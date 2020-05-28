@@ -1,6 +1,11 @@
 # SearchX Front End
+<<<<<<< HEAD
 
 Branch for just highlighting
+=======
+Branch for Highlight and note-taking
+
+>>>>>>> Push first change in branch
 
 SearchX is a scalable collaborative search system being developed by [Lambda Lab](http://www.wis.ewi.tudelft.nl/projects/learning-analytics/) of [TU Delft](https://www.tudelft.nl/).
 It is based on [Pineapple Search](http://onlinelibrary.wiley.com/doi/10.1002/pra2.2016.14505301122/full) and is further developed to facilitate collaborative search and sensemaking.
