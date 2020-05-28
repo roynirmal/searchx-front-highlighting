@@ -1,5 +1,5 @@
 # SearchX Front End
-
+Branch for Highlight and note-taking
 
 
 SearchX is a scalable collaborative search system being developed by [Lambda Lab](http://www.wis.ewi.tudelft.nl/projects/learning-analytics/) of [TU Delft](https://www.tudelft.nl/).
