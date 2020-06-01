@@ -18,6 +18,8 @@ const WebSearchResult = function ({searchState, serpId, index, result, metadata,
 
     let clickUrl = () => {
         urlClickHandler(result.url);
+        console.log("URL", result.url)
+        console.log("result",result)
         log(LoggerEventTypes.SEARCHRESULT_CLICK_URL, metaInfo);
     };
 

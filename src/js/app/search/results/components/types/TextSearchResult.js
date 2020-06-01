@@ -20,13 +20,38 @@ const TextSearchResult = function ({
     };
 
     let clickUrl = () => {
-
-        var doctext = result.text.split('\n').map((item, key) => {
-            return <span key={key}>{item}<br/></span>
-        })
-
-        doctext.unshift(<h4> {result.source} <br/></h4>);
-        doctext.unshift(<h3> {result.name} <br/></h3>);
+        // console.log("result", result)
+        var doctext = []
+        var m
+        // result.text.split('\n').forEach(element => {
+            
+            // res = result.text.match(/<p>(.*?)<\/p>/g);
+        const r = /<p>(.*?)<\/p>/g
+        
+        const regex0 = /\n/g;
+        let cleaned_item0 = result.text.replace(regex0, '');
+        const regex1 = /<a.*?>/g;
+        let cleaned_item = cleaned_item0.replace(regex1, '');
+        const regex2 = /<\/a>/g;
+        let cleaned_item2 = cleaned_item.replace(regex2, '');
+        const regex3 = /<img.*?>/g;
+        let cleaned_item3 = cleaned_item2.replace(regex3, '');
+        const regex4 = /<\/img>/g;
+        let cleaned_item4 = cleaned_item3.replace(regex4, '');
+        const regex5 = /<sup.*?<\/sup>/g;
+        let cleaned_item5 = cleaned_item4.replace(regex5, '');
+        // const regex6 = /<\/sup>/g;
+        // let cleaned_item6 = cleaned_item5.replace(regex6, '');
+        
+        while (m = r.exec(cleaned_item5)) {
+            
+            doctext.push(<p dangerouslySetInnerHTML={{__html: m[1]}}/>);
+            }
+        console.log(doctext)
+        
+        
+        // doctext.unshift(<h4> {result.source} <br/></h4>);
+        doctext.unshift(<h2> {result.name} <br/></h2>);
 
         urlClickHandler(result.id, doctext);
         log(LoggerEventTypes.SEARCHRESULT_CLICK_URL, metaInfo);
