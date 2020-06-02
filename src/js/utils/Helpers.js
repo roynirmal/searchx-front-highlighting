@@ -58,7 +58,7 @@ const exports = {
     },
 
     getId(result) {
-        return result.id ? result.id : result.url;
+        return  result.url;
     },
     
     shuffle(array) {

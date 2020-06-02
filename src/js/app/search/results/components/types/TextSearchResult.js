@@ -11,7 +11,7 @@ const TextSearchResult = function ({
                                        urlClickHandler, hideCollapsedResultsHandler, isCollapsible, visited
                                    }) {
     let metaInfo = {
-        url: result.id,
+        url: result.url,
         index: index,
         query: searchState.query,
         page: searchState.page,
@@ -20,14 +20,14 @@ const TextSearchResult = function ({
     };
 
     let clickUrl = () => {
-        // console.log("result", result)
+        console.log("result", result)
         var doctext = []
         var m
         // result.text.split('\n').forEach(element => {
             
             // res = result.text.match(/<p>(.*?)<\/p>/g);
-        const r = /<p>(.*?)<\/p>/g
-        
+        const rp = /<p>(.*?)<\/p>|<h2>(.*?)<\/h2>|<h3>(.*?)<\/h3>/g
+ 
         const regex0 = /\n/g;
         let cleaned_item0 = result.text.replace(regex0, '');
         const regex1 = /<a.*?>/g;
@@ -43,17 +43,24 @@ const TextSearchResult = function ({
         // const regex6 = /<\/sup>/g;
         // let cleaned_item6 = cleaned_item5.replace(regex6, '');
         
-        while (m = r.exec(cleaned_item5)) {
-            
+        while (m = rp.exec(cleaned_item5)) {
+            if (m[0].startsWith('<p>')){
             doctext.push(<p dangerouslySetInnerHTML={{__html: m[1]}}/>);
+            } else if (m[0].startsWith('<h2>')){
+                
+                doctext.push(<h2 dangerouslySetInnerHTML={{__html: m[2]}}/>);
+            } else if (m[0].startsWith('<h3>')){
+                
+                doctext.push(<h3 dangerouslySetInnerHTML={{__html: '<b>'+ m[3] + '</b>'}}/>);
             }
-        console.log(doctext)
+            }
+        // console.log(doctext)
         
         
         // doctext.unshift(<h4> {result.source} <br/></h4>);
-        doctext.unshift(<h2> {result.name} <br/></h2>);
+        doctext.unshift(<h1> {result.name} <br/></h1>);
 
-        urlClickHandler(result.id, doctext);
+        urlClickHandler(result.url, doctext);
         log(LoggerEventTypes.SEARCHRESULT_CLICK_URL, metaInfo);
     };
 
@@ -80,13 +87,13 @@ const TextSearchResult = function ({
 
     const hideCollapsedResults = function () {
         const collapseMetaInfo = {
-            urls: [result.id],
+            urls: [result.url],
             query: searchState.query,
             page: searchState.page,
             serpId: serpId,
         };
         log(LoggerEventTypes.SEARCHRESULT_HIDE_COLLAPSED, collapseMetaInfo);
-        const id = result.id ? result.id : result.url;
+        const id =  result.url;
         hideCollapsedResultsHandler([id]);
     };
 
