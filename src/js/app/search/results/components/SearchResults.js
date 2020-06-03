@@ -12,6 +12,10 @@ import $ from 'jquery';
 import CenteredMessage from "../../../common/CenteredMessage";
 import Helpers from "../../../../utils/Helpers";
 
+import AccountStore from "../../../../stores/AccountStore"
+import highlighter from "../../../../utils/Highlighter"
+import highlightStored from "../../../../utils/Highlighter"
+
 const SearchResults = function ({
                                     searchState, progress, serpId, results, matches, elapsedTime, activeUrl, provider,
                                     distributionOfLabour, activeDoctext, tutorial, collapsed, autoHide,
@@ -39,6 +43,9 @@ const SearchResults = function ({
     if (searchState.query === '' && results.length === 0) {
         return <CenteredMessage height="800px" style={style}>
             <h3> Your search results will appear here :) </h3>
+            <p> User {AccountStore.getUserId()} </p>
+            {/* todo - make this execute after content is loaded*/}
+            <script> highlightStored() </script>
         </CenteredMessage>
     }
 
