@@ -1,14 +1,7 @@
 import TextHighlighter from 'texthighlighter';
 import React from "react";
 import AccountStore from "../stores/AccountStore"
-
-// function getId() {
-//     let userNode = document.getElementById('user');
-//     let userId = userNode.textContent.split('-')[1].trim();
-//     let documentNode = document.getElementById('document');
-//     let documentId = documentNode.textContent.split('-')[1].trim();
-//     return userId + '_' + documentId
-// }
+import api from 'etherpad-lite-client'
 
 let highlighterOptions = {
     color: '#fcf8e3',
@@ -18,9 +11,6 @@ let highlighterOptions = {
     },
     onAfterHighlight: function (range, highlights) {
         updateHighlights(highlights);
-        window.alert('Created ' + highlights.length + ' highlight(s): ' + highlights.map(function (h) {
-            return '"' + h.innerText + '"';
-        }).join(', '));
     }
 };
 
@@ -54,6 +44,48 @@ function updateHighlights(highlights){
     }
     updatedHLs.push(newHls);
     localStorage.setItem(hlId, JSON.stringify(updatedHLs));
+
+    // copyHlsToNotepad(newHls);
+
+    window.alert('Created ' + highlights.length + ' highlight(s): ' + highlights.map(function (h) {
+        return '"' + h.innerText + '"';
+    }).join(', '));
+}
+
+
+function copyHlsToNotepad(newHls){
+
+    // let etherpad = api.connect({
+    //     apikey: '3748d4909293037fd6058b35c1b46cc08a285efbfaf303bbed5c5bcd0bd333f8',
+    //     host: 'localhost',
+    //     port: 9001
+    // });
+
+    // let args = {
+    //     padID: 'SearchXtesting',
+    //     text: newHls
+    // };
+    // etherpad.getText(args, function(error, data) {
+    //     if(error) {
+    //         console.log('test-error');
+    //         console.log(error);
+    //     } else {
+    //         console.log('ether-test');
+    //         console.log(data)
+    //     }
+    // });
+
+    const Http = new XMLHttpRequest();
+    let url='http://localhost:9001/api/1.2.13/appendText?apikey=3748d4909293037fd6058b35c1b46cc08a285efbfaf303bbed5c5bcd0bd333f8&padID=SearchXtesting&text=';
+    url += newHls;
+    Http.open("GET", url);
+    Http.setRequestHeader("Content-Type", "text/plain");
+    Http.send();
+
+    Http.onreadystatechange = (e) => {
+        console.log(Http.responseText)
+    };
+
 }
 
 // highlightStored();

@@ -6,7 +6,7 @@ import {Button} from "react-bootstrap";
 
 const Notepad = function(props) {
     const sidebarClass = props.isOpen ? 'sidebar open' : 'sidebar';
-    const padUrl = "http://localhost:9001/p/" + props.padUrl + "?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false";
+    const padUrl = "http://localhost:9001/p/" + props.padUrl + "?showControls=true&showChat=false&showLineNumbers=true&useMonospaceFont=false&withCredentials=false";
     return (
         <div className={sidebarClass}>
             {/*<Button variant="light" onClick={props.toggleSidebar} className="sidebar-toggle">Hide Document</Button>*/}
