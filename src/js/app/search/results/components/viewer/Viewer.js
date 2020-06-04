@@ -8,12 +8,13 @@ import ViewerPage from "./ViewerPage";
 import AnnotationContainer from "../../../features/annotation/AnnotationContainer";
 import RatingContainer from "../../../features/rating/RatingContainer";
 import Modal from "../../../../common/Modal";
-
+import Highlighter from "react-highlight-words";
 import config from '../../../../../config';
 
 export default class Viewer extends React.Component  {
 
     render() {
+        
         if (this.props.url === "") {
             return <div/>
         }
@@ -51,6 +52,8 @@ export default class Viewer extends React.Component  {
         let scrollDocument = () => {
             log(LoggerEventTypes.DOCUMENT_SCROLL, metaInfo);
         };
+
+        
 
     
         return (

@@ -45,7 +45,7 @@ const SearchResults = function ({
             <h3> Your search results will appear here :) </h3>
             <p> User {AccountStore.getUserId()} </p>
             {/* todo - make this execute after content is loaded*/}
-            <script> highlightStored() </script>
+            {/* <script> {highlightStored()} </script> */}
         </CenteredMessage>
     }
 

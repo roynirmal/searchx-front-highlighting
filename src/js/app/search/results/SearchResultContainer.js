@@ -9,6 +9,7 @@ import SearchResult from "./components/SearchResult";
 
 import {log} from '../../../utils/Logger';
 import {LoggerEventTypes} from '../../../utils/LoggerEventTypes';
+import {highlightStored} from '../../../utils/Highlighter';
 
 
 export default class SearchResultContainer extends React.Component {
@@ -41,8 +42,8 @@ export default class SearchResultContainer extends React.Component {
         } else {
             visitedUrls = {};
             visitedUrls[url] = true;
-        }
-
+        }   
+        // highlightStored()
         localStorage.setItem('visited-urls', JSON.stringify(visitedUrls));
     }
 

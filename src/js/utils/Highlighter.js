@@ -11,9 +11,9 @@ import AccountStore from "../stores/AccountStore"
 // }
 
 let highlighterOptions = {
-    color: 'lightblue',
+    color: '#fcf8e3',
     onBeforeHighlight: function (range) {
-        console.log(range);
+        // console.log(window.confirm('Selected text: ' + range + '\nReally highlight?'));
         return window.confirm('Selected text: ' + range + '\nReally highlight?');
     },
     onAfterHighlight: function (range, highlights) {
@@ -26,9 +26,10 @@ let highlighterOptions = {
 
 export let highlighter = new TextHighlighter(document.body, highlighterOptions);
 
-let finder = new TextHighlighter(document.body, {color: 'lightgreen'});
+let finder = new TextHighlighter(document.body, {color: '#ffffff'});
 
 export function highlightStored() {
+    console.log("highlightStored")
     let hlId = AccountStore.getUserId();
     let currentHls = JSON.parse(localStorage.getItem(hlId));
     if (currentHls){

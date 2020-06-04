@@ -1,9 +1,9 @@
 import React from 'react';
 import VisibilitySensor from 'react-visibility-sensor';
-
+import {highlightStored} from "../../../../../utils/Highlighter"
 import {log} from '../../../../../utils/Logger';
 import {LoggerEventTypes} from '../../../../../utils/LoggerEventTypes';
-
+import AccountStore from "../../../../../stores/AccountStore"
 ////
 
 const TextSearchResult = function ({
@@ -53,12 +53,15 @@ const TextSearchResult = function ({
                 
                 doctext.push(<h3 dangerouslySetInnerHTML={{__html: '<b>'+ m[3] + '</b>'}}/>);
             }
-            }
+        }
         // console.log(doctext)
-        
-        
+        // highlightStored()
+
+        // highlightStored()
+        console.log("Click")
+   
         // doctext.unshift(<h4> {result.source} <br/></h4>);
-        doctext.unshift(<h1> {result.name} <br/></h1>);
+        doctext.unshift(<h1 dangerouslySetInnerHTML={{__html: result.name}} />);
 
         urlClickHandler(result.url, doctext);
         log(LoggerEventTypes.SEARCHRESULT_CLICK_URL, metaInfo);
