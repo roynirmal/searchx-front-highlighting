@@ -20,7 +20,7 @@ let highlighterOptions = {
         updateHighlights(highlights);
         window.alert('Created ' + highlights.length + ' highlight(s): ' + highlights.map(function (h) {
             return '"' + h.innerText + '"';
-        }).join(', '));
+        }).join(''));
     }
 };
 
@@ -45,7 +45,7 @@ function updateHighlights(highlights){
     let currentHls = JSON.parse(localStorage.getItem(hlId));
     let newHls = highlights.map(function (h) {
         return h.innerText;
-    }).join(', ');
+    }).join('');
     let updatedHLs = [];
     if (currentHls){
         for (let hl of currentHls){

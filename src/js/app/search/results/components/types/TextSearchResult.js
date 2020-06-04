@@ -21,39 +21,39 @@ const TextSearchResult = function ({
 
     let clickUrl = () => {
         console.log("result", result)
-        var doctext = []
+        var doctext = '<h1>'+result.name+'</h1>'+ result.text
         var m
         // result.text.split('\n').forEach(element => {
             
             // res = result.text.match(/<p>(.*?)<\/p>/g);
-        const rp = /<p>(.*?)<\/p>|<h2>(.*?)<\/h2>|<h3>(.*?)<\/h3>/g
+        // const rp = /<p>(.*?)<\/p>|<h2>(.*?)<\/h2>|<h3>(.*?)<\/h3>/g
  
-        const regex0 = /\n/g;
-        let cleaned_item0 = result.text.replace(regex0, '');
-        const regex1 = /<a.*?>/g;
-        let cleaned_item = cleaned_item0.replace(regex1, '');
-        const regex2 = /<\/a>/g;
-        let cleaned_item2 = cleaned_item.replace(regex2, '');
-        const regex3 = /<img.*?>/g;
-        let cleaned_item3 = cleaned_item2.replace(regex3, '');
-        const regex4 = /<\/img>/g;
-        let cleaned_item4 = cleaned_item3.replace(regex4, '');
-        const regex5 = /<sup.*?<\/sup>/g;
-        let cleaned_item5 = cleaned_item4.replace(regex5, '');
-        // const regex6 = /<\/sup>/g;
-        // let cleaned_item6 = cleaned_item5.replace(regex6, '');
+        // const regex0 = /\n/g;
+        // let cleaned_item0 = result.text.replace(regex0, '');
+        // const regex1 = /<a.*?>/g;
+        // let cleaned_item = cleaned_item0.replace(regex1, '');
+        // const regex2 = /<\/a>/g;
+        // let cleaned_item2 = cleaned_item.replace(regex2, '');
+        // const regex3 = /<img.*?>/g;
+        // let cleaned_item3 = cleaned_item2.replace(regex3, '');
+        // const regex4 = /<\/img>/g;
+        // let cleaned_item4 = cleaned_item3.replace(regex4, '');
+        // const regex5 = /<sup.*?<\/sup>/g;
+        // let cleaned_item5 = cleaned_item4.replace(regex5, '');
+        // // const regex6 = /<\/sup>/g;
+        // // let cleaned_item6 = cleaned_item5.replace(regex6, '');
         
-        while (m = rp.exec(cleaned_item5)) {
-            if (m[0].startsWith('<p>')){
-            doctext.push(<p dangerouslySetInnerHTML={{__html: m[1]}}/>);
-            } else if (m[0].startsWith('<h2>')){
+        // while (m = rp.exec(cleaned_item5)) {
+        //     if (m[0].startsWith('<p>')){
+        //     doctext.push(<p dangerouslySetInnerHTML={{__html: m[1]}}/>);
+        //     } else if (m[0].startsWith('<h2>')){
                 
-                doctext.push(<h2 dangerouslySetInnerHTML={{__html: m[2]}}/>);
-            } else if (m[0].startsWith('<h3>')){
+        //         doctext.push(<h2 dangerouslySetInnerHTML={{__html: m[2]}}/>);
+        //     } else if (m[0].startsWith('<h3>')){
                 
-                doctext.push(<h3 dangerouslySetInnerHTML={{__html: '<b>'+ m[3] + '</b>'}}/>);
-            }
-        }
+        //         doctext.push(<h3 dangerouslySetInnerHTML={{__html: '<b>'+ m[3] + '</b>'}}/>);
+        //     }
+        // }
         // console.log(doctext)
         // highlightStored()
 
@@ -61,7 +61,7 @@ const TextSearchResult = function ({
         console.log("Click")
    
         // doctext.unshift(<h4> {result.source} <br/></h4>);
-        doctext.unshift(<h1 dangerouslySetInnerHTML={{__html: result.name}} />);
+        // doctext.unshift(<h1 dangerouslySetInnerHTML={{__html: result.name}} />);
 
         urlClickHandler(result.url, doctext);
         log(LoggerEventTypes.SEARCHRESULT_CLICK_URL, metaInfo);
