@@ -20,7 +20,7 @@ const TextSearchResult = function ({
     };
 
     let clickUrl = () => {
-        console.log("result", result)
+        localStorage.setItem("opened-doc", result.url)
         var doctext = '<h1>'+result.name+'</h1>'+ result.text
         var m
         // result.text.split('\n').forEach(element => {

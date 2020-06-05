@@ -29,20 +29,28 @@ export function highlightStored() {
         }
     }
 }
+let updatedHLs = {};
 
 function updateHighlights(highlights){
     let hlId = AccountStore.getUserId();
+    let opened_doc = localStorage.getItem("opened-doc")
     let currentHls = JSON.parse(localStorage.getItem(hlId));
     let newHls = highlights.map(function (h) {
         return h.innerText;
     }).join('');
-    let updatedHLs = [];
-    if (currentHls){
-        for (let hl of currentHls){
-            updatedHLs.push(hl)
-        }
+    
+    // if (currentHls){
+    //     for (let hl of currentHls[opened_doc]){
+    //         updatedHLs[opened_doc].push(hl)
+    //     }
+    // }
+    if (updatedHLs[opened_doc]){
+        updatedHLs[opened_doc].push(newHls); 
+    } else {
+        updatedHLs[opened_doc] = []
+        updatedHLs[opened_doc].push(newHls);
     }
-    updatedHLs.push(newHls);
+    
     localStorage.setItem(hlId, JSON.stringify(updatedHLs));
 
     // copyHlsToNotepad(newHls);

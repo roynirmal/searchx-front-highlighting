@@ -13,8 +13,7 @@ import CenteredMessage from "../../../common/CenteredMessage";
 import Helpers from "../../../../utils/Helpers";
 
 import AccountStore from "../../../../stores/AccountStore"
-import highlighter from "../../../../utils/Highlighter"
-import highlightStored from "../../../../utils/Highlighter"
+
 
 const SearchResults = function ({
                                     searchState, progress, serpId, results, matches, elapsedTime, activeUrl, provider,
