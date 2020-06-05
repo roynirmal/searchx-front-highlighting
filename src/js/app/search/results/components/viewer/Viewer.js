@@ -58,7 +58,7 @@ export default class Viewer extends React.Component  {
     
         return (
             <Modal width="95%" height="90%">
-                <div className="viewer" onMouseEnter={hoverEnterDocument} onMouseLeave={hoverLeaveDocument}
+                <div id={"viewer"} className="viewer" onMouseEnter={hoverEnterDocument} onMouseLeave={hoverLeaveDocument}
                      onScroll={scrollDocument}>
                     <div className="header">
     

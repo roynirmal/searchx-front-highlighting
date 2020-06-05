@@ -1,6 +1,6 @@
 // import TextHighlighter from 'texthighlighter';
 // import React from "react";
-// import AccountStore from "../stores/AccountStore"
+// import AccountStore from "../../../stores/AccountStore"
 // import api from 'etherpad-lite-client'
 // import fetch from 'node-fetch'
 //
@@ -30,28 +30,20 @@
 //         }
 //     }
 // }
-// let updatedHLs = {};
 //
 // function updateHighlights(highlights){
 //     let hlId = AccountStore.getUserId();
-//     let opened_doc = localStorage.getItem("opened-doc")
 //     let currentHls = JSON.parse(localStorage.getItem(hlId));
 //     let newHls = highlights.map(function (h) {
 //         return h.innerText;
 //     }).join('');
-//
-//     // if (currentHls){
-//     //     for (let hl of currentHls[opened_doc]){
-//     //         updatedHLs[opened_doc].push(hl)
-//     //     }
-//     // }
-//     if (updatedHLs[opened_doc]){
-//         updatedHLs[opened_doc].push(newHls);
-//     } else {
-//         updatedHLs[opened_doc] = []
-//         updatedHLs[opened_doc].push(newHls);
+//     let updatedHLs = [];
+//     if (currentHls){
+//         for (let hl of currentHls){
+//             updatedHLs.push(hl)
+//         }
 //     }
-//
+//     updatedHLs.push(newHls);
 //     localStorage.setItem(hlId, JSON.stringify(updatedHLs));
 //
 //     copyHlsToNotepad(newHls);
@@ -60,7 +52,7 @@
 //         return '"' + h.innerText + '"';
 //     }).join(''));
 // }
-
+//
 //
 // function copyHlsToNotepad(hlText){
 //
@@ -85,19 +77,18 @@
 //     //     }
 //     // });
 //
-//     let apiKey = '94b4d1a3492e5482d0c939de54bbde34f46725011c9e7066f673825624ddd1cb';
-//     // let url='http://localhost:9001/api/1.2.13/appendText?apikey='+apiKey+'&padID=SearchXtesting&text=';
-//     let url='http://localhost:9001/api/1.2.13/appendText?apikey='+apiKey+'&padID=SearchXtesting';
+//     let url='http://localhost:9001/api/1.2.13/appendText?apikey=3748d4909293037fd6058b35c1b46cc08a285efbfaf303bbed5c5bcd0bd333f8&padID=SearchXtesting&text=';
+//     // let url='http://localhost:9001/api/1.2.13/appendText?apikey=3748d4909293037fd6058b35c1b46cc08a285efbfaf303bbed5c5bcd0bd333f8&padID=SearchXtesting';
 //     let hlToNote = '\n' + hlText + '\n';
-//     // url += hlToNote;
+//     url += hlToNote;
 //     console.log(hlToNote);
 //     let headers = {
 //         "Content-Type": "text/plain"
 //     };
 //     let data = {
-//         "text": hlToNote
+//         "text": "text=" + hlToNote
 //     };
-//     fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(data), mode: 'no-cors'})
+//     fetch(url, { method: 'GET', headers: headers, data: data, mode: 'no-cors'})
 //         .then((res) => {
 //             console.log(res)
 //         })

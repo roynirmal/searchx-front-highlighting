@@ -1,8 +1,15 @@
 import React from 'react';
 import Loader from 'react-loader';
 import isImage from 'is-image';
-import highlighter from "../../../../../utils/Highlighter"
-import highlightStored from "../../../../../utils/Highlighter"
+// import highlighter from "./Highlighter"
+
+// import highlightStored from "../../../../../utils/Highlighter"
+import $ from 'jquery'
+
+import TextHighlighter from 'texthighlighter';
+import AccountStore from "../../../../../stores/AccountStore";
+
+var highlighter;
 
 export default class ViewerPage extends React.Component {
     componentDidMount() {
@@ -10,7 +17,78 @@ export default class ViewerPage extends React.Component {
             this.props.loadHandler();
             
         }
+        // function updateHighlights(highlights){
+        //     let hlId = AccountStore.getUserId();
+        //     let currentHls = JSON.parse(localStorage.getItem(hlId));
+        //     let newHls = highlights.map(function (h) {
+        //         return h.innerText;
+        //     }).join('');
+        //     let updatedHLs = [];
+        //     if (currentHls){
+        //         for (let hl of currentHls){
+        //             updatedHLs.push(hl)
+        //         }
+        //     }
+        //     updatedHLs.push(newHls);
+        //     localStorage.setItem(hlId, JSON.stringify(updatedHLs));
+        //
+        //     // copyHlsToNotepad(newHls);
+        //
+        //     window.alert('Created ' + highlights.length + ' highlight(s): ' + highlights.map(function (h) {
+        //         return '"' + h.innerText + '"';
+        //     }).join(''));
+        // }
 
+        let updatedHLs = {};
+
+        function updateHighlights(highlights){
+            let hlId = AccountStore.getUserId();
+            let opened_doc = localStorage.getItem("opened-doc")
+            let currentHls = JSON.parse(localStorage.getItem(hlId));
+            let newHls = highlights.map(function (h) {
+                return h.innerText;
+            }).join('');
+
+            // if (currentHls){
+            //     for (let hl of currentHls[opened_doc]){
+            //         updatedHLs[opened_doc].push(hl)
+            //     }
+            // }
+            if (updatedHLs[opened_doc]){
+                updatedHLs[opened_doc].push(newHls);
+            } else {
+                updatedHLs[opened_doc] = []
+                updatedHLs[opened_doc].push(newHls);
+            }
+
+            localStorage.setItem(hlId, JSON.stringify(updatedHLs));
+
+            // copyHlsToNotepad(newHls);
+
+            window.alert('Created ' + highlights.length + ' highlight(s): ' + highlights.map(function (h) {
+                return '"' + h.innerText + '"';
+            }).join(''));
+        }
+
+
+        let highlighterOptions = {
+            color: '#fcfa40',
+            onBeforeHighlight: function (range) {
+                return window.confirm('Selected text: ' + range + '\nReally highlight?');
+            },
+            onAfterHighlight: function (range, highlights) {
+                updateHighlights(highlights);
+            }
+        };
+
+        let highlighter = new TextHighlighter(document.getElementById("viewer"), highlighterOptions);
+    }
+
+    componentWillUnmount() {
+        let highlighterOptions = {
+            color: '#ffffff'
+        };
+        highlighter = new TextHighlighter(document.body, highlighterOptions);
     }
 
     componentWillReceiveProps(nextProps) {
