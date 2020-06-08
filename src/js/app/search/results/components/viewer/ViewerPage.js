@@ -2,7 +2,7 @@ import React from 'react';
 import Loader from 'react-loader';
 import isImage from 'is-image';
 // import highlighter from "./Highlighter"
-
+import Rating from 'react-rating';
 // import highlightStored from "../../../../../utils/Highlighter"
 import $ from 'jquery'
 
@@ -17,6 +17,7 @@ export default class ViewerPage extends React.Component {
             this.props.loadHandler();
             
         }
+        // this.props.highlightClickHandler();
         // function updateHighlights(highlights){
         //     let hlId = AccountStore.getUserId();
         //     let currentHls = JSON.parse(localStorage.getItem(hlId));
@@ -39,56 +40,7 @@ export default class ViewerPage extends React.Component {
         //     }).join(''));
         // }
 
-        let updatedHLs = {};
-
-        function updateHighlights(highlights){
-            let hlId = AccountStore.getUserId();
-            let opened_doc = localStorage.getItem("opened-doc")
-            let currentHls = JSON.parse(localStorage.getItem(hlId));
-            let newHls = highlights.map(function (h) {
-                return h.innerText;
-            }).join('');
-
-            // if (currentHls){
-            //     for (let hl of currentHls[opened_doc]){
-            //         updatedHLs[opened_doc].push(hl)
-            //     }
-            // }
-            if (updatedHLs[opened_doc]){
-                updatedHLs[opened_doc].push(newHls);
-            } else {
-                updatedHLs[opened_doc] = []
-                updatedHLs[opened_doc].push(newHls);
-            }
-
-            localStorage.setItem(hlId, JSON.stringify(updatedHLs));
-
-            // copyHlsToNotepad(newHls);
-
-            window.alert('Created ' + highlights.length + ' highlight(s): ' + highlights.map(function (h) {
-                return '"' + h.innerText + '"';
-            }).join(''));
-        }
-
-
-        let highlighterOptions = {
-            color: '#fcfa40',
-            onBeforeHighlight: function (range) {
-                return window.confirm('Selected text: ' + range + '\nReally highlight?');
-            },
-            onAfterHighlight: function (range, highlights) {
-                updateHighlights(highlights);
-            }
-        };
-
-        let highlighter = new TextHighlighter(document.getElementById("viewer"), highlighterOptions);
-    }
-
-    componentWillUnmount() {
-        let highlighterOptions = {
-            color: '#ffffff'
-        };
-        highlighter = new TextHighlighter(document.body, highlighterOptions);
+        
     }
 
     componentWillReceiveProps(nextProps) {
@@ -101,7 +53,6 @@ export default class ViewerPage extends React.Component {
         return {__html: text};
     }
     
-        
     
     render() {
         let highlightText = (doc) => {
@@ -113,7 +64,7 @@ export default class ViewerPage extends React.Component {
             let currentHls = JSON.parse(localStorage.getItem(hlId));
             
             // currentHls = currentHls?currentHls:['']
-            console.log(currentHls)
+            // console.log(currentHls)
             let highlighted = []
             highlighted.push(
                 <span dangerouslySetInnerHTML ={{__html: highlightMatches(cleaned_item2, currentHls)}} /> 
@@ -132,7 +83,7 @@ export default class ViewerPage extends React.Component {
                 })
             }
             }
-            console.log(doc)
+            // console.log(doc)
             return doc
             }
         let  escapeRegExp = (string) => {
@@ -201,11 +152,16 @@ export default class ViewerPage extends React.Component {
   			
             return p.join('\n')
         }
+
     
         return (
             <div className="page">
                 {this.props.doctext ? (
+                    
                         <div className={"textBackground"}>
+                             
+ 
+                    
                             <div className={"documentText"} >
                                 {highlightText(this.props.doctext)}
                            

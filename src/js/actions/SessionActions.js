@@ -5,6 +5,8 @@ export default {
 
     //// Chat
 
+
+
     getChatMessageList(){
         dispatch({
             type: ActionTypes.GET_CHAT_MESSAGE_LIST,
@@ -36,6 +38,23 @@ export default {
         dispatch({
             type: ActionTypes.GET_BOOKMARKS_AND_EXCLUDES,
             payload: {}
+        })
+    },
+
+    addHighlight(text){
+        dispatch({
+            type: ActionTypes.ADD_HIGHLIGHT,
+            payload: {
+                text: text
+            }
+        })
+    },
+    removeHighlight(text){
+        dispatch({
+            type: ActionTypes.REMOVE_HIGHLIGHT,
+            payload: {
+                text: text
+            }
         })
     },
 
