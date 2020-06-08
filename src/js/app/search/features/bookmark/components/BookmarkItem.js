@@ -18,7 +18,9 @@ const BookmarkItem = function({data, removeHandler, starHandler, clickHandler}) 
     let hoverLeaveSummary = () => log(LoggerEventTypes.BOOKMARK_HOVERLEAVE,metaInfo);
     let contextUrl = () => log(LoggerEventTypes.BOOKMARK_CONTEXT_URL,metaInfo);
     let clickUrl = () => {
-        clickHandler(data.url);
+        var doctext = '<h1>'+data.title +'</h1>'+ data.text
+        console.log(data)
+        clickHandler(data.url, doctext);
         log(LoggerEventTypes.BOOKMARK_CLICK_URL, metaInfo);
     };
 

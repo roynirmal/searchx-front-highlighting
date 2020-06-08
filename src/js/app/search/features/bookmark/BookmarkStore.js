@@ -61,7 +61,7 @@ const BookmarkStore = Object.assign(EventEmitter.prototype, {
                 _get('exclude');
                 break;
             case ActionTypes.ADD_BOOKMARK:
-                _add(action.payload.url, action.payload.title, 'bookmark');
+                _add(action.payload.url, action.payload.title, action.payload.text, 'bookmark');
                 break;
             case ActionTypes.REMOVE_BOOKMARK:
                 _remove(action.payload.url, 'bookmark');
@@ -93,6 +93,7 @@ const _get = function(type) {
             if (err || !res.body || res.body.error) {
                 state[type] = [];
             } else {
+                console.log("GET B", res.body.results)
                 state[type] = res.body.results;
                 res.body.results.forEach(result => {
                     const resultId = result.url ? result.url : result.id;
@@ -109,7 +110,7 @@ const _get = function(type) {
         });
 };
 
-const _add = function(url, title, type) {
+const _add = function(url, title, text, type) {
     const userId = AccountStore.getUserId();
     request
         .post(`${process.env.REACT_APP_SERVER_URL}/v1/session/${AccountStore.getSessionId()}/${type}`)
@@ -126,6 +127,7 @@ const _add = function(url, title, type) {
         url: url,
         title: title,
         userId: userId,
+        text: text,
         date: new Date()
     });
     BookmarkStore.emitChange();

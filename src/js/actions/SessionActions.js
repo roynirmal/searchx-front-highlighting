@@ -58,12 +58,13 @@ export default {
         })
     },
 
-    addBookmark(url, title) {
+    addBookmark(url, title, text) {
         dispatch({
             type: ActionTypes.ADD_BOOKMARK,
             payload: {
                 url: url,
-                title: title
+                title: title,
+                text
             }
         })
     },

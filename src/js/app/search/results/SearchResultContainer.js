@@ -60,7 +60,7 @@ export default class SearchResultContainer extends React.Component {
         } else {
             action = "add";
 
-            SessionActions.addBookmark(id, this.props.result.name);
+            SessionActions.addBookmark(id, this.props.result.name, this.props.result.text);
             if (this.props.result.metadata.exclude) {
                 SessionActions.removeExclude(id);
             }
