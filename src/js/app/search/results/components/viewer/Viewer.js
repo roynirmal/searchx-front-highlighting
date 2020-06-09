@@ -23,14 +23,15 @@ export default class Viewer extends React.Component  {
     }
     highlightRemoveHandler() {
         let hlId = AccountStore.getUserId();
-        let opened_doc = localStorage.getItem("opened-doc")
+        let opened_doc = localStorage.getItem("opened-doc");
         let currentHls = JSON.parse(localStorage.getItem(hlId));
 
         if (currentHls){
             if (currentHls[opened_doc]){
                 currentHls[opened_doc].pop();
             }
-        } 
+        }
+
         localStorage.setItem(hlId, JSON.stringify(currentHls));
         SessionActions.removeHighlight(opened_doc);
         SearchStore.modifyMetadata(opened_doc, {
@@ -41,16 +42,14 @@ export default class Viewer extends React.Component  {
             },
             exclude: null
         });
-
     }
 
     highlightClickHandler() {
-        // let highlighter
         if(!localStorage.getItem('highlighting')){
             localStorage.setItem('highlighting', true)
         } else {
-            localStorage.removeItem('highlighting')
-            let opened_doc = localStorage.getItem("opened-doc")
+            localStorage.removeItem('highlighting');
+            let opened_doc = localStorage.getItem("opened-doc");
             SearchStore.modifyMetadata(opened_doc, {
                 highlight: {
                     userId: AccountStore.getUserId(),
@@ -58,12 +57,11 @@ export default class Viewer extends React.Component  {
                 },
                 exclude: null
             });
-
         }
-        let highlighterOptions 
-        let  updateHighlights = (highlights) => {
+        let highlighterOptions ;
+        let updateHighlights = (highlights) => {
             let hlId = AccountStore.getUserId();
-            let opened_doc = localStorage.getItem("opened-doc")
+            let opened_doc = localStorage.getItem("opened-doc");
             let currentHls = JSON.parse(localStorage.getItem(hlId));
             let newHls = highlights.map(function (h) {
                 return h.innerText;
@@ -73,12 +71,11 @@ export default class Viewer extends React.Component  {
                 if (currentHls[opened_doc]){
                     currentHls[opened_doc].push(newHls);
                 } else {
-                    currentHls[opened_doc] = []
+                    currentHls[opened_doc] = [];
                     currentHls[opened_doc].push(newHls);
                 }
             } else {
                 currentHls = { }
-                
             }
 
             localStorage.setItem(hlId, JSON.stringify(currentHls));
@@ -96,7 +93,7 @@ export default class Viewer extends React.Component  {
                 },
                 exclude: null
             });
-        }
+        };
 
         highlighterOptions = {
             color: '#fcfa40',
@@ -106,14 +103,16 @@ export default class Viewer extends React.Component  {
                 }
             },
             onAfterHighlight: function (range, highlights) {
+                console.log('range', range);
+                console.log('highlights', highlights);
                 if (localStorage.getItem('highlighting')){
                     updateHighlights(highlights);
                 }
             }
         };
 
-    let highlighter = new TextHighlighter(document.getElementById("viewer"), highlighterOptions);
-}
+        let highlighter = new TextHighlighter(document.getElementById("viewer"), highlighterOptions);
+    }
 
     render() {
         
@@ -163,9 +162,6 @@ export default class Viewer extends React.Component  {
                 <div id={"viewer"} className="viewer" onMouseEnter={hoverEnterDocument} onMouseLeave={hoverLeaveDocument}
                      onScroll={scrollDocument}>
                     <div className="header">
-    
-    
-                        
                             {!this.props.doctext  ?
                               [
                                 <span className="forward" onClick={openInBrowser}>open in browser</span>,
@@ -173,7 +169,7 @@ export default class Viewer extends React.Component  {
                             ] :
                             <div className="pull-right">
                             <Rating className="rating" emptySymbol="fa fa-pencil-square-o" fullSymbol="fa fa-pencil-square" onClick={this.highlightClickHandler}
-                            title="Highlight" stop={1} initialRating={initialHighlight} style={{ marginRight : '20px'}} ></Rating> 
+                            title="Highlight" stop={1} initialRating={initialHighlight} style={{ marginRight : '20px'}} > </Rating>
                              <span  onClick={this.highlightRemoveHandler}><i className="fa fa-trash"/></span>
                             </div>
                             } 
@@ -182,7 +178,6 @@ export default class Viewer extends React.Component  {
                                 <span className="divider"/>
                             ]}
                             <span className="close" onClick={closeDocument}><i className="fa fa-times"/></span>
-                        
                     </div>
     
                     <div className="body">
@@ -191,14 +186,10 @@ export default class Viewer extends React.Component  {
                                 <AnnotationContainer url={this.props.url}/>
                             </div>
                         )}
-    
                         <ViewerPage url={this.props.url} loadHandler={loadDocument} doctext={this.props.doctext} />
                     </div>
                 </div>
             </Modal>
         );
-
-
     }
-
 }
