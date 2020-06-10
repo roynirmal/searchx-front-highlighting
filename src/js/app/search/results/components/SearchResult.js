@@ -1,5 +1,5 @@
 import React from 'react';
-import Rating from 'react-rating';
+// import Rating from 'react-rating';
 
 import {Collapse} from "react-bootstrap";
 
@@ -8,33 +8,33 @@ import Identicon from "identicon.js";
 import md5 from 'md5';
 
 const SearchResult = function ({
-                                   searchState, serpId, result, bookmarkClickHandler, urlClickHandler, provider,
+                                   searchState, serpId, result, bookmarkClickHandler, urlClickHandler, savedhighlightClickHandler, provider,
                                    collapsed, excludeClickHandler, hideCollapsedResultsHandler, isCollapsible, visited,
                                    index
                                }) {
-    let initialBookmark = 0;
-    let initialExclude = 0;
-    if ('metadata' in result) {
-        initialBookmark = result.metadata.bookmark ? 1 : 0;
-        initialExclude = result.metadata.exclude ? 1 : 0;
-    }
+    // let initialBookmark = 0;
+    // let initialExclude = 0;
+    // if ('metadata' in result) {
+    //     initialBookmark = result.metadata.bookmark ? 1 : 0;
+    //     initialExclude = result.metadata.exclude ? 1 : 0;
+    // }
 
-    const bookmarkButton = <Rating
-        className="rating" emptySymbol="fa fa-bookmark-o" fullSymbol="fa fa-bookmark"
-        onClick={bookmarkClickHandler}
-        stop={1} initialRating={initialBookmark}
-        title="Save result"
-    />;
+    // const bookmarkButton = <Rating
+    //     className="rating" emptySymbol="fa fa-bookmark-o" fullSymbol="fa fa-bookmark"
+    //     onClick={bookmarkClickHandler}
+    //     stop={1} initialRating={initialBookmark}
+    //     title="Save result"
+    // />;
 
     // TODO: use variant from SearchStore instead of defaultVariant
-    const excludeButton = <div>
-        {config.defaultVariant === 'S0' ? <div/> : <Rating
-            className="rating" emptySymbol="fa fa-ban" fullSymbol="fa fa-ban red"
-            onClick={excludeClickHandler}
-            stop={1} initialRating={initialExclude}
-            title="Exclude result from future queries"
-        />}
-    </div>;
+    // const excludeButton = <div>
+    //     {config.defaultVariant === 'S0' ? <div/> : <Rating
+    //         className="rating" emptySymbol="fa fa-ban" fullSymbol="fa fa-ban red"
+    //         onClick={excludeClickHandler}
+    //         stop={1} initialRating={initialExclude}
+    //         title="Exclude result from future queries"
+    //     />}
+    // </div>;
 
 
     const props = {
@@ -43,10 +43,10 @@ const SearchResult = function ({
         result: result,
         index: index,
         metadata: formatMetadata(result.metadata),
-        bookmarkButton: bookmarkButton,
-        excludeButton: excludeButton,
+        // bookmarkButton: bookmarkButton,
+        // excludeButton: excludeButton,
         urlClickHandler: urlClickHandler,
-        hideCollapsedResultsHandler: hideCollapsedResultsHandler,
+        // hideCollapsedResultsHandler: hideCollapsedResultsHandler,
         isCollapsible: isCollapsible,
         visited: visited
     };

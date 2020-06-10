@@ -7,7 +7,8 @@ import PropTypes from "prop-types";
 import SearchHeaderContainer from './header/SearchHeaderContainer';
 import SearchResultsContainer from "./results/SearchResultsContainer";
 import QueryHistoryContainer from "./features/queryhistory/QueryHistoryContainer";
-import BookmarkContainer from "./features/bookmark/BookmarkContainer";
+// import BookmarkContainer from "./features/bookmark/BookmarkContainer";
+import SavedHighlightContainer from "./features/savedhighlight/SavedhighlightContainer";
 import Chat from "./features/chat/Chat";
 import config from "../../config";
 
@@ -55,7 +56,8 @@ class Search extends React.Component {
 
                     <div className="Side">
                         <QueryHistoryContainer collaborative={this.props.collaborative}/>
-                        <BookmarkContainer collaborative={this.props.collaborative}/>
+                        {/* <BookmarkContainer collaborative={this.props.collaborative}/> */}
+                        <SavedHighlightContainer collaborative={this.props.collaborative}/>
                     </div>
 
                     <div>

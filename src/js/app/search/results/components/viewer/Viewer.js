@@ -85,6 +85,11 @@ export default class Viewer extends React.Component  {
             }).join(''));
 
             SessionActions.addHighlight(opened_doc);
+            let name = this.props.doctext.match(/<h1>(.*)<\/h1>/)
+           
+            SessionActions.addBookmark(this.props.url, name[1], this.props.doctext);
+            let savedtexts = JSON.parse(localStorage.getItem("doctexts")) || {}
+            savedtexts[this.props.url] = this.props.doctext
             SearchStore.modifyMetadata(opened_doc, {
                 highlight: {
                     userId: AccountStore.getUserId(),

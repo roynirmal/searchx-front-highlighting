@@ -9,7 +9,7 @@ import SearchResult from "./components/SearchResult";
 
 import {log} from '../../../utils/Logger';
 import {LoggerEventTypes} from '../../../utils/LoggerEventTypes';
-import {highlightStored} from '../../../utils/Highlighter';
+
 
 
 export default class SearchResultContainer extends React.Component {
@@ -85,6 +85,44 @@ export default class SearchResultContainer extends React.Component {
         });
     };
 
+    savedhighlightClickHandler() {
+        let action = "";
+        const id = this.props.result.url ? this.props.result.url : this.props.result.id;
+        const index = this.props.index;
+        if (this.props.result.metadata.savedhighlight) {
+            action = "remove";
+            SessionActions.removeSavedHighlight(id);
+            SearchStore.modifyMetadata(id, {
+                savedhighlight: null
+            });
+        } else {
+            action = "add";
+
+            SessionActions.addSavedHighlight(id, this.props.result.name, this.props.result.text);
+            if (this.props.result.metadata.exclude) {
+                SessionActions.removeExclude(id);
+            }
+
+            SearchStore.modifyMetadata(id, {
+                savedhighlight: {
+                    userId: AccountStore.getUserId(),
+                    date: new Date()
+                },
+                exclude: null
+            });
+            if (this.props.autoHide) {
+                this.props.hideCollapsedResultsHandler([id]);
+            }
+        }
+
+        log(LoggerEventTypes.SAVEDHIGHLIGHT_ACTION, {
+            url: id,
+            action: action,
+            index: index,
+            session: localStorage.getItem("session-num") || 0,
+        });
+    };
+
     excludeClickHandler() {
         let action = "";
         const id = this.props.result.url ? this.props.result.url : this.props.result.id;
@@ -134,6 +172,7 @@ export default class SearchResultContainer extends React.Component {
             result={this.props.result}
             urlClickHandler={this.urlClickHandler}
             bookmarkClickHandler={this.bookmarkClickHandler}
+            savedhighlightClickHandler={this.savedhighlightClickHandler}
             provider={this.props.provider}
             collapsed={this.props.collapsed}
             excludeClickHandler={this.excludeClickHandler}

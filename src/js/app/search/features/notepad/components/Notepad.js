@@ -1,7 +1,7 @@
 import './Notepad.pcss';
 import React from 'react';
 import Iframe from "react-iframe";
-import {Button} from "react-bootstrap";
+// import {Button} from "react-bootstrap";
 
 
 const Notepad = function(props) {

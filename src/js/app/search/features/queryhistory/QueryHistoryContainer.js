@@ -20,6 +20,7 @@ export default class QueryHistoryContainer extends React.Component {
         };
 
         SessionActions.getQueryHistory();
+        // console.log('QC',SessionActions.getQueryHistory())
         this.changeHandler = this.changeHandler.bind(this);
         this.popupHandler = this.popupHandler.bind(this);
     }
@@ -38,6 +39,7 @@ export default class QueryHistoryContainer extends React.Component {
     }
 
     render() {
+        // console.log("GET QC1", this.state.history)
         return <QueryHistory
             history={this.state.history}
             popup={this.state.popup}
@@ -50,6 +52,7 @@ export default class QueryHistoryContainer extends React.Component {
 
     changeHandler() {
         let history = QueryHistoryStore.getQueryHistory();
+        
         if (!this.props.collaborative) {
             history = history.filter((data) => {
                 return data.userId === AccountStore.getUserId();
@@ -62,6 +65,7 @@ export default class QueryHistoryContainer extends React.Component {
         this.setState({
             history: history
         });
+        
     }
 
     popupHandler() {

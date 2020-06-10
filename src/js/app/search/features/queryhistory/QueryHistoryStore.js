@@ -47,6 +47,7 @@ const QueryHistoryStore = Object.assign(EventEmitter.prototype, {
                 {userId: 3, query: "third query", created: new Date()},
             ];
         }
+        // console.log("coming here", state.queries)
 
         return state.queries.slice().reverse();
     },

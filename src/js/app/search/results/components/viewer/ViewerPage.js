@@ -3,9 +3,8 @@ import Loader from 'react-loader';
 import isImage from 'is-image';
 
 import TextHighlighter from 'texthighlighter';
-import AccountStore from "../../../../../stores/AccountStore";
 
-var highlighter;
+
 
 export default class ViewerPage extends React.Component {
     componentDidMount() {

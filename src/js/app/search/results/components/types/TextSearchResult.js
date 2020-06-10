@@ -1,9 +1,9 @@
 import React from 'react';
 import VisibilitySensor from 'react-visibility-sensor';
-import {highlightStored} from "../../../../../utils/Highlighter"
+// import {highlightStored} from "../../../../../utils/Highlighter"
 import {log} from '../../../../../utils/Logger';
 import {LoggerEventTypes} from '../../../../../utils/LoggerEventTypes';
-import AccountStore from "../../../../../stores/AccountStore"
+// import AccountStore from "../../../../../stores/AccountStore"
 ////
 
 const TextSearchResult = function ({
@@ -22,7 +22,7 @@ const TextSearchResult = function ({
     let clickUrl = () => {
         localStorage.setItem("opened-doc", result.url)
         var doctext = '<h1>'+result.name+'</h1>'+ result.text
-        var m
+
         // result.text.split('\n').forEach(element => {
             
             // res = result.text.match(/<p>(.*?)<\/p>/g);
@@ -58,10 +58,6 @@ const TextSearchResult = function ({
         // highlightStored()
 
         // highlightStored()
-        console.log("Click")
-   
-        // doctext.unshift(<h4> {result.source} <br/></h4>);
-        // doctext.unshift(<h1 dangerouslySetInnerHTML={{__html: result.name}} />);
 
         urlClickHandler(result.url, doctext);
         log(LoggerEventTypes.SEARCHRESULT_CLICK_URL, metaInfo);
@@ -96,8 +92,8 @@ const TextSearchResult = function ({
             serpId: serpId,
         };
         log(LoggerEventTypes.SEARCHRESULT_HIDE_COLLAPSED, collapseMetaInfo);
-        const id =  result.url;
-        hideCollapsedResultsHandler([id]);
+
+        // hideCollapsedResultsHandler([id]);
     };
 
     const toTitleCase = function(str) {
