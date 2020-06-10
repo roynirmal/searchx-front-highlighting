@@ -29,6 +29,9 @@ export default class Viewer extends React.Component  {
         if (currentHls){
             if (currentHls[opened_doc]){
                 currentHls[opened_doc].pop();
+                if (currentHls[opened_doc].length === 0){
+                    SessionActions.removeBookmark(this.props.url)
+                    }
             }
         }
 
@@ -59,9 +62,10 @@ export default class Viewer extends React.Component  {
             });
         }
         let highlighterOptions ;
+        let opened_doc = localStorage.getItem("opened-doc");
         let updateHighlights = (highlights) => {
             let hlId = AccountStore.getUserId();
-            let opened_doc = localStorage.getItem("opened-doc");
+           
             let currentHls = JSON.parse(localStorage.getItem(hlId));
             let newHls = highlights.map(function (h) {
                 return h.innerText;
@@ -76,6 +80,8 @@ export default class Viewer extends React.Component  {
                 }
             } else {
                 currentHls = { }
+                currentHls[opened_doc] = [];
+                    currentHls[opened_doc].push(newHls);
             }
 
             localStorage.setItem(hlId, JSON.stringify(currentHls));
@@ -90,6 +96,7 @@ export default class Viewer extends React.Component  {
             SessionActions.addBookmark(this.props.url, name[1], this.props.doctext);
             let savedtexts = JSON.parse(localStorage.getItem("doctexts")) || {}
             savedtexts[this.props.url] = this.props.doctext
+            localStorage.setItem("doctexts", JSON.stringify(savedtexts));
             SearchStore.modifyMetadata(opened_doc, {
                 highlight: {
                     userId: AccountStore.getUserId(),
@@ -98,10 +105,11 @@ export default class Viewer extends React.Component  {
                 },
                 exclude: null
             });
+            
         };
 
         highlighterOptions = {
-            color: '#fcfa40',
+            color: '#1afc28',
             onBeforeHighlight: function (range) {
                 if (localStorage.getItem('highlighting')){
                     return window.confirm('Selected text: ' + range + '\nReally highlight?');
@@ -109,7 +117,7 @@ export default class Viewer extends React.Component  {
             },
             onAfterHighlight: function (range, highlights) {
                 console.log('range', range);
-                console.log('highlights', highlights);
+                console.log('highlights', highlights[0]);
                 if (localStorage.getItem('highlighting')){
                     updateHighlights(highlights);
                 }
@@ -117,6 +125,7 @@ export default class Viewer extends React.Component  {
         };
 
         let highlighter = new TextHighlighter(document.getElementById("viewer"), highlighterOptions);
+        
     }
 
     render() {
@@ -126,7 +135,9 @@ export default class Viewer extends React.Component  {
         }
     
         ////
-    
+
+        
+
         const metaInfo = {
             url: this.props.url,
             query: this.props.searchState.query,
@@ -160,7 +171,7 @@ export default class Viewer extends React.Component  {
             log(LoggerEventTypes.DOCUMENT_SCROLL, metaInfo);
         };
         let initialHighlight = localStorage.getItem('highlighting') ? 1 : 0;
-        console.log("IH,", initialHighlight)
+       
     
         return (
             <Modal width="95%" height="90%">
@@ -177,7 +188,7 @@ export default class Viewer extends React.Component  {
                             title="Highlight" stop={1} initialRating={initialHighlight} style={{ marginRight : '20px'}} > </Rating>
                              <span  onClick={this.highlightRemoveHandler}><i className="fa fa-trash"/></span>
                             </div>
-                            } 
+                             } 
                             {config.interface.ratings && [
                                 <RatingContainer url={this.props.url}/>,
                                 <span className="divider"/>

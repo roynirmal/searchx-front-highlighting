@@ -15,27 +15,27 @@ export default class ViewerPage extends React.Component {
                 color: '#1afc28'
             };
 
-            function cleanupHighlighter(){
-                let old_element = document.getElementById("documentText");
-                let new_element = old_element.cloneNode(true);
-                old_element.parentNode.replaceChild(new_element, old_element);
-            }
+            // function cleanupHighlighter(){
+            //     let old_element = document.getElementById("documentText");
+            //     let new_element = old_element.cloneNode(true);
+            //     old_element.parentNode.replaceChild(new_element, old_element);
+            // }
 
-            async function highlightCurrent(){
-                let hlId = localStorage.getItem("user-id");
-                let currentHls = JSON.parse(localStorage.getItem(hlId));
-                let currentDoc = localStorage.getItem("opened-doc");
-                if (currentHls){
-                    if (currentHls[currentDoc]){
-                        let finder = new TextHighlighter(document.getElementById("documentText"), highlighterOptions);
-                        currentHls[currentDoc].forEach(text => {
-                            finder.find(text);
-                        });
+            // async function highlightCurrent(){
+            //     let hlId = localStorage.getItem("user-id");
+            //     let currentHls = JSON.parse(localStorage.getItem(hlId));
+            //     let currentDoc = localStorage.getItem("opened-doc");
+            //     if (currentHls){
+            //         if (currentHls[currentDoc]){
+            //             let finder = new TextHighlighter(document.getElementById("documentText"), highlighterOptions);
+            //             currentHls[currentDoc].forEach(text => {
+            //                 finder.find(text);
+            //             });
 
-                    }
-                }
-            }
-            highlightCurrent().then(cleanupHighlighter)
+            //         }
+            //     }
+            // }
+            // highlightCurrent().then(cleanupHighlighter)
         }
         // this.props.highlightClickHandler();
     }
@@ -52,7 +52,7 @@ export default class ViewerPage extends React.Component {
     
     
     render() {
-
+        
         let renderText = (doc) => {
             const regex1 = /<a.*?>/g;
             let cleaned_item = doc.replace(regex1, '');
@@ -147,29 +147,47 @@ export default class ViewerPage extends React.Component {
         //     return p.join('\n')
         // }
 
-    
+
+        let old_element = document.getElementById("documentText");
+        let opened_doc = localStorage.getItem("opened-doc");
+        let highlighting = localStorage.getItem("highlighting")
+        // console.log(old_element.childNodes[0])
+       
+        // html_obj[opened_doc].push(old_element.childNodes[0])
+        
+        if (old_element && highlighting){
+            
+            localStorage.setItem(opened_doc, old_element.innerHTML)
+        }
+
         return (
             <div className="page">
-                {this.props.doctext ? (
+                {localStorage.getItem(opened_doc) ?  
+                <div className={"textBackground"}>
+                    <div className={"documentText"} id={"documentText"}>
+                    {renderText(localStorage.getItem(opened_doc))}
+                    </div>
+                    </div>
+                : (
                         <div className={"textBackground"}>
                             <div className={"documentText"} id={"documentText"}>
                                 {renderText(this.props.doctext)}
                             </div>
                         </div>
-                    ) :
-                    [
-                        <div id="viewer-content-loader">
-                            <Loader/>
-                        </div>,
-                        isImage(this.props.url) ?
-                            <img src={this.props.url} onLoad={this.props.loadHandler} alt={this.props.url}/>
-                            :
-                            <iframe title={this.props.url} scrolling="yes"
-                                    frameBorder="0"
-                                    src={`${process.env.REACT_APP_RENDERER_URL}/${this.props.url}`}
-                                    onLoad={this.props.loadHandler}>
-                            </iframe>
-                    ]
+                    )
+                    // [
+                    //     <div id="viewer-content-loader">
+                    //         <Loader/>
+                    //     </div>,
+                    //     isImage(this.props.url) ?
+                    //         <img src={this.props.url} onLoad={this.props.loadHandler} alt={this.props.url}/>
+                    //         :
+                    //         <iframe title={this.props.url} scrolling="yes"
+                    //                 frameBorder="0"
+                    //                 src={`${process.env.REACT_APP_RENDERER_URL}/${this.props.url}`}
+                    //                 onLoad={this.props.loadHandler}>
+                    //         </iframe>
+                    // ]
                 }
             </div>
         )

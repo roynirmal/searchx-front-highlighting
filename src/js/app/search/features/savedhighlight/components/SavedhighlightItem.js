@@ -23,7 +23,7 @@ const SavedhighlightItem = function({data, removeHandler, starHandler, clickHand
     let contextUrl = () => log(LoggerEventTypes.HIGHLIGHT_CONTEXT_URL,metaInfo);
     let clickUrl = () => {
         let doctext = JSON.parse(localStorage.getItem("doctexts"))[data.url]
-        var doc = '<h1>'+data.title +'</h1>'+ doctext
+        var doc =  doctext
         // console.log(data)
         clickHandler(data.url, doc);
         log(LoggerEventTypes.HIGHLIGHT_CLICK_URL, metaInfo);
