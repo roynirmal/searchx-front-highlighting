@@ -2,42 +2,12 @@ import React from 'react';
 import Loader from 'react-loader';
 import isImage from 'is-image';
 
-import TextHighlighter from 'texthighlighter';
-
-
 
 export default class ViewerPage extends React.Component {
     componentDidMount() {
         if (this.props.doctext) {
             this.props.loadHandler();
-
-            let highlighterOptions = {
-                color: '#1afc28'
-            };
-
-            // function cleanupHighlighter(){
-            //     let old_element = document.getElementById("documentText");
-            //     let new_element = old_element.cloneNode(true);
-            //     old_element.parentNode.replaceChild(new_element, old_element);
-            // }
-
-            // async function highlightCurrent(){
-            //     let hlId = localStorage.getItem("user-id");
-            //     let currentHls = JSON.parse(localStorage.getItem(hlId));
-            //     let currentDoc = localStorage.getItem("opened-doc");
-            //     if (currentHls){
-            //         if (currentHls[currentDoc]){
-            //             let finder = new TextHighlighter(document.getElementById("documentText"), highlighterOptions);
-            //             currentHls[currentDoc].forEach(text => {
-            //                 finder.find(text);
-            //             });
-
-            //         }
-            //     }
-            // }
-            // highlightCurrent().then(cleanupHighlighter)
         }
-        // this.props.highlightClickHandler();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -52,129 +22,48 @@ export default class ViewerPage extends React.Component {
     
     
     render() {
-        
         let renderText = (doc) => {
             const regex1 = /<a.*?>/g;
             let cleaned_item = doc.replace(regex1, '');
             const regex2 = /<\/a>/g;
             let cleaned_item2 = cleaned_item.replace(regex2, '');
-            let highlighted = [];
-            highlighted.push(
+            let cleanHTML = [];
+            cleanHTML.push(
                 <span dangerouslySetInnerHTML ={{__html: cleaned_item2}} />
             );
-            return highlighted
+            return cleanHTML
         };
 
-        // todo - Cleanup
-        // let highlightMatches = (doc, currentHls) => {
-        //     let currentDoc = localStorage.getItem("opened-doc");
-        //     if (currentHls){
-        //         if (currentHls[currentDoc]){
-        //             // loop through the multiple highlighted spans in a document
-        //             currentHls[currentDoc].forEach(text => {
-        //                 // before sending the doc to the highlighter function split it, this is for early breaking. Check highlightInElement function.
-        //                 doc = highlightInElement(doc.split('\n'), text)
-        //         })
-        //     }
-        //     }
-        //     // console.log(doc)
-        //     return doc
-        //     };
-        // let  escapeRegExp = (string) => {
-        //     return string.replace(/[*+^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+        // todo Cleanup STORE HTML
+        // let documentTextElement = document.getElementById("documentText");
+        // let openDocumentName = localStorage.getItem("opened-doc");
+        // let highlighting = localStorage.getItem("highlighting");
+        // // console.log(old_element.childNodes[0])
+        //
+        // // html_obj[opened_doc].push(old_element.childNodes[0])
+        //
+        // if (documentTextElement && highlighting){
+        //     localStorage.setItem(openDocumentName, documentTextElement.innerHTML)
         // }
-        //
-        // function highlightInElement  (p, text) {
-        //
-        //     let z = 0
-        //     // loop through each splitted portion of the text
-        //     for (let elementHtml of p) {
-        //         //index of splitted portion
-        //         z = z + 1
-        //         var tags = [];
-        //         var tagLocations= [];
-        //         var htmlTagRegEx = /<{1}\/{0,1}\w+>{1}/;
-        //         //Strip the tags from the elementHtml and keep track of them
-        //         var htmlTag;
-        //       //	text = escapeRegExp(text)
-        //         while(htmlTag = elementHtml.match(htmlTagRegEx)){
-        //             tagLocations[tagLocations.length] = elementHtml.search(htmlTagRegEx);
-        //             tags[tags.length] = htmlTag;
-        //             elementHtml = elementHtml.replace(htmlTag, '');
-        //         }
-        //         //Search for the text in the stripped html
-        //         let r = new RegExp(escapeRegExp(text), "g");
-        //         var textLocation = elementHtml.search(r);
-        //
-        //         if(textLocation>=0){
-        //             //found the match
-        //             //Add the highlight
-        //             var highlightHTMLStart = '<mark>';
-        //             var highlightHTMLEnd = '</mark>';
-        //
-        //             elementHtml = elementHtml.replace(r, highlightHTMLStart + text + highlightHTMLEnd);
-        //
-        //             //plug back in the HTML tags
-        //             var textEndLocation = textLocation + text.length;
-        //             for(let i=tagLocations.length-1; i>=0; i--){
-        //                 var location = tagLocations[i];
-        //                 if(location > textEndLocation){
-        //                     location += highlightHTMLStart.length + highlightHTMLEnd.length;
-        //                 } else if(location > textLocation){
-        //                     location += highlightHTMLStart.length;
-        //                 }
-        //                 if (elementHtml.substring(location).startsWith('<mark>')){
-        //
-        //                     if (tags[i][0] === '<p>'){
-        //                     // console.log("here")
-        //                     elementHtml = elementHtml.substring(0,location) + tags[i] + elementHtml.substring(location);
-        //                     } else {
-        //                     elementHtml = elementHtml.substring(0,location+6) + tags[i] + elementHtml.substring(location+6);
-        //                     }
-        //                 }
-        //                 else  {
-        //                     elementHtml = elementHtml.substring(0,location) + tags[i] + elementHtml.substring(location);
-        //                 }
-        //
-        //             }
-        //             // replace the matched element of the original array with the highlighted html code
-        //             p[z-1] = elementHtml
-        //             // break out of the loop so that we dont have to go through all the splitted HTML elements.
-        //             break
-        //         }
-        //    }
-  		//
-        //     return p.join('\n')
-        // }
-
-
-        let old_element = document.getElementById("documentText");
-        let opened_doc = localStorage.getItem("opened-doc");
-        let highlighting = localStorage.getItem("highlighting")
-        // console.log(old_element.childNodes[0])
-       
-        // html_obj[opened_doc].push(old_element.childNodes[0])
-        
-        if (old_element && highlighting){
-            
-            localStorage.setItem(opened_doc, old_element.innerHTML)
-        }
 
         return (
             <div className="page">
-                {localStorage.getItem(opened_doc) ?  
+                {/*{localStorage.getItem(openDocumentName) ?  */}
+                {this.props.doctext ?
                 <div className={"textBackground"}>
                     <div className={"documentText"} id={"documentText"}>
-                    {renderText(localStorage.getItem(opened_doc))}
+                        {/*{renderText(localStorage.getItem(openDocumentName))}*/}
+                        {renderText(this.props.doctext)}
                     </div>
-                    </div>
-                : (
+                </div>
+                    :(
                         <div className={"textBackground"}>
                             <div className={"documentText"} id={"documentText"}>
                                 {renderText(this.props.doctext)}
                             </div>
                         </div>
                     )
+                    // todo cleanup
                     // [
                     //     <div id="viewer-content-loader">
                     //         <Loader/>
