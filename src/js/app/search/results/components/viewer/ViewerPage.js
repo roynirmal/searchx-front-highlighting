@@ -1,12 +1,30 @@
 import React from 'react';
-import Loader from 'react-loader';
-import isImage from 'is-image';
-
+import TextHighlighter from "texthighlighter";
+import SearchStore from "../../../SearchStore";
+import AccountStore from "../../../../../stores/AccountStore";
 
 export default class ViewerPage extends React.Component {
     componentDidMount() {
         if (this.props.doctext) {
             this.props.loadHandler();
+
+            let highlighterOptions = {
+                color: 'rgba(252,250,64,0.79)'
+            };
+
+            let highlighter = new TextHighlighter(document.getElementById("documentText"), highlighterOptions);
+
+            let userId = localStorage.getItem("user-id");
+            let currentDoc = localStorage.getItem("opened-doc");
+            let hlId = userId + '_' + currentDoc;
+            let currentHls = JSON.parse(localStorage.getItem(hlId));
+            if (currentHls){
+                highlighter.deserializeHighlights(currentHls[currentHls.length - 1]);
+            }
+
+            let old_element = document.getElementById("documentText");
+            let new_element = old_element.cloneNode(true);
+            old_element.parentNode.replaceChild(new_element, old_element);
         }
     }
 
@@ -34,25 +52,11 @@ export default class ViewerPage extends React.Component {
             return cleanHTML
         };
 
-        // todo Cleanup STORE HTML
-        // let documentTextElement = document.getElementById("documentText");
-        // let openDocumentName = localStorage.getItem("opened-doc");
-        // let highlighting = localStorage.getItem("highlighting");
-        // // console.log(old_element.childNodes[0])
-        //
-        // // html_obj[opened_doc].push(old_element.childNodes[0])
-        //
-        // if (documentTextElement && highlighting){
-        //     localStorage.setItem(openDocumentName, documentTextElement.innerHTML)
-        // }
-
         return (
             <div className="page">
-                {/*{localStorage.getItem(openDocumentName) ?  */}
                 {this.props.doctext ?
                 <div className={"textBackground"}>
                     <div className={"documentText"} id={"documentText"}>
-                        {/*{renderText(localStorage.getItem(openDocumentName))}*/}
                         {renderText(this.props.doctext)}
                     </div>
                 </div>

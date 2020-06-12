@@ -26,39 +26,57 @@ export default class Viewer extends React.Component  {
         let userId = AccountStore.getUserId();
         let currentDoc = localStorage.getItem("opened-doc");
 
-        // Text highlights & SERP
-        let currentHls = JSON.parse(localStorage.getItem(userId));
-        if (currentHls){
-            if (currentHls[currentDoc]){
-                currentHls[currentDoc].pop();
-                if (currentHls[currentDoc].length === 0){
-                    SessionActions.removeBookmark(this.props.url)
+        if (window.confirm('Delete last highlight?')){
+            // Text highlights & SERP
+            let currentHls = JSON.parse(localStorage.getItem(userId));
+            if (currentHls){
+                if (currentHls[currentDoc]){
+                    currentHls[currentDoc].pop();
+                    if (currentHls[currentDoc].length === 0){
+                        SessionActions.removeBookmark(this.props.url)
+                    }
                 }
             }
-        }
-        localStorage.setItem(userId, JSON.stringify(currentHls));
-        SessionActions.removeHighlight(currentDoc);
-        SearchStore.modifyMetadata(currentDoc, {
-            highlight: {
-                userId: AccountStore.getUserId(),
-                date: new Date(),
-                highlights: currentHls
-            },
-            exclude: null
-        });
+            localStorage.setItem(userId, JSON.stringify(currentHls));
+            SessionActions.removeHighlight(currentDoc);
+            SearchStore.modifyMetadata(currentDoc, {
+                highlight: {
+                    userId: AccountStore.getUserId(),
+                    date: new Date(),
+                    highlights: currentHls
+                },
+                exclude: null
+            });
 
-        // Span highlights
-        let highlightId = userId + '_' + currentDoc;
-        let serializedList = [];
-        let existingSerialized = JSON.parse(localStorage.getItem(highlightId));
-        if (existingSerialized){
-            serializedList = existingSerialized;
+            // Span highlights
+            let highlightId = userId + '_' + currentDoc;
+            let serializedList = [];
+            let existingSerialized = JSON.parse(localStorage.getItem(highlightId));
+            if (existingSerialized){
+                serializedList = existingSerialized;
+            }
+            serializedList.pop();
+            localStorage.setItem(highlightId, JSON.stringify(serializedList));
         }
-        serializedList.pop();
-        localStorage.setItem(highlightId, JSON.stringify(serializedList));
+
     }
 
     highlightClickHandler() {
+        if(!localStorage.getItem('highlighting')){
+            localStorage.setItem('highlighting', true)
+        } else {
+            localStorage.removeItem('highlighting');
+            cleanupHighlighter();
+            let opened_doc = localStorage.getItem("opened-doc");
+            SearchStore.modifyMetadata(opened_doc, {
+                highlight: {
+                    userId: AccountStore.getUserId(),
+                    date: new Date()
+                },
+                exclude: null
+            });
+        }
+
         let highlighterOptions;
         let opened_doc = localStorage.getItem("opened-doc");
 
@@ -70,51 +88,19 @@ export default class Viewer extends React.Component  {
                 }
             },
             onAfterHighlight: function (range, highlights) {
-                console.log('range', range);
-                console.log('highlights', highlights[0]);
                 if (localStorage.getItem('highlighting')){
                     updateHighlights(highlights);
                 }
             }
         };
-        let highlighter = new TextHighlighter(document.getElementById("viewer"), highlighterOptions);
 
-        if(!localStorage.getItem('highlighting')){
-            localStorage.setItem('highlighting', true)
-        } else {
-            highlighter.removeHighlights();
-            localStorage.removeItem('highlighting');
-            let opened_doc = localStorage.getItem("opened-doc");
-            SearchStore.modifyMetadata(opened_doc, {
-                highlight: {
-                    userId: AccountStore.getUserId(),
-                    date: new Date()
-                },
-                exclude: null
-            });
+        let highlighter = new TextHighlighter(document.getElementById("documentText"), highlighterOptions);
+
+        function cleanupHighlighter(){
+            let old_element = document.getElementById("documentText");
+            let new_element = old_element.cloneNode(true);
+            old_element.parentNode.replaceChild(new_element, old_element);
         }
-
-        // highlighterOptions = {
-        //     color: 'rgba(252,250,64,0.79)'
-        // };
-        //
-        // function cleanupHighlighter(){
-        //     let old_element = document.getElementById("viewer");
-        //     let new_element = old_element.cloneNode(true);
-        //     old_element.parentNode.replaceChild(new_element, old_element);
-        // }
-
-        function highlightCurrent(){
-            let userId = localStorage.getItem("user-id");
-            let currentDoc = localStorage.getItem("opened-doc");
-            let hlId = userId + '_' + currentDoc;
-            let currentHls = JSON.parse(localStorage.getItem(hlId));
-            if (currentHls){
-                console.log(currentHls);
-                highlighter.deserializeHighlights(currentHls[currentHls.length - 1]);
-            }
-        }
-        highlightCurrent();
 
         let updateHighlights = (highlights) => {
             let userId = AccountStore.getUserId();
@@ -140,14 +126,18 @@ export default class Viewer extends React.Component  {
             localStorage.setItem(userId, JSON.stringify(currentHls));
 
             // Serialized Span Highlights for display
-            let serializedList = [];
-            let existingSerialized = JSON.parse(localStorage.getItem(highlightId));
-            if (existingSerialized){
-                serializedList = existingSerialized;
+            function updateSerialized(highlightId){
+                let serializedList = [];
+                let existingSerialized = JSON.parse(localStorage.getItem(highlightId));
+                if (existingSerialized){
+                    serializedList = existingSerialized;
+                }
+                let toSerialize = highlighter.serializeHighlights();
+                existingSerialized.push(toSerialize);
+                localStorage.setItem(highlightId, JSON.stringify(serializedList));
             }
-            let toSerialize = highlighter.serializeHighlights();
-            serializedList.push(toSerialize);
-            localStorage.setItem(highlightId, JSON.stringify(serializedList));
+
+            updateSerialized(highlightId);
 
             // Prepare highlights for SERP
             SessionActions.addHighlight(opened_doc);
