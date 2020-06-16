@@ -167,8 +167,28 @@ export default class Viewer extends React.Component  {
                 existingSerialized.push(toSerialize);
                 localStorage.setItem(highlightId, JSON.stringify(existingSerialized));
             }
-
             updateSerialized(highlightId);
+
+            // Highlights to Notepad
+            function getPadUrl(){
+                let url = 'SearchXtesting';
+                if (AccountStore.getGroupId() === AccountStore.getSessionId()){
+                    url = AccountStore.getGroupId();
+                }
+                return url;
+            }
+
+            const Http = new XMLHttpRequest();
+            let apiKey = 'e428f5d6a0214eb322a304e0a0f055deab089808d57e0fbd07e617250b62e9e1';
+            let padID = getPadUrl();
+            let url = 'http://localhost:9001/api/1.2.13/appendText?apikey='+ apiKey + '&padID=' + padID + '&text= --';
+            url += newHls;
+            Http.open("GET", url);
+            Http.setRequestHeader("Content-Type", "text/plain");
+            Http.send();
+            Http.onreadystatechange = (e) => {
+                console.log(Http.responseText)
+            };
 
             // Prepare highlights for SERP
             SessionActions.addHighlight(openedDoc);
