@@ -88,13 +88,14 @@ export default class Viewer extends React.Component  {
     }
 
     highlightClickHandler() {
+        let openedDoc = localStorage.getItem("opened-doc");
+
         if(!localStorage.getItem('highlighting')){
             localStorage.setItem('highlighting', true)
         } else {
             localStorage.removeItem('highlighting');
             cleanupHighlighter();
-            let opened_doc = localStorage.getItem("opened-doc");
-            SearchStore.modifyMetadata(opened_doc, {
+            SearchStore.modifyMetadata(openedDoc, {
                 highlight: {
                     userId: AccountStore.getUserId(),
                     date: new Date()
@@ -104,8 +105,6 @@ export default class Viewer extends React.Component  {
         }
 
         let highlighterOptions;
-        let opened_doc = localStorage.getItem("opened-doc");
-
         highlighterOptions = {
             color: '#1afc28',
             onBeforeHighlight: function (range) {
@@ -123,15 +122,15 @@ export default class Viewer extends React.Component  {
         let highlighter = new TextHighlighter(document.getElementById("documentText"), highlighterOptions);
 
         function cleanupHighlighter(){
-            let old_element = document.getElementById("documentText");
-            let new_element = old_element.cloneNode(true);
-            old_element.parentNode.replaceChild(new_element, old_element);
+            let oldElement = document.getElementById("documentText");
+            let newElement = oldElement.cloneNode(true);
+            oldElement.parentNode.replaceChild(newElement, oldElement);
         }
         
         
         let updateHighlights = (highlights) => {
             let userId = AccountStore.getUserId();
-            let highlightId = userId + '_' + opened_doc;
+            let highlightId = userId + '_' + openedDoc;
 
             // Text Highlights
             let currentHls = JSON.parse(localStorage.getItem(userId));
@@ -139,16 +138,16 @@ export default class Viewer extends React.Component  {
                 return h.innerText;
             }).join(' ');
             if (currentHls){
-                if (currentHls[btoa(opened_doc)]){
-                    currentHls[btoa(opened_doc)].push(newHls);
+                if (currentHls[btoa(openedDoc)]){
+                    currentHls[btoa(openedDoc)].push(newHls);
                 } else {
-                    currentHls[btoa(opened_doc)] = [];
-                    currentHls[btoa(opened_doc)].push(newHls);
+                    currentHls[btoa(openedDoc)] = [];
+                    currentHls[btoa(openedDoc)].push(newHls);
                 }
             } else {
                 currentHls = { };
-                currentHls[btoa(opened_doc)] = [];
-                currentHls[btoa(opened_doc)].push(newHls);
+                currentHls[btoa(openedDoc)] = [];
+                currentHls[btoa(openedDoc)].push(newHls);
             }
             localStorage.setItem(userId, JSON.stringify(currentHls));
             log(LoggerEventTypes.HIGHLIGHT_ACTION, {
@@ -163,27 +162,23 @@ export default class Viewer extends React.Component  {
 
             // Serialized Span Highlights for display
             function updateSerialized(highlightId){
-                let serializedList = [];
                 let existingSerialized = JSON.parse(localStorage.getItem(highlightId)) || [];
-                if (existingSerialized){
-                    serializedList = existingSerialized;
-                }
                 let toSerialize = highlighter.serializeHighlights();
                 existingSerialized.push(toSerialize);
-                localStorage.setItem(highlightId, JSON.stringify(serializedList));
+                localStorage.setItem(highlightId, JSON.stringify(existingSerialized));
             }
 
             updateSerialized(highlightId);
 
             // Prepare highlights for SERP
-            SessionActions.addHighlight(opened_doc);
+            SessionActions.addHighlight(openedDoc);
             let name = this.props.doctext.match(/<h1>(.*)<\/h1>/);
             SessionActions.addBookmark(this.props.url, name[1], this.props.doctext);
 
-            let savedtexts = JSON.parse(localStorage.getItem("doctexts")) || {};
-            savedtexts[this.props.url] = this.props.doctext;
-            localStorage.setItem("doctexts", JSON.stringify(savedtexts));
-            SearchStore.modifyMetadata(opened_doc, {
+            let savedTexts = JSON.parse(localStorage.getItem("doctexts")) || {};
+            savedTexts[this.props.url] = this.props.doctext;
+            localStorage.setItem("doctexts", JSON.stringify(savedTexts));
+            SearchStore.modifyMetadata(openedDoc, {
                 highlight: {
                     userId: AccountStore.getUserId(),
                     date: new Date(),

@@ -1,7 +1,6 @@
 import React from 'react';
 import TextHighlighter from "texthighlighter";
-import SearchStore from "../../../SearchStore";
-import AccountStore from "../../../../../stores/AccountStore";
+
 
 export default class ViewerPage extends React.Component {
     componentDidMount() {
@@ -11,7 +10,6 @@ export default class ViewerPage extends React.Component {
             let highlighterOptions = {
                 color: '#1afc28'
             };
-
             let highlighter = new TextHighlighter(document.getElementById("documentText"), highlighterOptions);
 
             let userId = localStorage.getItem("user-id");
@@ -22,9 +20,9 @@ export default class ViewerPage extends React.Component {
                 highlighter.deserializeHighlights(currentHls[currentHls.length - 1]);
             }
 
-            let old_element = document.getElementById("documentText");
-            let new_element = old_element.cloneNode(true);
-            old_element.parentNode.replaceChild(new_element, old_element);
+            let oldElement = document.getElementById("documentText");
+            let newElement = oldElement.cloneNode(true);
+            oldElement.parentNode.replaceChild(newElement, oldElement);
         }
     }
 
@@ -42,12 +40,12 @@ export default class ViewerPage extends React.Component {
     render() {
         let renderText = (doc) => {
             const regex1 = /<a.*?>/g;
-            let cleaned_item = doc.replace(regex1, '');
+            let cleanedItem = doc.replace(regex1, '');
             const regex2 = /<\/a>/g;
-            let cleaned_item2 = cleaned_item.replace(regex2, '');
+            let cleanedItem2 = cleanedItem.replace(regex2, '');
             let cleanHTML = [];
             cleanHTML.push(
-                <span dangerouslySetInnerHTML ={{__html: cleaned_item2}} />
+                <span dangerouslySetInnerHTML ={{__html: cleanedItem2}} />
             );
             return cleanHTML
         };
@@ -55,34 +53,23 @@ export default class ViewerPage extends React.Component {
         let highlighterOptions = {
             color: '#1afc28'
         };
-        let old_element = document.getElementById("documentText");
-        if (old_element && localStorage.getItem('highlighting')) {
-            let highlighter = new TextHighlighter(old_element, highlighterOptions);
-            highlighter.removeHighlights()
+        let oldElement = document.getElementById("documentText");
+        if (oldElement && localStorage.getItem('highlighting')) {
+            let highlighter = new TextHighlighter(oldElement, highlighterOptions);
+            highlighter.removeHighlights();
             let userId = localStorage.getItem("user-id");
             let currentDoc = localStorage.getItem("opened-doc");
             let hlId = userId + '_' + currentDoc;
             let currentHls = JSON.parse(localStorage.getItem(hlId));
-            // console.log("currentHls", currentHls)
             if (currentHls){
                 highlighter.deserializeHighlights(currentHls[currentHls.length - 1]);
             }
             if(localStorage.getItem("highlight-removing")){
-                localStorage.removeItem("highlight-removing")
-                localStorage.removeItem("highlighting")
-                let new_element = old_element.cloneNode(true);
-            old_element.parentNode.replaceChild(new_element, old_element);
+                localStorage.removeItem("highlight-removing");
+                localStorage.removeItem("highlighting");
+                let newElement = oldElement.cloneNode(true);
+                oldElement.parentNode.replaceChild(newElement, oldElement);
             }
-            
-            // if(localStorage.getItem('first-remove')){
-            //     console.log("here")
-            //     localStorage.removeItem('highlighting')
-            //     localStorage.removeItem('first-remove')
-            // }
-
-            
-            // let new_element = old_element.cloneNode(true);
-            // old_element.parentNode.replaceChild(new_element, old_element);
         }
 
         return (
