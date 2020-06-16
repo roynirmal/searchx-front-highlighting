@@ -8,6 +8,8 @@ import SessionStore from "../../../../stores/SessionStore";
 import SearchActions from "../../../../actions/SearchActions";
 import BookmarkStore from "../bookmark/BookmarkStore";
 import AccountStore from "../../../../stores/AccountStore";
+import {log} from '../../../../utils/Logger';
+import {LoggerEventTypes} from '../../../../utils/LoggerEventTypes';
 
 function removeHandler(url) {
     SessionActions.removeBookmark(url);
@@ -16,9 +18,15 @@ function removeHandler(url) {
     });
     let hl = JSON.parse(localStorage.getItem(AccountStore.getUserId()))
     console.log("Delete", hl)
-    delete hl[url]
+    delete hl[btoa(url)]
     console.log("Delete", hl)
     localStorage.setItem(AccountStore.getUserId(), JSON.stringify(hl))
+    localStorage.removeItem(AccountStore.getUserId()+'_'+url)
+    log(LoggerEventTypes.HIGHLIGHT_ACTION, {
+        url: url,
+        action: "delete",
+        currentHl: hl
+    });
 }
 
 function starHandler(url) {

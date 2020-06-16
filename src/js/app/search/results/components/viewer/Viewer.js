@@ -23,18 +23,33 @@ export default class Viewer extends React.Component  {
     }
 
     highlightRemoveHandler() {
+        let metaInfo = {
+            url: this.props.url,
+            query: this.props.searchState.query,
+            page: this.props.searchState.page,
+            vertical: this.props.searchState.vertical
+        };
+        if(!localStorage.getItem('highlighting')){
+            localStorage.setItem('highlighting', true)
+        }
         let userId = AccountStore.getUserId();
         let currentDoc = localStorage.getItem("opened-doc");
-
+        localStorage.setItem("highlight-removing", true)
         if (window.confirm('Delete last highlight?')){
             // Text highlights & SERP
+            let removedhl
             let currentHls = JSON.parse(localStorage.getItem(userId));
             if (currentHls){
-                if (currentHls[currentDoc]){
-                    currentHls[currentDoc].pop();
-                    if (currentHls[currentDoc].length === 0){
+                if (currentHls[btoa(currentDoc)]){
+                    removedhl = currentHls[btoa(currentDoc)].pop();
+                    if (currentHls[btoa(currentDoc)].length === 0){
+                        delete currentHls[btoa(currentDoc)]
                         SessionActions.removeBookmark(this.props.url)
-                    }
+                        window.alert('All highlights have been deleted from this page')
+                    } 
+                } else if (!Object.keys(currentHls).includes(btoa(currentDoc))) {
+                    // console.log("here")
+                    window.alert('All highlights have been deleted from this page')
                 }
             }
             localStorage.setItem(userId, JSON.stringify(currentHls));
@@ -57,7 +72,18 @@ export default class Viewer extends React.Component  {
             }
             serializedList.pop();
             localStorage.setItem(highlightId, JSON.stringify(serializedList));
+            log(LoggerEventTypes.HIGHLIGHT_ACTION, {
+                url: this.props.url,
+                query: this.props.searchState.query,
+                action: "remove",
+                page: this.props.searchState.page,
+                vertical: this.props.searchState.vertical,
+                text: removedhl,
+                currentHl: currentHls
+            });
+
         }
+        
 
     }
 
@@ -101,7 +127,8 @@ export default class Viewer extends React.Component  {
             let new_element = old_element.cloneNode(true);
             old_element.parentNode.replaceChild(new_element, old_element);
         }
-
+        
+        
         let updateHighlights = (highlights) => {
             let userId = AccountStore.getUserId();
             let highlightId = userId + '_' + opened_doc;
@@ -112,23 +139,32 @@ export default class Viewer extends React.Component  {
                 return h.innerText;
             }).join(' ');
             if (currentHls){
-                if (currentHls[opened_doc]){
-                    currentHls[opened_doc].push(newHls);
+                if (currentHls[btoa(opened_doc)]){
+                    currentHls[btoa(opened_doc)].push(newHls);
                 } else {
-                    currentHls[opened_doc] = [];
-                    currentHls[opened_doc].push(newHls);
+                    currentHls[btoa(opened_doc)] = [];
+                    currentHls[btoa(opened_doc)].push(newHls);
                 }
             } else {
                 currentHls = { };
-                currentHls[opened_doc] = [];
-                currentHls[opened_doc].push(newHls);
+                currentHls[btoa(opened_doc)] = [];
+                currentHls[btoa(opened_doc)].push(newHls);
             }
             localStorage.setItem(userId, JSON.stringify(currentHls));
+            log(LoggerEventTypes.HIGHLIGHT_ACTION, {
+                url: this.props.url,
+                query: this.props.searchState.query,
+                action: "add",
+                page: this.props.searchState.page,
+                vertical: this.props.searchState.vertical,
+                text: newHls,
+                currentHls: currentHls
+            });
 
             // Serialized Span Highlights for display
             function updateSerialized(highlightId){
                 let serializedList = [];
-                let existingSerialized = JSON.parse(localStorage.getItem(highlightId));
+                let existingSerialized = JSON.parse(localStorage.getItem(highlightId)) || [];
                 if (existingSerialized){
                     serializedList = existingSerialized;
                 }
@@ -161,6 +197,8 @@ export default class Viewer extends React.Component  {
                 return '"' + h.innerText + '"';
             }).join(''));
         };
+        
+        
     }
 
     render() {
@@ -201,8 +239,8 @@ export default class Viewer extends React.Component  {
             log(LoggerEventTypes.DOCUMENT_SCROLL, metaInfo);
         };
         let initialHighlight = localStorage.getItem('highlighting') ? 1 : 0;
-
-    
+        initialHighlight = localStorage.getItem("highlight-removing") ? 0 : initialHighlight;
+        
         return (
             <Modal width="95%" height="90%">
                 <div id={"viewer"} className="viewer" onMouseEnter={hoverEnterDocument} onMouseLeave={hoverLeaveDocument}

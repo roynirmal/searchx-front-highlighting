@@ -9,7 +9,7 @@ export default class ViewerPage extends React.Component {
             this.props.loadHandler();
 
             let highlighterOptions = {
-                color: 'rgba(252,250,64,0.79)'
+                color: '#1afc28'
             };
 
             let highlighter = new TextHighlighter(document.getElementById("documentText"), highlighterOptions);
@@ -51,6 +51,39 @@ export default class ViewerPage extends React.Component {
             );
             return cleanHTML
         };
+
+        let highlighterOptions = {
+            color: '#1afc28'
+        };
+        let old_element = document.getElementById("documentText");
+        if (old_element && localStorage.getItem('highlighting')) {
+            let highlighter = new TextHighlighter(old_element, highlighterOptions);
+            highlighter.removeHighlights()
+            let userId = localStorage.getItem("user-id");
+            let currentDoc = localStorage.getItem("opened-doc");
+            let hlId = userId + '_' + currentDoc;
+            let currentHls = JSON.parse(localStorage.getItem(hlId));
+            // console.log("currentHls", currentHls)
+            if (currentHls){
+                highlighter.deserializeHighlights(currentHls[currentHls.length - 1]);
+            }
+            if(localStorage.getItem("highlight-removing")){
+                localStorage.removeItem("highlight-removing")
+                localStorage.removeItem("highlighting")
+                let new_element = old_element.cloneNode(true);
+            old_element.parentNode.replaceChild(new_element, old_element);
+            }
+            
+            // if(localStorage.getItem('first-remove')){
+            //     console.log("here")
+            //     localStorage.removeItem('highlighting')
+            //     localStorage.removeItem('first-remove')
+            // }
+
+            
+            // let new_element = old_element.cloneNode(true);
+            // old_element.parentNode.replaceChild(new_element, old_element);
+        }
 
         return (
             <div className="page">

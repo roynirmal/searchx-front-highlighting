@@ -9,7 +9,7 @@ const Savedhighlights = function({savedhighlights, popup, removeHandler, starHan
     const list = savedhighlights.map((data, index) => {
 
         let hlObj = JSON.parse(localStorage.getItem(AccountStore.getUserId()))
-        let highlights = hlObj[data.url]
+        let highlights = hlObj[btoa(data.url)]
         return <SavedhighlightItem
             key={index}
             data={data}
