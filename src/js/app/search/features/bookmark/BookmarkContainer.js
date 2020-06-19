@@ -55,7 +55,7 @@ export default class BookmarkContainer extends React.Component {
 
     changeHandler() {
         let bookmarks = BookmarkStore.getBookmarks();
-        // console.log("GET QC1", bookmarks)
+        console.log("GET QC1", bookmarks)
         if (!this.props.collaborative) {
             bookmarks = bookmarks.filter((data) => {
                 return data.userId === AccountStore.getUserId();

@@ -22,9 +22,10 @@ const SavedhighlightItem = function({data, removeHandler, starHandler, clickHand
     let hoverLeaveSummary = () => log(LoggerEventTypes.HIGHLIGHT_HOVERLEAVE,metaInfo);
     let contextUrl = () => log(LoggerEventTypes.HIGHLIGHT_CONTEXT_URL,metaInfo);
     let clickUrl = () => {
-        let doctext = JSON.parse(localStorage.getItem("doctexts"))[data.url]
-        var doc =  doctext
-        // console.log(data)
+        // let doctext = JSON.parse(localStorage.getItem("doctexts"))[data.url]
+        localStorage.setItem("opened-doc", data.url)
+        var doc =  '<h1>'+data.title+'</h1>'+data.text
+        console.log(data.title)
         clickHandler(data.url, doc);
         log(LoggerEventTypes.HIGHLIGHT_CLICK_URL, metaInfo);
     };

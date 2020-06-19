@@ -6,7 +6,7 @@ export default class ViewerPage extends React.Component {
     componentDidMount() {
         if (this.props.doctext) {
             this.props.loadHandler();
-
+            console.log("Page")
             let highlighterOptions = {
                 color: '#1afc28'
             };

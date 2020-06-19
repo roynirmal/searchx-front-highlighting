@@ -177,12 +177,12 @@ export default class Viewer extends React.Component  {
                 }
                 return url;
             }
-
+            console.log(newHls)
             const Http = new XMLHttpRequest();
-            let apiKey = 'e428f5d6a0214eb322a304e0a0f055deab089808d57e0fbd07e617250b62e9e1';
+            let apiKey = '72b43e8f36c05322f160f0228adb4592b3622ee8fda3a4a407d0ba271eb275a4';
             let padID = getPadUrl();
             let url = 'http://localhost:9001/api/1.2.13/appendText?apikey='+ apiKey + '&padID=' + padID + '&text= --';
-            url += newHls;
+            url += newHls+'%0A%0A';
             Http.open("GET", url);
             Http.setRequestHeader("Content-Type", "text/plain");
             Http.send();
@@ -190,14 +190,21 @@ export default class Viewer extends React.Component  {
                 console.log(Http.responseText)
             };
 
+            // Http.open("GET", 'http://localhost:9001/api/1.2.13/appendText?apikey='+ apiKey + '&padID=' + padID + '&text=%0A');
+            // Http.setRequestHeader("Content-Type", "text/plain");
+            // Http.send();
+            // Http.onreadystatechange = (e) => {
+            //     console.log(Http.responseText)
+            // };
+
             // Prepare highlights for SERP
             SessionActions.addHighlight(openedDoc);
             let name = this.props.doctext.match(/<h1>(.*)<\/h1>/);
-            SessionActions.addBookmark(this.props.url, name[1], this.props.doctext);
+            SessionActions.addBookmark(this.props.url, name[1], this.props.doctext.replace(/<h1>(.*)<\/h1>/,''));
 
-            let savedTexts = JSON.parse(localStorage.getItem("doctexts")) || {};
-            savedTexts[this.props.url] = this.props.doctext;
-            localStorage.setItem("doctexts", JSON.stringify(savedTexts));
+            // let savedTexts = JSON.parse(localStorage.getItem("doctexts")) || {};
+            // savedTexts[this.props.url] = this.props.doctext;
+            // localStorage.setItem("doctexts", JSON.stringify(savedTexts));
             SearchStore.modifyMetadata(openedDoc, {
                 highlight: {
                     userId: AccountStore.getUserId(),
