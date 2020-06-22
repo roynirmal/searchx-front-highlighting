@@ -59,10 +59,12 @@ class Search extends React.Component {
                         {/* <BookmarkContainer collaborative={this.props.collaborative}/> */}
                         <SavedHighlightContainer collaborative={this.props.collaborative}/>
                     </div>
-
+                    {config.interface.notepad && (                    
                     <div>
                         <NotepadContainer collaborative={this.props.collaborative} />
                     </div>
+                    ) }
+
 
                     {this.props.taskDescription && (
                         <div className="Side">

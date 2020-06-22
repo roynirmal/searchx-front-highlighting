@@ -23,7 +23,7 @@ const Savedhighlights = function({savedhighlights, popup, removeHandler, starHan
     return (
         <div className="Savedhighlights">
             <h3 className="banner" onClick={popupHandler}>
-                <i className="fa fa-bookmark medium"/> Your Highlights
+                <i className="fa fa-pencil-square medium"/> Your Highlights
             </h3>
 
             <div className="list">
