@@ -1,8 +1,11 @@
 # SearchX Front End
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 Branch for just highlighting
 =======
+=======
+>>>>>>> 1690fe79765bdfd30ded4c899356138daa571478
 Branch for Highlight and note-taking
 
 >>>>>>> Push first change in branch
