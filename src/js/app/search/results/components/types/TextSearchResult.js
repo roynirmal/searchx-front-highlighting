@@ -21,7 +21,8 @@ const TextSearchResult = function ({
 
     let clickUrl = () => {
         localStorage.setItem("opened-doc", result.url)
-        var doctext = '<h1>'+result.name+'</h1>'+ result.text
+        var doctext = '<h1>'+result.name+'</h1>'
+        // console.log(result.id)
 
         // result.text.split('\n').forEach(element => {
             
@@ -130,7 +131,9 @@ const TextSearchResult = function ({
                         {result.name}
                     </a>
                 </h2>
-
+                <span className="source">
+                    {result.displayUrl}
+                </span>
                 {isCollapsible ? (
                     <div className="textArea" draggable="true" role="button" onClick={hideCollapsedResults}>
                         <p dangerouslySetInnerHTML={createSnippet()} >

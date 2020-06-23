@@ -24,8 +24,30 @@ export default class ViewerPage extends React.Component {
             let newElement = oldElement.cloneNode(true);
             oldElement.parentNode.replaceChild(newElement, oldElement);
         }
+        
     }
+    componentDidUpdate() {
+        if (this.props.doctext && !localStorage.getItem('highlighting') ) {
+            this.props.loadHandler();
+            console.log("Page")
+            let highlighterOptions = {
+                color: '#1afc28'
+            };
+            let highlighter = new TextHighlighter(document.getElementById("documentText"), highlighterOptions);
 
+            let userId = localStorage.getItem("user-id");
+            let currentDoc = localStorage.getItem("opened-doc");
+            let hlId = userId + '_' + currentDoc;
+            let currentHls = JSON.parse(localStorage.getItem(hlId));
+            if (currentHls){
+                highlighter.deserializeHighlights(currentHls[currentHls.length - 1]);
+            }
+
+            let oldElement = document.getElementById("documentText");
+            let newElement = oldElement.cloneNode(true);
+            oldElement.parentNode.replaceChild(newElement, oldElement);
+        }
+    }
     componentWillReceiveProps(nextProps) {
         if (nextProps.doctext && nextProps.url !== this.props.url) {
             nextProps.loadHandler();
@@ -38,6 +60,7 @@ export default class ViewerPage extends React.Component {
     
     
     render() {
+        
         let renderText = (doc) => {
             const regex1 = /<a.*?>/g;
             let cleanedItem = doc.replace(regex1, '');
@@ -55,6 +78,7 @@ export default class ViewerPage extends React.Component {
         };
         let oldElement = document.getElementById("documentText");
         if (oldElement && localStorage.getItem('highlighting')) {
+            console.log("ViewerPAge render", oldElement)
             let highlighter = new TextHighlighter(oldElement, highlighterOptions);
             highlighter.removeHighlights();
             let userId = localStorage.getItem("user-id");

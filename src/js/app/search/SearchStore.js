@@ -226,7 +226,7 @@ const SearchStore = Object.assign(EventEmitter.prototype, {
                 break;
             case ActionTypes.OPEN_URL:
                 state.activeUrl = action.payload.url;
-                state.activeDoctext = action.payload.doctext;
+                _getByUrl(action.payload.url, action.payload.doctext);
                 SyncStore.emitViewState(action.payload.url);
                 break;
             case ActionTypes.CLOSE_URL:
@@ -351,6 +351,29 @@ const _getById = function (id) {
             SearchStore.emitChange();
         });
 };
+
+const _getByUrl = function (url, doctext) {
+    request
+        .get(process.env.REACT_APP_SERVER_URL + '/v1/search/' + state.vertical
+            + '/getUrl/' + 1
+            + '?providerName=' + state.provider
+            + '&getByUrl=' + url
+
+        )
+        .end((err, res) => {
+            // console.log("result", res.body.result)
+            if (!res.body.error) {
+                const result = res.body.result;
+                state.activeUrl = url
+                state.activeDoctext =  doctext  + result;
+            }
+
+            SyncStore.emitViewState(url);
+            SearchStore.emitChange();
+        });
+};
+
+
 
 const _updateUrl = function (query, vertical, page, provider, variant) {
     const url = window.location.href;

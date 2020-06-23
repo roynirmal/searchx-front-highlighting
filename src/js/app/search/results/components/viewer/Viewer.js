@@ -109,7 +109,8 @@ export default class Viewer extends React.Component  {
             color: '#1afc28',
             onBeforeHighlight: function (range) {
                 if (localStorage.getItem('highlighting')){
-                    return window.confirm('Selected text: ' + range + '\nSave this highlight?');
+                    // return window.confirm('Selected text: ' + range + '\nSave this highlight?');
+                    return true;
                 }
             },
             onAfterHighlight: function (range, highlights) {
@@ -168,27 +169,30 @@ export default class Viewer extends React.Component  {
                 localStorage.setItem(highlightId, JSON.stringify(existingSerialized));
             }
             updateSerialized(highlightId);
+            SessionActions.addHighlight(openedDoc);
+            let name = this.props.doctext.match(/<h1>(.*)<\/h1>/);
+            SessionActions.addBookmark(this.props.url, name[1], this.props.doctext.replace(/<h1>(.*)<\/h1>/,''));
 
             // Highlights to Notepad
-            function getPadUrl(){
-                let url = 'SearchXtesting';
-                if (AccountStore.getGroupId() === AccountStore.getSessionId()){
-                    url = AccountStore.getGroupId();
-                }
-                return url;
-            }
-            console.log(newHls)
-            const Http = new XMLHttpRequest();
-            let apiKey = '72b43e8f36c05322f160f0228adb4592b3622ee8fda3a4a407d0ba271eb275a4';
-            let padID = getPadUrl();
-            let url = 'http://localhost:9001/api/1.2.13/appendText?apikey='+ apiKey + '&padID=' + padID + '&text= --';
-            url += newHls+'%0A%0A';
-            Http.open("GET", url);
-            Http.setRequestHeader("Content-Type", "text/plain");
-            Http.send();
-            Http.onreadystatechange = (e) => {
-                console.log(Http.responseText)
-            };
+            // function getPadUrl(){
+            //     let url = 'SearchXtesting';
+            //     if (AccountStore.getGroupId() === AccountStore.getSessionId()){
+            //         url = AccountStore.getGroupId();
+            //     }
+            //     return url;
+            // }
+            // console.log(newHls)
+            // const Http = new XMLHttpRequest();
+            // let apiKey = '1eff7b3c631c9a6bacb0aa48803b7d1a8b0f5cc76a05c43be065f26cc460dadd';
+            // let padID = getPadUrl();
+            // let url = 'http://localhost:9001/api/1.2.13/appendText?apikey='+ apiKey + '&padID=' + padID  + '&text= --';
+            // url += name[1] + ' '  + this.props.url.toString().replace("https\:\/\/", "") + '%0A' + newHls+'%0A%0A';
+            // Http.open("GET", url);
+            // Http.setRequestHeader("Content-Type", "text/plain");
+            // Http.send();
+            // Http.onreadystatechange = (e) => {
+            //     console.log(Http.responseText)
+            // };
 
             // Http.open("GET", 'http://localhost:9001/api/1.2.13/appendText?apikey='+ apiKey + '&padID=' + padID + '&text=%0A');
             // Http.setRequestHeader("Content-Type", "text/plain");
@@ -198,9 +202,7 @@ export default class Viewer extends React.Component  {
             // };
 
             // Prepare highlights for SERP
-            SessionActions.addHighlight(openedDoc);
-            let name = this.props.doctext.match(/<h1>(.*)<\/h1>/);
-            SessionActions.addBookmark(this.props.url, name[1], this.props.doctext.replace(/<h1>(.*)<\/h1>/,''));
+
 
             // let savedTexts = JSON.parse(localStorage.getItem("doctexts")) || {};
             // savedTexts[this.props.url] = this.props.doctext;
@@ -215,9 +217,9 @@ export default class Viewer extends React.Component  {
             });
 
             // Confirmation for Participant
-            window.alert('Created ' + highlights.length + ' highlight(s): ' + highlights.map(function (h) {
-                return '"' + h.innerText + '"';
-            }).join(''));
+            // window.alert('Created ' + highlights.length + ' highlight(s): ' + highlights.map(function (h) {
+            //     return '"' + h.innerText + '"';
+            // }).join(''));
         };
         
         
@@ -264,6 +266,7 @@ export default class Viewer extends React.Component  {
         initialHighlight = localStorage.getItem("highlight-removing") ? 0 : initialHighlight;
         
         return (
+            
             <Modal width="95%" height="90%">
                 <div id={"viewer"} className="viewer" onMouseEnter={hoverEnterDocument} onMouseLeave={hoverLeaveDocument}
                      onScroll={scrollDocument} >

@@ -23,9 +23,9 @@ const SavedhighlightItem = function({data, removeHandler, starHandler, clickHand
     let contextUrl = () => log(LoggerEventTypes.HIGHLIGHT_CONTEXT_URL,metaInfo);
     let clickUrl = () => {
         // let doctext = JSON.parse(localStorage.getItem("doctexts"))[data.url]
-        localStorage.setItem("opened-doc", data.url)
-        var doc =  '<h1>'+data.title+'</h1>'+data.text
-        console.log(data.title)
+        // localStorage.setItem("opened-doc", data.url)
+        var doc =  '<h1>'+data.title+'</h1>'
+        // console.log(data.title)
         clickHandler(data.url, doc);
         log(LoggerEventTypes.HIGHLIGHT_CLICK_URL, metaInfo);
     };
@@ -78,9 +78,9 @@ const SavedhighlightItem = function({data, removeHandler, starHandler, clickHand
                 />
             </div>
             
-            {/* <span>
+            <span>
                 {isNaN(data.url) ? data.url : (config.interface.star && <br/>)}
-            </span> */}
+            </span>
             {highlightslist}
 
 
