@@ -44,7 +44,7 @@ export default class Viewer extends React.Component  {
                     removedhl = currentHls[btoa(currentDoc)].pop();
                     if (currentHls[btoa(currentDoc)].length === 0){
                         delete currentHls[btoa(currentDoc)]
-                        SessionActions.removeBookmark(this.props.url)
+                        SessionActions.removeHighlight(this.props.url)
                         window.alert('All highlights have been deleted from this page')
                     } 
                 } else if (!Object.keys(currentHls).includes(btoa(currentDoc))) {
@@ -169,37 +169,37 @@ export default class Viewer extends React.Component  {
                 localStorage.setItem(highlightId, JSON.stringify(existingSerialized));
             }
             updateSerialized(highlightId);
-            SessionActions.addHighlight(openedDoc);
+            // SessionActions.addHighlight(openedDoc);
             let name = this.props.doctext.match(/<h1>(.*)<\/h1>/);
-            SessionActions.addBookmark(this.props.url, name[1], this.props.doctext.replace(/<h1>(.*)<\/h1>/,''));
+            SessionActions.addHighlight(this.props.url, name[1], this.props.doctext.replace(/<h1>(.*)<\/h1>/,''));
 
             // Highlights to Notepad
-            // function getPadUrl(){
-            //     let url = 'SearchXtesting';
-            //     if (AccountStore.getGroupId() === AccountStore.getSessionId()){
-            //         url = AccountStore.getGroupId();
-            //     }
-            //     return url;
-            // }
-            // console.log(newHls)
-            // const Http = new XMLHttpRequest();
-            // let apiKey = '1eff7b3c631c9a6bacb0aa48803b7d1a8b0f5cc76a05c43be065f26cc460dadd';
-            // let padID = getPadUrl();
-            // let url = 'http://localhost:9001/api/1.2.13/appendText?apikey='+ apiKey + '&padID=' + padID  + '&text= --';
-            // url += name[1] + ' '  + this.props.url.toString().replace("https\:\/\/", "") + '%0A' + newHls+'%0A%0A';
-            // Http.open("GET", url);
-            // Http.setRequestHeader("Content-Type", "text/plain");
-            // Http.send();
-            // Http.onreadystatechange = (e) => {
-            //     console.log(Http.responseText)
-            // };
+            function getPadUrl(){
+                let url = 'SearchXtesting';
+                if (AccountStore.getGroupId() === AccountStore.getSessionId()){
+                    url = AccountStore.getGroupId();
+                }
+                return url;
+            }
+            console.log(newHls)
+            const Http = new XMLHttpRequest();
+            let apiKey = '6987254dc0b839af50406f61df0d3de2144c74c69662bf2589b3dc8b41ea2eed';
+            let padID = getPadUrl();
+            let url = 'http://localhost:9001/api/1.2.13/appendText?apikey='+ apiKey + '&padID=' + padID  + '&text= --';
+            url += name[1] + ' '  + this.props.url.toString().replace("https\:\/\/", "") + '%0A' + newHls+'%0A%0A';
+            Http.open("GET", url);
+            Http.setRequestHeader("Content-Type", "text/plain");
+            Http.send();
+            Http.onreadystatechange = (e) => {
+                console.log(Http.responseText)
+            };
 
-            // Http.open("GET", 'http://localhost:9001/api/1.2.13/appendText?apikey='+ apiKey + '&padID=' + padID + '&text=%0A');
-            // Http.setRequestHeader("Content-Type", "text/plain");
-            // Http.send();
-            // Http.onreadystatechange = (e) => {
-            //     console.log(Http.responseText)
-            // };
+            Http.open("GET", 'http://localhost:9001/api/1.2.13/appendText?apikey='+ apiKey + '&padID=' + padID + '&text=%0A');
+            Http.setRequestHeader("Content-Type", "text/plain");
+            Http.send();
+            Http.onreadystatechange = (e) => {
+                console.log(Http.responseText)
+            };
 
             // Prepare highlights for SERP
 
@@ -229,7 +229,7 @@ export default class Viewer extends React.Component  {
         if (this.props.url === "") {
             return <div/>
         }
-
+        console.log("Viwere renderer")
         const metaInfo = {
             url: this.props.url,
             query: this.props.searchState.query,

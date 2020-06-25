@@ -6,15 +6,15 @@ import SearchStore from "../../SearchStore";
 import SessionStore from "../../../../stores/SessionStore";
 // import SavedhighlightStore from "./SavedhighlightStore";
 import SearchActions from "../../../../actions/SearchActions";
-import BookmarkStore from "../bookmark/BookmarkStore";
+import SavedHighlightStore from "./SavedHighlightStore";
 import AccountStore from "../../../../stores/AccountStore";
 import {log} from '../../../../utils/Logger';
 import {LoggerEventTypes} from '../../../../utils/LoggerEventTypes';
 
 function removeHandler(url) {
-    SessionActions.removeBookmark(url);
+    SessionActions.removeHighlight(url);
     SearchStore.modifyMetadata(url, {
-        bookmark: null
+        highlight: null
     });
     let hl = JSON.parse(localStorage.getItem(AccountStore.getUserId()))
     console.log("Delete", hl)
@@ -30,7 +30,7 @@ function removeHandler(url) {
 }
 
 function starHandler(url) {
-    SessionActions.starBookmark(url);
+    SessionActions.starHighlight(url);
 }
 
 function clickHandler(url, doctext) {
@@ -45,13 +45,13 @@ export default class SavedhighlightContainer extends React.Component {
             popup: false
         };
 
-        SessionActions.getBookmarksAndExcludes();
+        SessionActions.getHighlights();
         this.changeHandler = this.changeHandler.bind(this);
         this.popupHandler = this.popupHandler.bind(this);
     }
 
-    componentWillMount() {BookmarkStore.addChangeListener(this.changeHandler);}
-    componentWillUnmount() {BookmarkStore.removeChangeListener(this.changeHandler);}
+    componentWillMount() {SavedHighlightStore.addChangeListener(this.changeHandler);}
+    componentWillUnmount() {SavedHighlightStore.removeChangeListener(this.changeHandler);}
 
     render() {
   
@@ -70,7 +70,7 @@ export default class SavedhighlightContainer extends React.Component {
 
     changeHandler() {
         
-        let savedhighlights = BookmarkStore.getBookmarks();
+        let savedhighlights = SavedHighlightStore.getHighlights();
         if (!this.props.collaborative) {
             savedhighlights = savedhighlights.filter((data) => {
                 return data.userId === AccountStore.getUserId();

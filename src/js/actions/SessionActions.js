@@ -41,18 +41,20 @@ export default {
         })
     },
 
-    getHighlightsAndExcludes() {
+    getHighlights() {
         dispatch({
-            type: ActionTypes.GET_SAVEDHIGHLIGHTS_AND_EXCLUDES,
+            type: ActionTypes.GET_HIGHLIGHTS,
             payload: {}
         })
     },
 
-    addHighlight(text){
+    addHighlight(url, title, text){
         dispatch({
             type: ActionTypes.ADD_HIGHLIGHT,
             payload: {
-                text: text
+                url: url,
+                title: title,
+                text:text
             }
         })
     },
@@ -72,17 +74,6 @@ export default {
                 url: url,
                 title: title,
                 text:text
-            }
-        })
-    },
-
-    addSavedHighlight(url, title, text) {
-        dispatch({
-            type: ActionTypes.ADD_SAVEDHIGHLIGHT,
-            payload: {
-                url: url,
-                title: title,
-                text: text
             }
         })
     },
@@ -132,9 +123,9 @@ export default {
             }
         })
     },
-    starSavedHighlight(url) {
+    starHighlight(url) {
         dispatch({
-            type: ActionTypes.STAR_SAVEDHIGHLIGHT,
+            type: ActionTypes.STAR_HIGHLIGHT,
             payload: {
                 url: url
             }

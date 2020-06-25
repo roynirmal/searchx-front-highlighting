@@ -78,7 +78,7 @@ export default class ViewerPage extends React.Component {
         };
         let oldElement = document.getElementById("documentText");
         if (oldElement && localStorage.getItem('highlighting')) {
-            console.log("ViewerPAge render", oldElement)
+            // console.log("ViewerPAge render", oldElement)
             let highlighter = new TextHighlighter(oldElement, highlighterOptions);
             highlighter.removeHighlights();
             let userId = localStorage.getItem("user-id");
