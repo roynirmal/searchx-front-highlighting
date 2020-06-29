@@ -34,16 +34,16 @@ export default class Viewer extends React.Component  {
         }
         let userId = AccountStore.getUserId();
         let currentDoc = localStorage.getItem("opened-doc");
-        localStorage.setItem("highlight-removing", true)
+        localStorage.setItem("highlight-removing", true);
         if (window.confirm('Delete last highlight?')){
             // Text highlights & SERP
-            let removedhl
+            let removedhl;
             let currentHls = JSON.parse(localStorage.getItem(userId));
             if (currentHls){
                 if (currentHls[btoa(currentDoc)]){
                     removedhl = currentHls[btoa(currentDoc)].pop();
                     if (currentHls[btoa(currentDoc)].length === 0){
-                        delete currentHls[btoa(currentDoc)]
+                        delete currentHls[btoa(currentDoc)];
                         SessionActions.removeHighlight(this.props.url)
                         window.alert('All highlights have been deleted from this page')
                     } 
@@ -81,10 +81,7 @@ export default class Viewer extends React.Component  {
                 text: removedhl,
                 currentHl: currentHls
             });
-
         }
-        
-
     }
 
     highlightClickHandler() {
@@ -92,8 +89,21 @@ export default class Viewer extends React.Component  {
 
         if(!localStorage.getItem('highlighting')){
             localStorage.setItem('highlighting', true)
+            SearchStore.modifyMetadata(openedDoc, {
+                highlight: {
+                    userId: AccountStore.getUserId(),
+                    date: new Date()
+                },
+                exclude: null
+            });
         } else {
             localStorage.removeItem('highlighting');
+            let doctext = document.getElementById("documentText");
+            const buttons = [...doctext.getElementsByClassName("btn-xs")];
+            for (let btn of buttons){
+                let tempParent = btn.parentNode;
+                tempParent.removeChild(btn)
+            }
             cleanupHighlighter();
             SearchStore.modifyMetadata(openedDoc, {
                 highlight: {
@@ -109,13 +119,15 @@ export default class Viewer extends React.Component  {
             color: '#1afc28',
             onBeforeHighlight: function (range) {
                 if (localStorage.getItem('highlighting')){
-                    // return window.confirm('Selected text: ' + range + '\nSave this highlight?');
-                    return true;
+                    console.log('from hl b4', localStorage.getItem('highlighting'))
+                    return true
                 }
             },
             onAfterHighlight: function (range, highlights) {
+                
                 if (localStorage.getItem('highlighting')){
-                    updateHighlights(highlights);
+                    emitHighlights(highlights);
+                    console.log('from hl', highlights)
                 }
             }
         };
@@ -127,109 +139,32 @@ export default class Viewer extends React.Component  {
             let newElement = oldElement.cloneNode(true);
             oldElement.parentNode.replaceChild(newElement, oldElement);
         }
-        
-        
-        let updateHighlights = (highlights) => {
-            let userId = AccountStore.getUserId();
-            let highlightId = userId + '_' + openedDoc;
 
-            // Text Highlights
-            let currentHls = JSON.parse(localStorage.getItem(userId));
-            let newHls = highlights.map(function (h) {
-                return h.innerText;
-            }).join(' ');
-            if (currentHls){
-                if (currentHls[btoa(openedDoc)]){
-                    currentHls[btoa(openedDoc)].push(newHls);
-                } else {
-                    currentHls[btoa(openedDoc)] = [];
-                    currentHls[btoa(openedDoc)].push(newHls);
-                }
-            } else {
-                currentHls = { };
-                currentHls[btoa(openedDoc)] = [];
-                currentHls[btoa(openedDoc)].push(newHls);
-            }
-            localStorage.setItem(userId, JSON.stringify(currentHls));
-            log(LoggerEventTypes.HIGHLIGHT_ACTION, {
-                url: this.props.url,
-                query: this.props.searchState.query,
-                action: "add",
-                page: this.props.searchState.page,
-                vertical: this.props.searchState.vertical,
-                text: newHls,
-                currentHls: currentHls
-            });
-
-            // Serialized Span Highlights for display
-            function updateSerialized(highlightId){
-                let existingSerialized = JSON.parse(localStorage.getItem(highlightId)) || [];
-                let toSerialize = highlighter.serializeHighlights();
-                existingSerialized.push(toSerialize);
-                localStorage.setItem(highlightId, JSON.stringify(existingSerialized));
-            }
-            updateSerialized(highlightId);
-            // SessionActions.addHighlight(openedDoc);
+        let emitHighlights = (highlights) => {
             let name = this.props.doctext.match(/<h1>(.*)<\/h1>/);
-            SessionActions.addHighlight(this.props.url, name[1], this.props.doctext.replace(/<h1>(.*)<\/h1>/,''));
-
-            // Highlights to Notepad
-            function getPadUrl(){
-                let url = 'SearchXtesting';
-                if (AccountStore.getGroupId() === AccountStore.getSessionId()){
-                    url = AccountStore.getGroupId();
-                }
-                return url;
+            SessionActions.addHighlight(this.props.url, name[1], this.props.doctext.replace(/<h1>(.*)<\/h1>/, ''));
+            // SearchStore.modifyMetadata(openedDoc, {
+            //     highlight: {
+            //         userId: AccountStore.getUserId(),
+            //         date: new Date(),
+            //         highlights: highlights
+            //     },
+            //     exclude: null
+            // });
             }
-            console.log(newHls)
-            const Http = new XMLHttpRequest();
-            let apiKey = '6987254dc0b839af50406f61df0d3de2144c74c69662bf2589b3dc8b41ea2eed';
-            let padID = getPadUrl();
-            let url = 'http://localhost:9001/api/1.2.13/appendText?apikey='+ apiKey + '&padID=' + padID  + '&text= --';
-            url += name[1] + ' '  + this.props.url.toString().replace("https\:\/\/", "") + '%0A' + newHls+'%0A%0A';
-            Http.open("GET", url);
-            Http.setRequestHeader("Content-Type", "text/plain");
-            Http.send();
-            Http.onreadystatechange = (e) => {
-                console.log(Http.responseText)
-            };
 
-            Http.open("GET", 'http://localhost:9001/api/1.2.13/appendText?apikey='+ apiKey + '&padID=' + padID + '&text=%0A');
-            Http.setRequestHeader("Content-Type", "text/plain");
-            Http.send();
-            Http.onreadystatechange = (e) => {
-                console.log(Http.responseText)
-            };
+        // Confirmation for Participant
+        // window.alert('Created ' + highlights.length + ' highlight(s): ' + highlights.map(function (h) {
+        //     return '"' + h.innerText + '"';
+        // }).join(''));
+    };
 
-            // Prepare highlights for SERP
-
-
-            // let savedTexts = JSON.parse(localStorage.getItem("doctexts")) || {};
-            // savedTexts[this.props.url] = this.props.doctext;
-            // localStorage.setItem("doctexts", JSON.stringify(savedTexts));
-            SearchStore.modifyMetadata(openedDoc, {
-                highlight: {
-                    userId: AccountStore.getUserId(),
-                    date: new Date(),
-                    highlights: currentHls
-                },
-                exclude: null
-            });
-
-            // Confirmation for Participant
-            // window.alert('Created ' + highlights.length + ' highlight(s): ' + highlights.map(function (h) {
-            //     return '"' + h.innerText + '"';
-            // }).join(''));
-        };
-        
-        
-    }
 
     render() {
         if (this.props.url === "") {
             return <div/>
         }
-        console.log("Viwere renderer")
+
         const metaInfo = {
             url: this.props.url,
             query: this.props.searchState.query,
@@ -243,10 +178,116 @@ export default class Viewer extends React.Component  {
         let hoverLeaveDocument = () => {
             log(LoggerEventTypes.DOCUMENT_HOVERLEAVE, metaInfo)
         };
+
         let closeDocument = () => {
             this.props.documentCloseHandler();
             log(LoggerEventTypes.DOCUMENT_CLOSE, metaInfo);
-            localStorage.removeItem("highlighting")
+            localStorage.removeItem("highlighting");
+            let doctext = document.getElementById("documentText");
+            const buttons = [...doctext.getElementsByClassName("btn-xs")];
+            for (let btn of buttons){
+                let tempParent = btn.parentNode;
+                tempParent.removeChild(btn)
+            }
+
+            let openedDoc = localStorage.getItem("opened-doc");
+            let userId = AccountStore.getUserId();
+            let highlightId = userId + '_' + openedDoc;
+
+            let highlighterOptions = { color: '#fcfa40'};
+            let highlighter = new TextHighlighter(document.getElementById("documentText"), highlighterOptions);
+            let toSerialize = highlighter.serializeHighlights();
+
+            let updateHighlights = (serializedHighlights) => {
+
+                let highlights = JSON.parse(serializedHighlights);
+
+                // Text Highlights
+                let currentHls = JSON.parse(localStorage.getItem(userId)) || {} ;
+                console.log('To map', highlights);
+                let newHls = highlights.map(function (h) {
+                    return h.innerText;
+                }).join(' ');
+
+                // if (currentHls){
+                //     currentHls[btoa(openedDoc)] = [] 
+                //     for (let hl of highlights){
+                //         currentHls[btoa(openedDoc)].push(hl[1]);
+                //     }
+                // } else {
+                    // let currentHls = {};
+                    
+                    currentHls[btoa(openedDoc)] = [];
+                    for (let hl of highlights){
+                        console.log(hl);
+                        currentHls[btoa(openedDoc)].push(hl[1]);
+                    }
+                // }
+
+                localStorage.setItem(userId, JSON.stringify(currentHls));
+                log(LoggerEventTypes.HIGHLIGHT_ACTION, {
+                    url: this.props.url,
+                    query: this.props.searchState.query,
+                    action: "add",
+                    page: this.props.searchState.page,
+                    vertical: this.props.searchState.vertical,
+                    text: newHls,
+                    currentHls: currentHls
+                });
+
+                // Serialized Span Highlights for display
+                // function updateSerialized(highlightId){
+                //     let existingSerialized = JSON.parse(localStorage.getItem(highlightId)) || [];
+                //     let toSerialize = highlighter.serializeHighlights();
+                //     existingSerialized.push(toSerialize);
+                //     localStorage.setItem(highlightId, JSON.stringify(existingSerialized));
+                // }
+                // updateSerialized(highlightId);
+
+                // Highlights to Notepad
+                function getPadUrl() {
+                    let url = 'SearchXtesting';
+                    if (AccountStore.getGroupId() === AccountStore.getSessionId()) {
+                        url = AccountStore.getGroupId();
+                    }
+                    return url;
+                }
+
+                const Http = new XMLHttpRequest();
+                let apiKey = '7a0e5240ea947240181d2628191eb04cd8d670c1b5e5f17c60b037f9c0fcb3a9';
+                let padID = getPadUrl();
+                let url = 'http://localhost:9001/api/1.2.13/appendText?apikey=' + apiKey + '&padID=' + padID + '&text= --';
+                url += newHls + '%0A%0A';
+                Http.open("GET", url);
+                Http.setRequestHeader("Content-Type", "text/plain");
+                Http.send();
+                Http.onreadystatechange = (e) => {
+                    console.log(Http.responseText)
+                };
+
+                // Http.open("GET", 'http://localhost:9001/api/1.2.13/appendText?apikey='+ apiKey + '&padID=' + padID + '&text=%0A');
+                // Http.setRequestHeader("Content-Type", "text/plain");
+                // Http.send();
+                // Http.onreadystatechange = (e) => {
+                //     console.log(Http.responseText)
+                // };
+
+                // Prepare highlights for SERP
+                // SessionActions.addHighlight(openedDoc);
+                
+
+                // let savedTexts = JSON.parse(localStorage.getItem("doctexts")) || {};
+                // savedTexts[this.props.url] = this.props.doctext;
+                // localStorage.setItem("doctexts", JSON.stringify(savedTexts));
+
+            };
+
+            console.log(toSerialize);
+
+            if (toSerialize.length > 3){
+                updateHighlights(toSerialize);
+                localStorage.setItem(highlightId, JSON.stringify(toSerialize));
+            }
         };
         let loadDocument = () => {
             log(LoggerEventTypes.DOCUMENT_LOAD, metaInfo);
@@ -266,7 +307,6 @@ export default class Viewer extends React.Component  {
         initialHighlight = localStorage.getItem("highlight-removing") ? 0 : initialHighlight;
         
         return (
-            
             <Modal width="95%" height="90%">
                 <div id={"viewer"} className="viewer" onMouseEnter={hoverEnterDocument} onMouseLeave={hoverLeaveDocument}
                      onScroll={scrollDocument} >
@@ -279,7 +319,7 @@ export default class Viewer extends React.Component  {
                             <div className="pull-right">
                                 <Rating className="rating" emptySymbol="fa fa-pencil-square-o" fullSymbol="fa fa-pencil-square" onClick={this.highlightClickHandler}
                                 title="Highlight" stop={1} initialRating={initialHighlight} style={{ marginRight : '20px'}} > </Rating>
-                                <span  onClick={this.highlightRemoveHandler}><i className="fa fa-trash"/></span>
+                                {/*<span  onClick={this.highlightRemoveHandler}><i className="fa fa-trash"/></span>*/}
                             </div>
                          }
                         {config.interface.ratings && [

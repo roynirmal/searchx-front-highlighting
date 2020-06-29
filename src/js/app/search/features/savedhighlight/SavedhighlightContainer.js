@@ -35,6 +35,7 @@ function starHandler(url) {
 
 function clickHandler(url, doctext) {
     SearchActions.openUrl(url, doctext);
+    localStorage.setItem('first-click', "yes");
 }
 
 export default class SavedhighlightContainer extends React.Component {

@@ -45,6 +45,7 @@ export default class SearchResultContainer extends React.Component {
         }   
         // highlightStored()
         localStorage.setItem('visited-urls', JSON.stringify(visitedUrls));
+        localStorage.setItem('first-click', "yes")
     }
 
     bookmarkClickHandler() {
