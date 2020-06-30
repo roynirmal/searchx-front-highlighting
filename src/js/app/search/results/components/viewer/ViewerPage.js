@@ -12,6 +12,14 @@ export default class ViewerPage extends React.Component {
             }
         }
 
+        function clearSpan(element){
+            if (["I", "B"].includes(element.nodeName)){
+                return element.outerHTML
+            } else {
+                return element.innerHTML
+            }
+        }
+
         let spans = [...document.getElementsByClassName('highlighted')];
         for (let span of spans) {
             let button = document.createElement("BUTTON");
@@ -29,10 +37,11 @@ export default class ViewerPage extends React.Component {
                     let directParent = elem.parentElement;
 
                     if (elem.previousSibling && elem.previousSibling.nodeName === "#text") {
-                        elem.outerHTML = elem.innerHTML;
+                        elem.outerHTML = clearSpan(elem);
                         elem = directPrevious;
-                    } else if (directParent.previousSibling && directParent.previousSibling.nodeName === '#text') {
-                        elem.outerHTML = elem.innerHTML;
+                    } else if (directParent.previousSibling && ["I", "B"].includes(directParent.nodeName) &&
+                        directParent.previousSibling.nodeName === '#text') {
+                        elem.outerHTML = clearSpan(elem);
                         elem = directParent.previousElementSibling;
                     } else if (directPrevious){
                         if (directPrevious.className === "highlighted"){
@@ -55,7 +64,7 @@ export default class ViewerPage extends React.Component {
                             }
                         }
                         if (flag === true){
-                            elem.outerHTML = elem.innerHTML;
+                            elem.outerHTML = clearSpan(elem);
                             elem = directPrevious;
                         }
                     } else if (directParent.previousElementSibling && ["I", "B"].includes(directParent.nodeName)){
@@ -65,13 +74,13 @@ export default class ViewerPage extends React.Component {
                             let children = [...directParent.previousElementSibling.children];
                             for (let child of children){
                                 if (child.className === "highlighted"){
-                                    child.outerHTML = child.innerHTML;
+                                    // child.outerHTML = child.innerHTML;
                                     flag = true;
                                 } else if (child.children.length > 0){
                                     let sub_children = [...child.children];
                                     for (let child of sub_children){
                                         if (child.className === "highlighted"){
-                                            child.outerHTML = child.innerHTML;
+                                            // child.outerHTML = child.innerHTML;
                                             flag = true;
                                         }
                                     }
@@ -79,12 +88,12 @@ export default class ViewerPage extends React.Component {
                             }
                         }
                         if (flag === true){
-                            elem.outerHTML = elem.innerHTML;
+                            elem.outerHTML = clearSpan(elem);
                             elem = directParent.previousElementSibling;
                         }
                     } else if (!elem.previousSibling && (!directParent.previousSibling ||
                         ['P', 'UL', 'LI', 'H1', 'H2', 'H3', 'TH', 'TD'].includes(directParent.nodeName))) {
-                        elem.outerHTML = elem.innerHTML;
+                        elem.outerHTML = clearSpan(elem);
                     }
                 }
             };

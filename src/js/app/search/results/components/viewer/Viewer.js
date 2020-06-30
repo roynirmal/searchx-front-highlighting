@@ -25,7 +25,7 @@ export default class Viewer extends React.Component  {
         let openedDoc = localStorage.getItem("opened-doc");
 
         if(!localStorage.getItem('highlighting')){
-            localStorage.setItem('highlighting', true)
+            localStorage.setItem('highlighting', true);
             SearchStore.modifyMetadata(openedDoc, {
                 highlight: {
                     userId: AccountStore.getUserId(),
