@@ -56,7 +56,13 @@ export default class Viewer extends React.Component  {
             color: '#1afc28',
             onBeforeHighlight: function (range) {
                 if (localStorage.getItem('highlighting')){
-                    return true
+                    if (['TH', 'TR', 'TD', 'TBODY'].includes(range.commonAncestorContainer.nodeName) ||
+                        ['TH', 'TR', 'TD', 'TBODY'].includes(range.commonAncestorContainer.parentElement.nodeName) ||
+                        ['TH', 'TR', 'TD', 'TBODY'].includes(range.commonAncestorContainer.parentElement.parentElement.nodeName) ||
+                        ['TH', 'TR', 'TD', 'TBODY'].includes(range.commonAncestorContainer.parentElement.parentElement.parentElement.nodeName)){
+                        return false;
+                    }
+                    return true;
                 }
             },
             onAfterHighlight: function (range, highlights) {
@@ -77,6 +83,69 @@ export default class Viewer extends React.Component  {
         let emitHighlights = (highlights) => {
             let name = this.props.doctext.match(/<h1>(.*)<\/h1>/);
             SessionActions.addHighlight(this.props.url, name[1], this.props.doctext.replace(/<h1>(.*)<\/h1>/, ''));
+            console.log("hl", highlights)
+            let currentHighlightText = [];
+            let temp = []
+            highlights.forEach(span => {
+                // console.log(span.parentElement.nextSibling.nodeName)
+                temp.push(span.innerText)
+
+                if (span.nextSibling && span.nextSibling.nodeName === "#text"){
+                    currentHighlightText.push(span.innerText);
+                } else if (span.nextElementSibling){
+                    if (span.nextElementSibling.children.length > 0){
+                        for (let child of span.nextElementSibling.children){
+                            if (child.className !== 'highlighted'){
+                                currentHighlightText.push(span.innerText);
+                                break;
+                            }
+                        }
+                    } else if (span.nextElementSibling.className !== 'highlighted'){
+                        // console.log("I am here 3",span.nextElementSibling.className )
+                        currentHighlightText.push(span.innerText);
+                    }
+                } else {
+                    if (span.parentElement.nextSibling && span.parentElement.nextSibling.nodeName === "#text"){
+                        currentHighlightText.push(span.innerText);
+                    } else if (span.innerText === span.parentElement.innerText &&
+                        ['LI', 'P', 'H1','H2','H3'].includes(span.parentElement.tagName)){
+                            currentHighlightText.push(span.innerText);
+                    } else if (span.parentElement.nextElementSibling){
+                        if (span.parentElement.nextElementSibling.children.length > 0){
+                            for (let child of span.parentElement.nextElementSibling.children){
+                                if (child.className !== 'highlighted'){
+                                    currentHighlightText.push(span.innerText);
+                                    break;
+                                }
+                            }
+                        } else if (span.parentElement.nextElementSibling.className !== 'highlighted'){
+                            currentHighlightText.push(span.innerText);
+                        }
+                    } else {
+                        currentHighlightText.push(span.innerText);
+                    }
+                } 
+            });
+            let idxarray = []
+            currentHighlightText.forEach( (e, idx) => {
+                const i = temp.indexOf(e)
+                idxarray.push(i)
+                let newHls = temp.slice(idxarray[idx-1]+1, idxarray[idx]+1).join(' ')
+                console.log("logging", newHls )
+                log(LoggerEventTypes.HIGHLIGHT_ACTION, {
+                    url: this.props.url,
+                    query: this.props.searchState.query,
+                    action: "add",
+                    page: this.props.searchState.page,
+                    vertical: this.props.searchState.vertical,
+                    text: newHls
+                // currentHls: currentHls
+                });
+            })
+
+
+            
+
         }
     };
 
@@ -135,15 +204,7 @@ export default class Viewer extends React.Component  {
                 }
 
                 localStorage.setItem(userId, JSON.stringify(currentHls));
-                log(LoggerEventTypes.HIGHLIGHT_ACTION, {
-                    url: this.props.url,
-                    query: this.props.searchState.query,
-                    action: "add",
-                    page: this.props.searchState.page,
-                    vertical: this.props.searchState.vertical,
-                    text: newHls,
-                    currentHls: currentHls
-                });
+
 
                 // Highlights to Notepad
                 function getPadUrl() {
@@ -217,7 +278,7 @@ export default class Viewer extends React.Component  {
                                 <AnnotationContainer url={this.props.url}/>
                             </div>
                         )}
-                        <ViewerPage url={this.props.url} loadHandler={loadDocument} doctext={this.props.doctext} />
+                        <ViewerPage url={this.props.url} loadHandler={loadDocument} doctext={this.props.doctext} searchState={this.props.searchState} />
                     </div>
                 </div>
             </Modal>
