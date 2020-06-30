@@ -3,17 +3,16 @@ import TextHighlighter from "texthighlighter";
 export default class ViewerPage extends React.Component {
     createButton() {
         let doctext = document.getElementById("documentText");
-        let buttons
+        let buttons;
         if (doctext) {
             buttons = [...doctext.getElementsByClassName("btn-xs")];
-        
             for (let btn of buttons){
                 let tempParent = btn.parentNode;
                 tempParent.removeChild(btn)
             }
         }
 
-        let spans = document.getElementsByClassName('highlighted');
+        let spans = [...document.getElementsByClassName('highlighted')];
         for (let span of spans) {
             let button = document.createElement("BUTTON");
             button.innerHTML = "x";
@@ -22,14 +21,20 @@ export default class ViewerPage extends React.Component {
                 let buttonParentElement = button.parentElement;
                 let elem = button.previousSibling;
                 buttonParentElement.removeChild(button);
-                // buttonSiblingElement.outerHTML = buttonSiblingElement.innerHTML;
                 let flag = true;
                 while (flag){
                     flag = false;
                     console.log(elem.innerText);
                     let directPrevious = elem.previousElementSibling;
                     let directParent = elem.parentElement;
-                    if (directPrevious){
+
+                    if (elem.previousSibling && elem.previousSibling.nodeName === "#text") {
+                        elem.outerHTML = elem.innerHTML;
+                        elem = directPrevious;
+                    } else if (directParent.previousSibling && directParent.previousSibling.nodeName === '#text') {
+                        elem.outerHTML = elem.innerHTML;
+                        elem = directParent.previousElementSibling;
+                    } else if (directPrevious){
                         if (directPrevious.className === "highlighted"){
                             flag = true;
                         } else if (directPrevious.children.length > 0){
@@ -53,10 +58,9 @@ export default class ViewerPage extends React.Component {
                             elem.outerHTML = elem.innerHTML;
                             elem = directPrevious;
                         }
-                    } else if (directParent.previousElementSibling){
-                        if (directParent.previousElementSibling.className = "highlighted"){
+                    } else if (directParent.previousElementSibling && ["I", "B"].includes(directParent.nodeName)){
+                        if (directParent.previousElementSibling.className === "highlighted"){
                             flag = true;
-                            // directParent.previousElementSibling.outerHTML = directParent.previousElementSibling.innerHTML
                         } else if (directParent.previousElementSibling.children.length > 0){
                             let children = [...directParent.previousElementSibling.children];
                             for (let child of children){
@@ -76,11 +80,15 @@ export default class ViewerPage extends React.Component {
                         }
                         if (flag === true){
                             elem.outerHTML = elem.innerHTML;
-                            elem = directParent.previousElementSibling
+                            elem = directParent.previousElementSibling;
                         }
+                    } else if (!elem.previousSibling && (!directParent.previousSibling ||
+                        ['P', 'UL', 'LI', 'H1', 'H2', 'H3', 'TH', 'TD'].includes(directParent.nodeName))) {
+                        elem.outerHTML = elem.innerHTML;
                     }
                 }
             };
+
             if (span.nextSibling && span.nextSibling.nodeName === "#text"){
                 span.insertAdjacentElement('afterend', button);
             } else if (span.nextElementSibling){
@@ -192,8 +200,8 @@ export default class ViewerPage extends React.Component {
             );
             return cleanHTML
         };
-        console.log("VP Render")
-        this.createButton()
+        console.log("VP Render");
+        this.createButton();
         
         
         return (
@@ -211,6 +219,20 @@ export default class ViewerPage extends React.Component {
                             </div>
                         </div>
                     )
+                    // todo cleanup
+                    // [
+                    //     <div id="viewer-content-loader">
+                    //         <Loader/>
+                    //     </div>,
+                    //     isImage(this.props.url) ?
+                    //         <img src={this.props.url} onLoad={this.props.loadHandler} alt={this.props.url}/>
+                    //         :
+                    //         <iframe title={this.props.url} scrolling="yes"
+                    //                 frameBorder="0"
+                    //                 src={`${process.env.REACT_APP_RENDERER_URL}/${this.props.url}`}
+                    //                 onLoad={this.props.loadHandler}>
+                    //         </iframe>
+                    // ]
                 }
             </div>
         )

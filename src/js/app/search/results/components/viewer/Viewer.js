@@ -19,69 +19,6 @@ export default class Viewer extends React.Component  {
     constructor(props) {
         super(props);
         this.highlightClickHandler = this.highlightClickHandler.bind(this);
-        this.highlightRemoveHandler = this.highlightRemoveHandler.bind(this);
-    }
-
-    highlightRemoveHandler() {
-        let metaInfo = {
-            url: this.props.url,
-            query: this.props.searchState.query,
-            page: this.props.searchState.page,
-            vertical: this.props.searchState.vertical
-        };
-        if(!localStorage.getItem('highlighting')){
-            localStorage.setItem('highlighting', true)
-        }
-        let userId = AccountStore.getUserId();
-        let currentDoc = localStorage.getItem("opened-doc");
-        localStorage.setItem("highlight-removing", true);
-        if (window.confirm('Delete last highlight?')){
-            // Text highlights & SERP
-            let removedhl;
-            let currentHls = JSON.parse(localStorage.getItem(userId));
-            if (currentHls){
-                if (currentHls[btoa(currentDoc)]){
-                    removedhl = currentHls[btoa(currentDoc)].pop();
-                    if (currentHls[btoa(currentDoc)].length === 0){
-                        delete currentHls[btoa(currentDoc)];
-                        SessionActions.removeHighlight(this.props.url)
-                        window.alert('All highlights have been deleted from this page')
-                    } 
-                } else if (!Object.keys(currentHls).includes(btoa(currentDoc))) {
-                    // console.log("here")
-                    window.alert('All highlights have been deleted from this page')
-                }
-            }
-            localStorage.setItem(userId, JSON.stringify(currentHls));
-            SessionActions.removeHighlight(currentDoc);
-            SearchStore.modifyMetadata(currentDoc, {
-                highlight: {
-                    userId: AccountStore.getUserId(),
-                    date: new Date(),
-                    highlights: currentHls
-                },
-                exclude: null
-            });
-
-            // Span highlights
-            let highlightId = userId + '_' + currentDoc;
-            let serializedList = [];
-            let existingSerialized = JSON.parse(localStorage.getItem(highlightId));
-            if (existingSerialized){
-                serializedList = existingSerialized;
-            }
-            serializedList.pop();
-            localStorage.setItem(highlightId, JSON.stringify(serializedList));
-            log(LoggerEventTypes.HIGHLIGHT_ACTION, {
-                url: this.props.url,
-                query: this.props.searchState.query,
-                action: "remove",
-                page: this.props.searchState.page,
-                vertical: this.props.searchState.vertical,
-                text: removedhl,
-                currentHl: currentHls
-            });
-        }
     }
 
     highlightClickHandler() {
@@ -119,15 +56,12 @@ export default class Viewer extends React.Component  {
             color: '#1afc28',
             onBeforeHighlight: function (range) {
                 if (localStorage.getItem('highlighting')){
-                    console.log('from hl b4', localStorage.getItem('highlighting'))
                     return true
                 }
             },
             onAfterHighlight: function (range, highlights) {
-                
                 if (localStorage.getItem('highlighting')){
                     emitHighlights(highlights);
-                    console.log('from hl', highlights)
                 }
             }
         };
@@ -143,20 +77,7 @@ export default class Viewer extends React.Component  {
         let emitHighlights = (highlights) => {
             let name = this.props.doctext.match(/<h1>(.*)<\/h1>/);
             SessionActions.addHighlight(this.props.url, name[1], this.props.doctext.replace(/<h1>(.*)<\/h1>/, ''));
-            // SearchStore.modifyMetadata(openedDoc, {
-            //     highlight: {
-            //         userId: AccountStore.getUserId(),
-            //         date: new Date(),
-            //         highlights: highlights
-            //     },
-            //     exclude: null
-            // });
-            }
-
-        // Confirmation for Participant
-        // window.alert('Created ' + highlights.length + ' highlight(s): ' + highlights.map(function (h) {
-        //     return '"' + h.innerText + '"';
-        // }).join(''));
+        }
     };
 
 
@@ -171,7 +92,7 @@ export default class Viewer extends React.Component  {
             page: this.props.searchState.page,
             vertical: this.props.searchState.vertical
         };
-    
+
         let hoverEnterDocument = () => {
             log(LoggerEventTypes.DOCUMENT_HOVERENTER, metaInfo)
         };
@@ -204,25 +125,14 @@ export default class Viewer extends React.Component  {
 
                 // Text Highlights
                 let currentHls = JSON.parse(localStorage.getItem(userId)) || {} ;
-                console.log('To map', highlights);
                 let newHls = highlights.map(function (h) {
                     return h.innerText;
                 }).join(' ');
 
-                // if (currentHls){
-                //     currentHls[btoa(openedDoc)] = [] 
-                //     for (let hl of highlights){
-                //         currentHls[btoa(openedDoc)].push(hl[1]);
-                //     }
-                // } else {
-                    // let currentHls = {};
-                    
-                    currentHls[btoa(openedDoc)] = [];
-                    for (let hl of highlights){
-                        console.log(hl);
-                        currentHls[btoa(openedDoc)].push(hl[1]);
-                    }
-                // }
+                currentHls[btoa(openedDoc)] = [];
+                for (let hl of highlights){
+                    currentHls[btoa(openedDoc)].push(hl[1]);
+                }
 
                 localStorage.setItem(userId, JSON.stringify(currentHls));
                 log(LoggerEventTypes.HIGHLIGHT_ACTION, {
@@ -234,15 +144,6 @@ export default class Viewer extends React.Component  {
                     text: newHls,
                     currentHls: currentHls
                 });
-
-                // Serialized Span Highlights for display
-                // function updateSerialized(highlightId){
-                //     let existingSerialized = JSON.parse(localStorage.getItem(highlightId)) || [];
-                //     let toSerialize = highlighter.serializeHighlights();
-                //     existingSerialized.push(toSerialize);
-                //     localStorage.setItem(highlightId, JSON.stringify(existingSerialized));
-                // }
-                // updateSerialized(highlightId);
 
                 // Highlights to Notepad
                 function getPadUrl() {
@@ -264,26 +165,7 @@ export default class Viewer extends React.Component  {
                 Http.onreadystatechange = (e) => {
                     console.log(Http.responseText)
                 };
-
-                // Http.open("GET", 'http://localhost:9001/api/1.2.13/appendText?apikey='+ apiKey + '&padID=' + padID + '&text=%0A');
-                // Http.setRequestHeader("Content-Type", "text/plain");
-                // Http.send();
-                // Http.onreadystatechange = (e) => {
-                //     console.log(Http.responseText)
-                // };
-
-                // Prepare highlights for SERP
-                // SessionActions.addHighlight(openedDoc);
-                
-
-                // let savedTexts = JSON.parse(localStorage.getItem("doctexts")) || {};
-                // savedTexts[this.props.url] = this.props.doctext;
-                // localStorage.setItem("doctexts", JSON.stringify(savedTexts));
-
             };
-
-            console.log(toSerialize);
-
             if (toSerialize.length > 3){
                 updateHighlights(toSerialize);
                 localStorage.setItem(highlightId, JSON.stringify(toSerialize));
