@@ -55,7 +55,7 @@ export default class ViewerPage extends React.Component {
                     if (elem.previousSibling && elem.previousSibling.nodeName === "#text") {
                         elem.outerHTML = clearSpan(elem);
                         elem = directPrevious;
-                    } else if (directParent.previousSibling && ["I", "B"].includes(directParent.nodeName) &&
+                    } else if (directParent.previousSibling && ["I", "B", "EM"].includes(directParent.nodeName) &&
                         directParent.previousSibling.nodeName === '#text') {
                         elem.outerHTML = clearSpan(elem);
                         elem = directParent.previousElementSibling;
@@ -83,7 +83,7 @@ export default class ViewerPage extends React.Component {
                             elem.outerHTML = clearSpan(elem);
                             elem = directPrevious;
                         }
-                    } else if (directParent.previousElementSibling && ["I", "B"].includes(directParent.nodeName)){
+                    } else if (directParent.previousElementSibling && ["I", "B", "EM"].includes(directParent.nodeName)){
                         if (directParent.previousElementSibling.className === "highlighted"){
                             flag = true;
                         } else if (directParent.previousElementSibling.children.length > 0){
@@ -142,8 +142,7 @@ export default class ViewerPage extends React.Component {
             } else {
                 if (span.parentElement.nextSibling && span.parentElement.nextSibling.nodeName === "#text"){
                     span.insertAdjacentElement('afterend', button);
-                } else if (span.innerText === span.parentElement.innerText &&
-                    ['LI', 'P', 'H1','H2','H3'].includes(span.parentElement.tagName)){
+                } else if (['LI', 'P', 'H1','H2','H3'].includes(span.parentElement.tagName)){
                     span.insertAdjacentElement('afterend', button);
                 } else if (span.parentElement.nextElementSibling){
                     if (span.parentElement.nextElementSibling.children.length > 0){
