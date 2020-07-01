@@ -56,7 +56,13 @@ export default class Viewer extends React.Component  {
             color: '#1afc28',
             onBeforeHighlight: function (range) {
                 if (localStorage.getItem('highlighting')){
-                    return true
+                    if (['TH', 'TR', 'TD', 'TBODY'].includes(range.commonAncestorContainer.nodeName) ||
+                        ['TH', 'TR', 'TD', 'TBODY'].includes(range.commonAncestorContainer.parentElement.nodeName) ||
+                        ['TH', 'TR', 'TD', 'TBODY'].includes(range.commonAncestorContainer.parentElement.parentElement.nodeName) ||
+                        ['TH', 'TR', 'TD', 'TBODY'].includes(range.commonAncestorContainer.parentElement.parentElement.parentElement.nodeName)){
+                        return false;
+                    }
+                    return true;
                 }
             },
             onAfterHighlight: function (range, highlights) {
@@ -128,11 +134,13 @@ export default class Viewer extends React.Component  {
                 let newHls = highlights.map(function (h) {
                     return h.innerText;
                 }).join(' ');
+                console.log('new', newHls);
 
                 currentHls[btoa(openedDoc)] = [];
                 for (let hl of highlights){
                     currentHls[btoa(openedDoc)].push(hl[1]);
                 }
+                console.log('current', currentHls);
 
                 localStorage.setItem(userId, JSON.stringify(currentHls));
                 log(LoggerEventTypes.HIGHLIGHT_ACTION, {

@@ -197,15 +197,17 @@ export default class ViewerPage extends React.Component {
     }
     render() {
         let renderText = (doc) => {
-            const regex1 = /<a.*?>/g;
-            let cleanedItem = doc.replace(regex1, '');
-            const regex2 = /<\/a>/g;
-            let cleanedItem2 = cleanedItem.replace(regex2, '');
-            let regex3 = /<sup.*?\/sup>/g
-            let cleanedItem3 = cleanedItem2.replace(regex3, '');
+            const regexOpenAnchor = /<a.*?>/g;
+            let cleanedOpenAnchors = doc.replace(regexOpenAnchor, '');
+            const regexCloseAnchor = /<\/a>/g;
+            let cleanedCloseAnchors = cleanedOpenAnchors.replace(regexCloseAnchor, '');
+            const regexSuperscript = /<sup.*?\/sup>/g;
+            let cleanedSuperscripts = cleanedCloseAnchors.replace(regexSuperscript, '');
+            let wikiEditTags = /<span><span>\[<\/span>edit<span>]<\/span><\/span>/g;
+            let cleanedWikiEdit = cleanedSuperscripts.replace(wikiEditTags, '');
             let cleanHTML = [];
             cleanHTML.push(
-                <span dangerouslySetInnerHTML ={{__html: cleanedItem3}} />
+                <span dangerouslySetInnerHTML ={{__html: cleanedWikiEdit}} />
             );
             return cleanHTML
         };
