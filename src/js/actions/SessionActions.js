@@ -58,11 +58,11 @@ export default {
             }
         })
     },
-    removeHighlight(text){
+    removeHighlight(url){
         dispatch({
             type: ActionTypes.REMOVE_HIGHLIGHT,
             payload: {
-                text: text
+                url: url
             }
         })
     },

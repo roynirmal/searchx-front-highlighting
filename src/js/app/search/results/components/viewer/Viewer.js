@@ -193,9 +193,9 @@ export default class Viewer extends React.Component  {
 
                 // Text Highlights
                 let currentHls = JSON.parse(localStorage.getItem(userId)) || {} ;
-                // let newHls = highlights.map(function (h) {
-                //     return h.innerText;
-                // }).join(' ');
+                let newHls = highlights.map(function (h) {
+                    return h.innerText;
+                }).join(' ');
                 console.log("newhls", highlights)
                 currentHls[btoa(openedDoc)] = [];
                 let se_dict = {}
@@ -210,7 +210,7 @@ export default class Viewer extends React.Component  {
                 })
                 for (const [key, value] of Object.entries(se_dict)) {  
                   let w = {}
-                  value.forEach(item => {
+                  value.forEach(item => { 
                     let l = item[1].splice(0,5).join(':')
                     let k = item[1][0]
                     var t = {}
@@ -242,10 +242,10 @@ export default class Viewer extends React.Component  {
                 }
 
                 const Http = new XMLHttpRequest();
-                let apiKey = '7a0e5240ea947240181d2628191eb04cd8d670c1b5e5f17c60b037f9c0fcb3a9';
+                let apiKey = '3a27994624a454bacdc02ba368ed25268f5b60079fa1429c0c9ac5d3b69c0abb';
                 let padID = getPadUrl();
                 let url = 'http://localhost:9001/api/1.2.13/appendText?apikey=' + apiKey + '&padID=' + padID + '&text= --';
-                // url += newHls + '%0A%0A';
+                url += newHls + '%0A%0A' ;
                 Http.open("GET", url);
                 Http.setRequestHeader("Content-Type", "text/plain");
                 Http.send();
