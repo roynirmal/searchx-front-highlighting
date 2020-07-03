@@ -142,8 +142,7 @@ export default class ViewerPage extends React.Component {
             } else {
                 if (span.parentElement.nextSibling && span.parentElement.nextSibling.nodeName === "#text"){
                     span.insertAdjacentElement('afterend', button);
-                } else if (span.innerText === span.parentElement.innerText &&
-                    ['LI', 'P', 'H1','H2','H3'].includes(span.parentElement.tagName)){
+                } else if (['LI', 'P', 'H1','H2','H3'].includes(span.parentElement.tagName)){
                     span.insertAdjacentElement('afterend', button);
                 } else if (span.parentElement.nextElementSibling){
                     if (span.parentElement.nextElementSibling.children.length > 0){
