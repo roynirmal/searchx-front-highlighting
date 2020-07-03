@@ -113,7 +113,7 @@ export default class ViewerPage extends React.Component {
                     }
                 }
                 let delHls  = remove.reverse().join(' ')
-                console.log("logging remove",  delHls)
+                // console.log("logging remove",  delHls)
                 // console.log(this.props.url)
                 log(LoggerEventTypes.HIGHLIGHT_ACTION, {
                     url: url,

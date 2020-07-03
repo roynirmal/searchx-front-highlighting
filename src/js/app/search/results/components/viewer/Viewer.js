@@ -126,11 +126,12 @@ export default class Viewer extends React.Component  {
                 } 
             });
             let idxarray = []
+            let newHls
             currentHighlightText.forEach( (e, idx) => {
                 const i = temp.indexOf(e)
                 idxarray.push(i)
-                let newHls = temp.slice(idxarray[idx-1]+1, idxarray[idx]+1).join(' ')
-                console.log("logging", newHls )
+                newHls = temp.slice(idxarray[idx-1]+1, idxarray[idx]+1).join(' ')
+                // console.log("logging", newHls )
                 log(LoggerEventTypes.HIGHLIGHT_ACTION, {
                     url: this.props.url,
                     query: this.props.searchState.query,
@@ -141,7 +142,26 @@ export default class Viewer extends React.Component  {
                 // currentHls: currentHls
                 });
             })
+            //                 // Highlights to Notepad
+            // function getPadUrl() {
+            //     let url = 'SearchXtesting';
+            //     if (AccountStore.getGroupId() === AccountStore.getSessionId()) {
+            //         url = AccountStore.getGroupId();
+            //     }
+            //     return url;
+            // }
 
+            // const Http = new XMLHttpRequest();
+            // let apiKey = 'a7ffd005ad9357ee7b8b0fb1650a38a32a0638476a009d49cc0437e44ad01a85';
+            // let padID = getPadUrl();
+            // let url = 'http://lambda4.ewi.tudelft.nl/api/1.2.13/appendText?apikey=' + apiKey + '&padID=' + padID + '&text= --';
+            // url += name[1] + ' '  + this.props.url.toString().replace("https\:\/\/", "") + '%0A' + newHls + '%0A%0A' ;
+            // Http.open("GET", url);
+            // Http.setRequestHeader("Content-Type", "text/plain");
+            // Http.send();
+            // Http.onreadystatechange = (e) => {
+            //     console.log(Http.responseText)
+            // };
 
             
 
@@ -187,20 +207,36 @@ export default class Viewer extends React.Component  {
             let highlighter = new TextHighlighter(document.getElementById("documentText"), highlighterOptions);
             let toSerialize = highlighter.serializeHighlights();
 
-            let updateHighlights = (serializedHighlights) => {
+            if(toSerialize.length === 2){
 
+                if(localStorage.getItem(highlightId)){
+                    localStorage.removeItem(highlightId)
+                    SessionActions.removeHighlight(this.props.url)
+                }
+            }
+            let updateHighlights = (serializedHighlights) => {
+                let openTime = localStorage.getItem("open-time")
                 let highlights = JSON.parse(serializedHighlights);
 
                 // Text Highlights
                 let currentHls = JSON.parse(localStorage.getItem(userId)) || {} ;
-                let newHls = highlights.map(function (h) {
-                    return h.innerText;
-                }).join(' ');
-                console.log("newhls", highlights)
+                let newHls =''
                 currentHls[btoa(openedDoc)] = [];
                 let se_dict = {}
+                let old_t = 0
+                let max_t
+                let pre_max = localStorage.getItem("pre-max"+'-'+openedDoc) || parseInt(0)
                 highlights.forEach((e, i) => {
                   let ts = e[0].match(/data-timestamp=\"(.*?)\"/)[1]
+                //   console.log("TIMES", ts)
+                  let curr_t = parseInt(ts)
+                  if (curr_t > old_t) {
+
+                       max_t = curr_t
+                    //    console.log("TIMES", curr_t, old_t, max_t)
+                  }
+                  old_t = curr_t
+                //   console.log("TIMES 2", curr_t, old_t, max_t)
                   if(se_dict[ts]){
                     se_dict[ts].push([e[1], e[2].split(":")])
                   } else {
@@ -208,7 +244,8 @@ export default class Viewer extends React.Component  {
                     se_dict[ts].push([e[1], e[2].split(":")])
                   }
                 })
-                for (const [key, value] of Object.entries(se_dict)) {
+                localStorage.setItem("pre-max"+'-'+openedDoc, max_t)
+                for (const [key1, value] of Object.entries(se_dict)) {
                   let w = {}
                   value.forEach(item => {
                     let l = item[1].splice(0,5).join(':')
@@ -222,13 +259,19 @@ export default class Viewer extends React.Component  {
                       w[l][k] = item[0]
                     }
                   })
-                  for (const [key, value] of Object.entries(w)) {
-                    console.log(Object.values(value).join(' '))
-                    currentHls[btoa(openedDoc)].push(Object.values(value).join(' '))
+                  for (const [key2, value] of Object.entries(w)) {
+
+                    let curHls = Object.values(value).join(' ')
+                    currentHls[btoa(openedDoc)].push(curHls)
+
+                    if (parseInt(key1)>pre_max){
+                        console.log("c", curHls)
+                        newHls += '-- ' + curHls + '%0A%0A'
+                    }
                   }
-
+                  
                 }
-
+                
                 localStorage.setItem(userId, JSON.stringify(currentHls));
 
 
@@ -241,11 +284,14 @@ export default class Viewer extends React.Component  {
                     return url;
                 }
 
+                let name = this.props.doctext.match(/<h1>(.*)<\/h1>/);
                 const Http = new XMLHttpRequest();
-                let apiKey = '7a0e5240ea947240181d2628191eb04cd8d670c1b5e5f17c60b037f9c0fcb3a9';
+                let apiKey = 'a7ffd005ad9357ee7b8b0fb1650a38a32a0638476a009d49cc0437e44ad01a85';
+                // manuel let apiKey = '3a27994624a454bacdc02ba368ed25268f5b60079fa1429c0c9ac5d3b69c0abb';
                 let padID = getPadUrl();
-                let url = 'http://localhost:9001/api/1.2.13/appendText?apikey=' + apiKey + '&padID=' + padID + '&text= --';
-                url += newHls + '%0A%0A' ;
+                // manuel let url = 'http://localhost:9001/api/1.2.13/appendText?apikey=' + apiKey + '&padID=' + padID + '&text= --';
+                let url = 'http://lambda4.ewi.tudelft.nl/api/1.2.13/appendText?apikey=' + apiKey + '&padID=' + padID + '&text=';
+                url += name[1] + '%0A' + newHls  ;
                 Http.open("GET", url);
                 Http.setRequestHeader("Content-Type", "text/plain");
                 Http.send();
@@ -260,6 +306,7 @@ export default class Viewer extends React.Component  {
         };
         let loadDocument = () => {
             log(LoggerEventTypes.DOCUMENT_LOAD, metaInfo);
+
             if (!this.props.doctext) {
                 document.getElementById("viewer-content-loader").style.display = "none";
             }
