@@ -55,7 +55,7 @@ export default class ViewerPage extends React.Component {
                     if (elem.previousSibling && elem.previousSibling.nodeName === "#text") {
                         elem.outerHTML = clearSpan(elem);
                         elem = directPrevious;
-                    } else if (directParent.previousSibling && ["I", "B"].includes(directParent.nodeName) &&
+                    } else if (directParent.previousSibling && ["I", "B", "EM"].includes(directParent.nodeName) &&
                         directParent.previousSibling.nodeName === '#text') {
                         elem.outerHTML = clearSpan(elem);
                         elem = directParent.previousElementSibling;
@@ -83,7 +83,7 @@ export default class ViewerPage extends React.Component {
                             elem.outerHTML = clearSpan(elem);
                             elem = directPrevious;
                         }
-                    } else if (directParent.previousElementSibling && ["I", "B"].includes(directParent.nodeName)){
+                    } else if (directParent.previousElementSibling && ["I", "B", "EM"].includes(directParent.nodeName)){
                         if (directParent.previousElementSibling.className === "highlighted"){
                             flag = true;
                         } else if (directParent.previousElementSibling.children.length > 0){

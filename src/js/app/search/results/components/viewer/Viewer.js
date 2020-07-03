@@ -107,8 +107,7 @@ export default class Viewer extends React.Component  {
                 } else {
                     if (span.parentElement.nextSibling && span.parentElement.nextSibling.nodeName === "#text"){
                         currentHighlightText.push(span.innerText);
-                    } else if (span.innerText === span.parentElement.innerText &&
-                        ['LI', 'P', 'H1','H2','H3'].includes(span.parentElement.tagName)){
+                    } else if (['LI', 'P', 'H1','H2','H3'].includes(span.parentElement.tagName)){
                             currentHighlightText.push(span.innerText);
                     } else if (span.parentElement.nextElementSibling){
                         if (span.parentElement.nextElementSibling.children.length > 0){
@@ -197,13 +196,38 @@ export default class Viewer extends React.Component  {
                 let newHls = highlights.map(function (h) {
                     return h.innerText;
                 }).join(' ');
-                console.log('new', newHls);
-
+                console.log("newhls", highlights)
                 currentHls[btoa(openedDoc)] = [];
-                for (let hl of highlights){
-                    currentHls[btoa(openedDoc)].push(hl[1]);
+                let se_dict = {}
+                highlights.forEach((e, i) => {
+                  let ts = e[0].match(/data-timestamp=\"(.*?)\"/)[1]
+                  if(se_dict[ts]){
+                    se_dict[ts].push([e[1], e[2].split(":")])
+                  } else {
+                    se_dict[ts] = []
+                    se_dict[ts].push([e[1], e[2].split(":")])
+                  }
+                })
+                for (const [key, value] of Object.entries(se_dict)) {
+                  let w = {}
+                  value.forEach(item => {
+                    let l = item[1].splice(0,5).join(':')
+                    let k = item[1][0]
+                    var t = {}
+                    t[k] = item[0]
+                    if(w[l]){
+                      w[l][k] = item[0]
+                    } else {
+                      w[l]= {}
+                      w[l][k] = item[0]
+                    }
+                  })
+                  for (const [key, value] of Object.entries(w)) {
+                    console.log(Object.values(value).join(' '))
+                    currentHls[btoa(openedDoc)].push(Object.values(value).join(' '))
+                  }
+
                 }
-                console.log('current', currentHls);
 
                 localStorage.setItem(userId, JSON.stringify(currentHls));
 
@@ -221,7 +245,7 @@ export default class Viewer extends React.Component  {
                 let apiKey = '7a0e5240ea947240181d2628191eb04cd8d670c1b5e5f17c60b037f9c0fcb3a9';
                 let padID = getPadUrl();
                 let url = 'http://localhost:9001/api/1.2.13/appendText?apikey=' + apiKey + '&padID=' + padID + '&text= --';
-                url += newHls + '%0A%0A';
+                url += newHls + '%0A%0A' ;
                 Http.open("GET", url);
                 Http.setRequestHeader("Content-Type", "text/plain");
                 Http.send();
