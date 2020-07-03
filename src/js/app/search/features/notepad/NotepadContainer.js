@@ -23,8 +23,8 @@ export default class NotepadContainer extends React.Component {
 
     handleViewSidebar(){
         this.setState({sidebarOpen: !this.state.sidebarOpen});
-        let margin = 600 * !this.state.sidebarOpen;
-        document.getElementById("root").style.marginRight = margin + "px";
+        let margin = window.innerWidth/3 * !this.state.sidebarOpen;
+        document.getElementById("root").style.marginRight = margin+15 + "px";
     }
 
     render() {
