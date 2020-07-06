@@ -53,7 +53,7 @@ export default class Viewer extends React.Component  {
 
         let highlighterOptions;
         highlighterOptions = {
-            color: '#1afc28',
+            color: 'rgba(26,252,40,0.6)',
             onBeforeHighlight: function (range) {
                 if (localStorage.getItem('highlighting')){
                     if (['TH', 'TR', 'TD', 'TBODY'].includes(range.commonAncestorContainer.nodeName) ||
