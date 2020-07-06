@@ -321,7 +321,7 @@ export default class Viewer extends React.Component  {
         };
         let initialHighlight = localStorage.getItem('highlighting') ? 1 : 0;
         initialHighlight = localStorage.getItem("highlight-removing") ? 0 : initialHighlight;
-        
+
         return (
             <Modal width="95%" height="90%">
                 <div id={"viewer"} className="viewer" onMouseEnter={hoverEnterDocument} onMouseLeave={hoverLeaveDocument}
@@ -333,9 +333,11 @@ export default class Viewer extends React.Component  {
                                 <span className="divider"/>
                             ] :
                             <div className="pull-right">
-                                <Rating className="rating" emptySymbol="fa fa-pencil-square-o" fullSymbol="fa fa-pencil-square" onClick={this.highlightClickHandler}
-                                title="Highlight" stop={1} initialRating={initialHighlight} style={{ marginRight : '20px'}} > </Rating>
-                                {/*<span  onClick={this.highlightRemoveHandler}><i className="fa fa-trash"/></span>*/}
+                                <span>Highlighter Tool - </span>
+                                <Rating className="rating" emptySymbol="fa fa-pencil-square-o" fullSymbol="fa fa-pencil-square"
+                                        onClick={this.highlightClickHandler} title="Highlight" stop={1} initialRating={initialHighlight}
+                                        style={{ marginRight : '20px'}}
+                                > </Rating>
                             </div>
                          }
                         {config.interface.ratings && [
