@@ -285,19 +285,22 @@ export default class Viewer extends React.Component  {
                 }
 
                 let name = this.props.doctext.match(/<h1>(.*)<\/h1>/);
-                const Http = new XMLHttpRequest();
-                let apiKey = 'a7ffd005ad9357ee7b8b0fb1650a38a32a0638476a009d49cc0437e44ad01a85';
-                // manuel let apiKey = '3a27994624a454bacdc02ba368ed25268f5b60079fa1429c0c9ac5d3b69c0abb';
-                let padID = getPadUrl();
-                // manuel let url = 'http://localhost:9001/api/1.2.13/appendText?apikey=' + apiKey + '&padID=' + padID + '&text= --';
-                let url = 'http://lambda4.ewi.tudelft.nl/api/1.2.13/appendText?apikey=' + apiKey + '&padID=' + padID + '&text=';
-                url += name[1] + '%0A' + newHls  ;
-                Http.open("GET", url);
-                Http.setRequestHeader("Content-Type", "text/plain");
-                Http.send();
-                Http.onreadystatechange = (e) => {
-                    console.log(Http.responseText)
-                };
+                if (newHls){
+                    const Http = new XMLHttpRequest();
+                    let apiKey = 'a7ffd005ad9357ee7b8b0fb1650a38a32a0638476a009d49cc0437e44ad01a85';
+                    // manuel let apiKey = '3a27994624a454bacdc02ba368ed25268f5b60079fa1429c0c9ac5d3b69c0abb';
+                    let padID = getPadUrl();
+                    // manuel let url = 'http://localhost:9001/api/1.2.13/appendText?apikey=' + apiKey + '&padID=' + padID + '&text= --';
+                    let url = 'http://lambda4.ewi.tudelft.nl/api/1.2.13/appendText?apikey=' + apiKey + '&padID=' + padID + '&text=';
+                    url += name[1] + '%0A' + newHls  ;
+                    Http.open("GET", url);
+                    Http.setRequestHeader("Content-Type", "text/plain");
+                    Http.send();
+                    Http.onreadystatechange = (e) => {
+                        console.log(Http.responseText)
+                    };
+                }
+     
             };
             if (toSerialize.length > 3){
                 updateHighlights(toSerialize);

@@ -132,7 +132,7 @@ const TextSearchResult = function ({
                     </a>
                 </h2>
                 <span className="source">
-                    {result.displayUrl}
+                    {result.url}
                 </span>
                 {isCollapsible ? (
                     <div className="textArea" draggable="true" role="button" onClick={hideCollapsedResults}>
