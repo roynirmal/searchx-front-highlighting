@@ -32,10 +32,51 @@ export default class ViewerPage extends React.Component {
             }
         }
 
+        function compare(a, b) {
+            let comparison = 0;
+            if (a.dataset.timestamp > b.dataset.timestamp) {
+                comparison = 1;
+            } else if (a.dataset.timestamp < b.dataset.timestamp) {
+                comparison = -1;
+            }
+            return comparison * -1;
+        }
+
+        function getLastSpans(spans){
+            let sortedSpans = spans.sort(compare);
+            let lastSpans = [];
+            let lastSpanTime = sortedSpans[0].dataset.timestamp;
+            for (let span of sortedSpans){
+                if (span.dataset.timestamp === lastSpanTime){
+                    lastSpans.push(span)
+                } else {
+                    break
+                }
+            }
+            return lastSpans;
+        }
+
         let spans = [...document.getElementsByClassName('highlighted')];
 
-        for (let span of spans) {
+        if (spans.length > 0) {
+            let lastSpans = getLastSpans(spans);
+            for (let lastSpan of lastSpans) {
+                let suffix = '';
+                if (lastSpan.nextSibling && lastSpan.nextSibling !== lastSpan.nextElementSibling && !lastSpan.textContent.endsWith(" ")) {
+                    for (let x of lastSpan.nextSibling.textContent) {
+                        if ([null, ' ', ''].includes(x)) {
+                            break;
+                        } else {
+                            suffix += x
+                        }
+                    }
+                    lastSpan.nextSibling.textContent = lastSpan.nextSibling.textContent.slice(suffix.length,)
+                    lastSpan.innerText += suffix
+                }
+            }
+        }
 
+        for (let span of spans) {
             let button = document.createElement("BUTTON");
             button.innerText = "x";
             button.setAttribute("class", "btn-xs");
@@ -113,8 +154,6 @@ export default class ViewerPage extends React.Component {
                     }
                 }
                 let delHls  = remove.reverse().join(' ')
-                // console.log("logging remove",  delHls)
-                // console.log(this.props.url)
                 log(LoggerEventTypes.HIGHLIGHT_ACTION, {
                     url: url,
                     query: query,
@@ -122,7 +161,6 @@ export default class ViewerPage extends React.Component {
                     page: page,
                     vertical: vertical,
                     text: delHls
-                // currentHls: currentHls
                 });
             };
 
@@ -161,34 +199,11 @@ export default class ViewerPage extends React.Component {
             }
         }
     }
-    // componentDidMount() {
-    //     if (this.props.doctext ) {
-    //         this.props.loadHandler();
-    //         let highlighterOptions = {
-    //             color: '#1afc28'
-    //         };
-    //         let highlighter = new TextHighlighter(document.getElementById("documentText"), highlighterOptions);
-    //         console.log('Mounting');
-    //         let userId = localStorage.getItem("user-id");
-    //         let currentDoc = localStorage.getItem("opened-doc");
-    //         let hlId = userId + '_' + currentDoc;
-    //         let currentHls = JSON.parse(localStorage.getItem(hlId));
-    //         if (currentHls){
-    //             highlighter.deserializeHighlights(currentHls);
-    //         }
-    //         // Remove highlighter listener
-    //         // let oldElement = document.getElementById("documentText");
-    //         // let newElement = oldElement.cloneNode(true);
-    //         // oldElement.parentNode.replaceChild(newElement, oldElement);
-    //         // this.createButton()
-    //     }
-    // }
+
     componentDidUpdate() {
         if (this.props.doctext  ) {
             this.props.loadHandler();
- 
 
-  
             // Remove highlighter listener
             if (localStorage.getItem("first-click") === "yes"){ 
                 let highlighterOptions = {
@@ -208,10 +223,7 @@ export default class ViewerPage extends React.Component {
                 oldElement.parentNode.replaceChild(newElement, oldElement);
                 localStorage.setItem("first-click", "no")
             }
-            
             this.createButton()
-            
-            
         }
     }
     componentWillReceiveProps(nextProps) {
@@ -269,20 +281,6 @@ export default class ViewerPage extends React.Component {
                             </div>
                         </div>
                     )
-                    // todo cleanup
-                    // [
-                    //     <div id="viewer-content-loader">
-                    //         <Loader/>
-                    //     </div>,
-                    //     isImage(this.props.url) ?
-                    //         <img src={this.props.url} onLoad={this.props.loadHandler} alt={this.props.url}/>
-                    //         :
-                    //         <iframe title={this.props.url} scrolling="yes"
-                    //                 frameBorder="0"
-                    //                 src={`${process.env.REACT_APP_RENDERER_URL}/${this.props.url}`}
-                    //                 onLoad={this.props.loadHandler}>
-                    //         </iframe>
-                    // ]
                 }
             </div>
         )
