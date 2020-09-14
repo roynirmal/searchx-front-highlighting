@@ -221,6 +221,7 @@ export default class ViewerPage extends React.Component {
                 let oldElement = document.getElementById("documentText");
                 let newElement = oldElement.cloneNode(true);
                 oldElement.parentNode.replaceChild(newElement, oldElement);
+
                 localStorage.setItem("first-click", "no")
             }
             this.createButton()

@@ -73,7 +73,6 @@ export default class Viewer extends React.Component  {
         };
 
         let highlighter = new TextHighlighter(document.getElementById("documentText"), highlighterOptions);
-
         function cleanupHighlighter(){
             let oldElement = document.getElementById("documentText");
             let newElement = oldElement.cloneNode(true);
@@ -131,7 +130,6 @@ export default class Viewer extends React.Component  {
                 const i = temp.indexOf(e)
                 idxarray.push(i)
                 newHls = temp.slice(idxarray[idx-1]+1, idxarray[idx]+1).join(' ')
-                // console.log("logging", newHls )
                 log(LoggerEventTypes.HIGHLIGHT_ACTION, {
                     url: this.props.url,
                     query: this.props.searchState.query,
@@ -165,7 +163,6 @@ export default class Viewer extends React.Component  {
         }
     };
 
-
     render() {
         if (this.props.url === "") {
             return <div/>
@@ -188,7 +185,7 @@ export default class Viewer extends React.Component  {
         let closeDocument = () => {
             this.props.documentCloseHandler();
             log(LoggerEventTypes.DOCUMENT_CLOSE, metaInfo);
-            // localStorage.removeItem("highlighting");
+            localStorage.removeItem("highlighting");
             let doctext = document.getElementById("documentText");
             const buttons = [...doctext.getElementsByClassName("btn-xs")];
             for (let btn of buttons){
@@ -266,11 +263,8 @@ export default class Viewer extends React.Component  {
                         newHls += '-- ' + curHls + '%0A%0A'
                     }
                   }
-                  
                 }
-                
                 localStorage.setItem(userId, JSON.stringify(currentHls));
-
 
                 // Highlights to Notepad
                 function getPadUrl() {
@@ -315,7 +309,6 @@ export default class Viewer extends React.Component  {
             log(LoggerEventTypes.DOCUMENT_OPEN_BROWSER, metaInfo);
             window.open(this.props.url);
         };
-    
         let scrollDocument = () => {
             log(LoggerEventTypes.DOCUMENT_SCROLL, metaInfo);
         };
@@ -336,7 +329,6 @@ export default class Viewer extends React.Component  {
                             ] :
                             <div className="pull-right">
                                 <span>{highlighterToggle}</span>
-                                {/*<Rating className="rating" emptySymbol="fa fa-pencil-square-o" fullSymbol="fa fa-pencil-square"*/}
                                 <Rating className="rating"
                                         emptySymbol={<img src='/img/highlighter_off.png' height="30"
                                                           className='highlighter icon' alt='highlighter off' />}
@@ -361,7 +353,8 @@ export default class Viewer extends React.Component  {
                                 <AnnotationContainer url={this.props.url}/>
                             </div>
                         )}
-                        <ViewerPage url={this.props.url} loadHandler={loadDocument} doctext={this.props.doctext} searchState={this.props.searchState} />
+                        <ViewerPage url={this.props.url} loadHandler={loadDocument} doctext={this.props.doctext}
+                                    searchState={this.props.searchState} />
                     </div>
                 </div>
             </Modal>
