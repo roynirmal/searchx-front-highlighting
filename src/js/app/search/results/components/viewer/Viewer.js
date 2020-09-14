@@ -53,7 +53,7 @@ export default class Viewer extends React.Component  {
 
         let highlighterOptions;
         highlighterOptions = {
-            color: 'rgba(26,252,40,0.6)',
+            color: 'rgb(252,214,26)',
             onBeforeHighlight: function (range) {
                 if (localStorage.getItem('highlighting')){
                     if (['TH', 'TR', 'TD', 'TBODY'].includes(range.commonAncestorContainer.nodeName) ||
@@ -162,9 +162,6 @@ export default class Viewer extends React.Component  {
             // Http.onreadystatechange = (e) => {
             //     console.log(Http.responseText)
             // };
-
-            
-
         }
     };
 
@@ -191,7 +188,7 @@ export default class Viewer extends React.Component  {
         let closeDocument = () => {
             this.props.documentCloseHandler();
             log(LoggerEventTypes.DOCUMENT_CLOSE, metaInfo);
-            localStorage.removeItem("highlighting");
+            // localStorage.removeItem("highlighting");
             let doctext = document.getElementById("documentText");
             const buttons = [...doctext.getElementsByClassName("btn-xs")];
             for (let btn of buttons){
@@ -325,6 +322,8 @@ export default class Viewer extends React.Component  {
         let initialHighlight = localStorage.getItem('highlighting') ? 1 : 0;
         initialHighlight = localStorage.getItem("highlight-removing") ? 0 : initialHighlight;
 
+        let highlighterToggle = localStorage.getItem('highlighting') ? 'Deactivate - ' : 'Activate - ';
+
         return (
             <Modal width="95%" height="90%">
                 <div id={"viewer"} className="viewer" onMouseEnter={hoverEnterDocument} onMouseLeave={hoverLeaveDocument}
@@ -336,9 +335,15 @@ export default class Viewer extends React.Component  {
                                 <span className="divider"/>
                             ] :
                             <div className="pull-right">
-                                <span>Highlighter Tool - </span>
-                                <Rating className="rating" emptySymbol="fa fa-pencil-square-o" fullSymbol="fa fa-pencil-square"
-                                        onClick={this.highlightClickHandler} title="Highlight" stop={1} initialRating={initialHighlight}
+                                <span>{highlighterToggle}</span>
+                                {/*<Rating className="rating" emptySymbol="fa fa-pencil-square-o" fullSymbol="fa fa-pencil-square"*/}
+                                <Rating className="rating"
+                                        emptySymbol={<img src='/img/highlighter_off.png' height="30"
+                                                          className='highlighter icon' alt='highlighter off' />}
+                                        fullSymbol={<img src='/img/highlighter_on.png' height="30"
+                                                         className='highlighter icon' alt='highlighter on' />}
+                                        onClick={this.highlightClickHandler} title="Highlight" stop={1}
+                                        initialRating={initialHighlight}
                                         style={{ marginRight : '20px'}}
                                 > </Rating>
                             </div>
@@ -347,7 +352,7 @@ export default class Viewer extends React.Component  {
                             <RatingContainer url={this.props.url}/>,
                             <span className="divider"/>
                         ]}
-                        <span className="close" onClick={closeDocument}><i className="fa fa-times"/></span>
+                        <span className="close" onClick={closeDocument}><i className="fa fa-times"/> Close Page</span>
                     </div>
     
                     <div className="body">

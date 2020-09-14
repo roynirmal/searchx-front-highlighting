@@ -78,7 +78,7 @@ export default class ViewerPage extends React.Component {
 
         for (let span of spans) {
             let button = document.createElement("BUTTON");
-            button.innerText = "x";
+            button.innerText = "delete";
             button.setAttribute("class", "btn-xs");
             button.onclick = function () {
                 let buttonParentElement = button.parentElement;
@@ -205,9 +205,9 @@ export default class ViewerPage extends React.Component {
             this.props.loadHandler();
 
             // Remove highlighter listener
-            if (localStorage.getItem("first-click") === "yes"){ 
+            if (localStorage.getItem("first-click") === "yes"){
                 let highlighterOptions = {
-                    color: 'rgba(26,252,40,0.6)',
+                    color: 'rgb(252,214,26)',
                 };
                 let highlighter = new TextHighlighter(document.getElementById("documentText"), highlighterOptions);
                 console.log("Updated first click")
