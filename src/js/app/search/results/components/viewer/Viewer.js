@@ -325,7 +325,7 @@ export default class Viewer extends React.Component  {
                     <div className="header">
                         {!this.props.doctext  ?
                             [
-                                <span className="forward" onClick={openInBrowser}>open in browser</span>,
+                                <span className="forward" > </span>,
                                 <span className="divider"/>
                             ] :
                             <div className="pull-right">

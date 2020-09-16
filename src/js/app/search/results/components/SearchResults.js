@@ -65,14 +65,14 @@ const SearchResults = function ({
 
 
     // Trick to remove last page from pagination;
-    $(".pagination").find("a").last().hide();
+    // $(".pagination").find("a").last().hide();
     
-    const pagination = <SearchResultsPagination
-        searchState={searchState}
-        finished={results.length > 0 || progress.finished}
-        matches={matches}
-        changeHandler={pageChangeHandler}
-    />;
+    // const pagination = <SearchResultsPagination
+    //     searchState={searchState}
+    //     finished={results.length > 0 || progress.finished}
+    //     matches={matches}
+    //     changeHandler={pageChangeHandler}
+    // />;
 
     const prefix = (matches < config.aboutPrefixAt) ? "" : "About ";
     const timeIndicator = prefix + Helpers.numberWithCommas(matches) + " results (" + elapsedTime + " seconds)";
@@ -161,7 +161,7 @@ const SearchResults = function ({
                 </div>
             </div>
 
-            {pagination}
+            {/* {pagination} */}
         </div>
     )
 };
