@@ -164,6 +164,7 @@ export default class Viewer extends React.Component  {
     };
 
     render() {
+        
         if (this.props.url === "") {
             return <div/>
         }
@@ -354,7 +355,7 @@ export default class Viewer extends React.Component  {
                             </div>
                         )}
                         <ViewerPage url={this.props.url} loadHandler={loadDocument} doctext={this.props.doctext}
-                                    searchState={this.props.searchState} />
+                                    searchState={this.props.searchState} highlightClickHandler={this.highlightClickHandler} />
                     </div>
                 </div>
             </Modal>

@@ -199,7 +199,10 @@ export default class ViewerPage extends React.Component {
             }
         }
     }
-
+    componentDidMount() {
+        this.props.highlightClickHandler();
+    }
+    
     componentDidUpdate() {
         if (this.props.doctext  ) {
             this.props.loadHandler();
@@ -220,11 +223,12 @@ export default class ViewerPage extends React.Component {
                 }
                 let oldElement = document.getElementById("documentText");
                 let newElement = oldElement.cloneNode(true);
-                oldElement.parentNode.replaceChild(newElement, oldElement);
+                // oldElement.parentNode.replaceChild(newElement, oldElement);
 
                 localStorage.setItem("first-click", "no")
             }
             this.createButton()
+            
         }
     }
     componentWillReceiveProps(nextProps) {
@@ -236,6 +240,7 @@ export default class ViewerPage extends React.Component {
         return {__html: text};
     }
     render() {
+        
         let renderText = (doc) => {
             const regexOpenAnchor = /<a.*?>/g;
             let cleanedOpenAnchors = doc.replace(regexOpenAnchor, '');
