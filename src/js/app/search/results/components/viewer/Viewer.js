@@ -328,7 +328,7 @@ export default class Viewer extends React.Component  {
                                 <span className="forward" > </span>,
                                 <span className="divider"/>
                             ] :
-                            <div className="pull-right">
+                            <div id='highlightingTool' className="pull-right" >
                                 <span>{highlighterToggle}</span>
                                 <Rating className="rating"
                                         emptySymbol={<img src='/img/highlighter_off.png' height="30"
@@ -345,7 +345,9 @@ export default class Viewer extends React.Component  {
                             <RatingContainer url={this.props.url}/>,
                             <span className="divider"/>
                         ]}
-                        <span className="close" onClick={closeDocument}><i className="fa fa-times"/> Close Page</span>
+                        <span id="closeDoc" className="close" onClick={closeDocument}><i className="fa fa-times"/>
+                            Close Page
+                        </span>
                     </div>
     
                     <div className="body">

@@ -2,6 +2,7 @@ import React from 'react';
 import TextHighlighter from "texthighlighter";
 import {log} from '../../../../../utils/Logger';
 import {LoggerEventTypes} from '../../../../../utils/LoggerEventTypes';
+import IntroStore from "../../../../../stores/IntroStore";
 export default class ViewerPage extends React.Component {
     constructor(props) {
         super(props);
@@ -199,8 +200,28 @@ export default class ViewerPage extends React.Component {
             }
         }
     }
+
     componentDidMount() {
         this.props.highlightClickHandler();
+
+        const introSteps = [
+            {
+                element: '#highlightingTool',
+                intro: 'Click here to activate or deactivate the highlighter tool'
+            },
+            {
+                element: '#closeDoc',
+                intro: 'Click here to go back to the search results. Your highlights will be saved automatically'
+            }
+        ];
+
+        IntroStore.startIntro(introSteps, () => {
+            const start = localStorage.getItem("timer-start") || Date.now();
+            localStorage.setItem("timer-start", start);
+            this.setState({
+                start: start
+            });
+        });
     }
     
     componentDidUpdate() {
