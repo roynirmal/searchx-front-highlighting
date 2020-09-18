@@ -21,6 +21,10 @@ export default class Viewer extends React.Component  {
         this.highlightClickHandler = this.highlightClickHandler.bind(this);
     }
 
+    componentDidMount() {
+        console.log(document.getElementById('highlightingTool'))
+    }
+
     highlightClickHandler() {
         let openedDoc = localStorage.getItem("opened-doc");
 
