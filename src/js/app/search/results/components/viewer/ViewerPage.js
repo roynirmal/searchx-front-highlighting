@@ -3,10 +3,10 @@ import TextHighlighter from "texthighlighter";
 import {log} from '../../../../../utils/Logger';
 import {LoggerEventTypes} from '../../../../../utils/LoggerEventTypes';
 import IntroStore from "../../../../../stores/IntroStore";
+
 export default class ViewerPage extends React.Component {
     constructor(props) {
         super(props);
-        // this.highlightClickHandler = this.highlightClickHandler.bind(this);
     }
 
     createButton() {
@@ -218,13 +218,13 @@ export default class ViewerPage extends React.Component {
                 console.log("Updated first click")
                 let introViewer = [
                     {   key: 'close',
-                        element: '#closeDoc',
+                        element: '.close',
                         intro: 'Click here to go back to the search results. Your highlights will be saved automatically',
                         position: 'right'
                     },
                     {
                         key: 'hl',
-                        element: '#highlightingTool',
+                        element: '.Rating',
                         intro: 'Click here to activate or deactivate the highlighter tool',
                         position: 'left'
                     }
@@ -264,6 +264,7 @@ export default class ViewerPage extends React.Component {
     createHTML(text) {
         return {__html: text};
     }
+
     render() {
         
         let renderText = (doc) => {
@@ -295,8 +296,7 @@ export default class ViewerPage extends React.Component {
         };
 
         this.createButton();
-        
-        
+
         return (
             <div className="page">
                 {this.props.doctext ?

@@ -163,8 +163,9 @@ export default class Viewer extends React.Component  {
         }
     };
 
+
     render() {
-        
+
         if (this.props.url === "") {
             return <div/>
         }
@@ -328,16 +329,15 @@ export default class Viewer extends React.Component  {
                                 <span className="forward" > </span>,
                                 <span className="divider"/>
                             ] :
-                            <div id='highlightingTool' className="pull-right" >
+                            <div className="pull-right" >
                                 <span>{highlighterToggle}</span>
-                                <Rating className="rating"
+                                <Rating className="Rating"
                                         emptySymbol={<img src='/img/highlighter_off.png' height="30"
                                                           className='highlighter icon' alt='highlighter off' />}
                                         fullSymbol={<img src='/img/highlighter_on.png' height="30"
                                                          className='highlighter icon' alt='highlighter on' />}
                                         onClick={this.highlightClickHandler} title="Highlight" stop={1}
                                         initialRating={initialHighlight}
-                                        style={{ marginRight : '20px'}}
                                 > </Rating>
                             </div>
                          }
