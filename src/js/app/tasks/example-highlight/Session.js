@@ -20,7 +20,8 @@ class Session extends React.PureComponent {
         this.state = {
             start: false,
             finished: false,
-            slideIndex: 1
+            slideIndex: 1,
+            nextbutton: "Next"
         };
 
         this.onFinish = this.onFinish.bind(this);
@@ -29,6 +30,8 @@ class Session extends React.PureComponent {
         this.openModal = this.openModal.bind(this);
         this.plusSlides = this.plusSlides.bind(this);
         this.minusSlides = this.minusSlides.bind(this);
+
+        // this.nextbutton = this.nextbutton.bind(this);
     }
 
     componentDidMount() {
@@ -100,6 +103,9 @@ class Session extends React.PureComponent {
         else {
             if (currentSlide < 2) {document.getElementById("tutorialPrev").style.display = "none";}
             else {document.getElementById("tutorialPrev").style.display = "block";}
+            if (currentSlide === slides.length){this.state.nextbutton = "Done"} else {
+                this.state.nextbutton = "Next"
+            }               
             for (i = 0; i < slides.length; i++) {
                 slides[i].style.display = "none";
             }
@@ -169,7 +175,7 @@ class Session extends React.PureComponent {
         );
 
         let captions = [
-            'This is what a document looks like',
+            'This is what a document looks like when you click a search result!',
             'The top right corner shows that the highlighter is active',
             'You can click on it to deactivate the highlighting tool',
             'When you highlight text, it will remain highlighted',
@@ -227,7 +233,7 @@ class Session extends React.PureComponent {
                         <div className="caption-container">
                             <p id="caption">{caption}</p>
                             <a id='tutorialPrev' className="tutorialPrev" onClick={this.minusSlides}>Back</a>
-                        <a id='tutorialNext' className="tutorialNext" onClick={this.plusSlides}>Next</a>
+                        <a id='tutorialNext' className="tutorialNext" onClick={this.plusSlides}>{this.state.nextbutton}</a>
 
                         </div>
                     </div>
