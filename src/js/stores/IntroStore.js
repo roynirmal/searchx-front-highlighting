@@ -25,8 +25,9 @@ let state = {
 };
 
 const IntroStore = Object.assign(EventEmitter.prototype, {
-    startIntro(steps, callback) {
+    startIntro(steps, modal, callback) {
         if (this.isIntroDone()) {
+           
             callback();
             return;
         }
@@ -52,8 +53,9 @@ const IntroStore = Object.assign(EventEmitter.prototype, {
             SearchStore.removeSearchTutorialData();
             QueryHistoryStore.removeQueryHistoryTutorialData();
             BookmarkStore.removeBookmarksTutorialData();
-
-            callback();
+            // console.log("yes Intro done", modal)
+            localStorage.setItem('start-hl-intro', true)
+            callback(modal);
         };
         intro.onexit(oncomplete);
         intro.oncomplete(oncomplete);

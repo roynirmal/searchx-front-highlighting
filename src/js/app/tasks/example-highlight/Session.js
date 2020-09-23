@@ -71,7 +71,7 @@ class Session extends React.PureComponent {
             }
 
         ];     
-        IntroStore.startIntro(introSteps, () => {
+        IntroStore.startIntro(introSteps, this.openModal, () => {
             const start = localStorage.getItem("timer-start") || Date.now();
             localStorage.setItem("timer-start", start);
             this.setState({
@@ -79,6 +79,55 @@ class Session extends React.PureComponent {
                 });
         });
     }
+    // Viewer Tutorial Functions ///////////////
+    openModal(){
+        document.getElementById("myModal").style.display = "block";
+        console.log("This is the openModal function")
+        this.showSlides()
+    }
+
+    closeModal(){
+        document.getElementById("myModal").style.display = "none";
+        localStorage.removeItem('start-hl-intro')
+    }
+
+    showSlides() {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let currentSlide = this.state.slideIndex;
+        console.log('before display', currentSlide);
+        if (currentSlide > slides.length) {this.closeModal()}
+        else {
+            if (currentSlide < 2) {document.getElementById("tutorialPrev").style.display = "none";}
+            else {document.getElementById("tutorialPrev").style.display = "block";}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[currentSlide - 1].style.display = "block";
+            console.log('after display', currentSlide);
+        }
+    }
+
+    plusSlides() {
+        let currentIndex = {...this.state.slideIndex}
+        let refIndex = this.state.slideIndex
+        console.log('ref', refIndex)
+        console.log('copy', currentIndex)
+        console.log('value', this.state.slideIndex)
+        let newIndex = this.state.slideIndex + 1;
+        this.setState({slideIndex: newIndex})
+
+        console.log('ref', refIndex)
+        console.log('copy', currentIndex)
+        console.log('value', this.state.slideIndex)
+        this.showSlides();
+    }
+    minusSlides() {
+        let newIndex = this.state.slideIndex - 1;
+        this.setState({slideIndex: newIndex})
+        this.showSlides();
+    }
+    // Viewer Tutorial Functions ///////////////
 
     render() {
         const task = AccountStore.getTask();
@@ -122,13 +171,18 @@ class Session extends React.PureComponent {
         let captions = [
             'This is what a document looks like',
             'The top right corner shows that the highlighter is active',
-            'You can click on it to deactivate it',
+            'You can click on it to deactivate the highlighting tool',
             'When you highlight text, it will remain highlighted',
             'You can delete each highlight with the corresponding button',
             'Click here to close the document and save your highlights'
         ]
         let caption = captions[this.state.slideIndex - 1];
-
+        let hlintro = localStorage.getItem('start-hl-intro')
+        if (hlintro ){
+            console.log(hlintro, "HLINTO")
+            this.openModal()
+        }
+        
         return (
             <div>
                 <TaskedSession 
@@ -138,9 +192,10 @@ class Session extends React.PureComponent {
                 lastSession={false} 
                 firstSession={false}/>
                 {/*// Viewer Tutorial Content ///////////////*/}
-                <div>
+                {/* {hlintro === true? this.openModal() : [] } */}
+                {/* <div>
                     <h2 onClick={this.openModal}> OpenTutorial </h2>
-                </div>
+                </div> */}
                 <div id="myModal" className="tutorialModal">
                     <span className="tutorialClose" onClick={this.closeModal}>&times;</span>
                     <div className="modal-content">
@@ -168,11 +223,12 @@ class Session extends React.PureComponent {
                             <img src='/img/viewerTutorial/Slide6.PNG' />
                         </div>
 
-                        <a id='tutorialPrev' className="tutorialPrev" onClick={this.minusSlides}>Back</a>
-                        <a id='tutorialNext' className="tutorialNext" onClick={this.plusSlides}>Next</a>
-
+                        
                         <div className="caption-container">
                             <p id="caption">{caption}</p>
+                            <a id='tutorialPrev' className="tutorialPrev" onClick={this.minusSlides}>Back</a>
+                        <a id='tutorialNext' className="tutorialNext" onClick={this.plusSlides}>Next</a>
+
                         </div>
                     </div>
                 </div>
@@ -182,54 +238,7 @@ class Session extends React.PureComponent {
     }
 
 
-    // Viewer Tutorial Functions ///////////////
-    openModal(){
-        document.getElementById("myModal").style.display = "block";
-        this.showSlides()
-    }
-
-    closeModal(){
-        document.getElementById("myModal").style.display = "none";
-    }
-
-    showSlides() {
-        let i;
-        let slides = document.getElementsByClassName("mySlides");
-        let currentSlide = this.state.slideIndex;
-        console.log('before display', currentSlide);
-        if (currentSlide > slides.length) {this.closeModal()}
-        else {
-            if (currentSlide < 2) {document.getElementById("tutorialPrev").style.display = "none";}
-            else {document.getElementById("tutorialPrev").style.display = "block";}
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-            slides[currentSlide - 1].style.display = "block";
-            console.log('after display', currentSlide);
-        }
-    }
-
-    plusSlides() {
-        let currentIndex = {...this.state.slideIndex}
-        let refIndex = this.state.slideIndex
-        console.log('ref', refIndex)
-        console.log('copy', currentIndex)
-        console.log('value', this.state.slideIndex)
-        let newIndex = this.state.slideIndex + 1;
-        this.setState({slideIndex: newIndex})
-
-        console.log('ref', refIndex)
-        console.log('copy', currentIndex)
-        console.log('value', this.state.slideIndex)
-        this.showSlides();
-    }
-    minusSlides() {
-        let newIndex = this.state.slideIndex - 1;
-        this.setState({slideIndex: newIndex})
-        this.showSlides();
-    }
-    // Viewer Tutorial Functions ///////////////
-
+    
 
     onFinish() {
         // if (localStorage.session ==1):

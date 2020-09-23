@@ -50,12 +50,39 @@
     cursor: pointer;
 }
 
-/* Next & previous buttons */
+
+
+img {
+    margin-bottom: -4px;
+}
+
+.caption-container {
+    box-sizing: content-box;
+    position: absolute;
+    visibility: visible;
+    padding: 10px;
+    background-color: white;
+    min-width: 200px;
+    max-width: 300px;
+    border-radius: 3px;
+    box-shadow: 0 1px 10px rgba(0,0,0,.4);
+    -webkit-transition: opacity 0.1s ease-out;
+    -moz-transition: opacity 0.1s ease-out;
+    -ms-transition: opacity 0.1s ease-out;
+    -o-transition: opacity 0.1s ease-out;
+    transition: opacity 0.1s ease-out;
+    text-align: center;
+    width: auto;
+    color: black;
+    top: 65%;
+    align-self: center;
+
+    /* Next & previous buttons */
 .tutorialPrev,
 .tutorialNext {
     cursor: pointer;
     position: absolute;
-    top: 80%;
+    top: 70%;
     width: auto;
     padding: 16px;
     margin-top: -50px;
@@ -85,12 +112,12 @@
 
 /* Position the "next button" to the right */
 .tutorialNext {
-    right: 40%;
+    right: 25%;
     border-radius: 3px 0 0 3px;
 }
 
 .tutorialPrev {
-    right: 55%;
+    right: 60%;
     border-radius: 3px 0 0 3px;
 }
 
@@ -110,31 +137,6 @@
     position: absolute;
     top: 0;
 }
-
-img {
-    margin-bottom: -4px;
-}
-
-.caption-container {
-    box-sizing: content-box;
-    position: absolute;
-    visibility: visible;
-    padding: 10px;
-    background-color: white;
-    min-width: 200px;
-    max-width: 300px;
-    border-radius: 3px;
-    box-shadow: 0 1px 10px rgba(0,0,0,.4);
-    -webkit-transition: opacity 0.1s ease-out;
-    -moz-transition: opacity 0.1s ease-out;
-    -ms-transition: opacity 0.1s ease-out;
-    -o-transition: opacity 0.1s ease-out;
-    transition: opacity 0.1s ease-out;
-    text-align: center;
-    width: auto;
-    color: black;
-    top: 65%;
-    align-self: center;
 }
 
 .demo {
