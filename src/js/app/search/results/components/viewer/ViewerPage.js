@@ -216,29 +216,6 @@ export default class ViewerPage extends React.Component {
                 };
                 let highlighter = new TextHighlighter(document.getElementById("documentText"), highlighterOptions);
                 console.log("Updated first click")
-                let introViewer = [
-                    {   key: 'close',
-                        element: '.close',
-                        intro: 'Click here to go back to the search results. Your highlights will be saved automatically',
-                        position: 'right'
-                    },
-                    {
-                        key: 'hl',
-                        element: '.Rating',
-                        intro: 'Click here to activate or deactivate the highlighter tool',
-                        position: 'left'
-                    }
-
-                ];
-
-                IntroStore.startIntro(introViewer, () => {
-                    const start = localStorage.getItem("timer-start") || Date.now();
-                    localStorage.setItem("timer-start", start);
-                    this.setState({
-                        start: start
-                    });
-                });
-
                 let userId = localStorage.getItem("user-id");
                 let currentDoc = localStorage.getItem("opened-doc");
                 let hlId = userId + '_' + currentDoc;
@@ -252,7 +229,10 @@ export default class ViewerPage extends React.Component {
 
                 localStorage.setItem("first-click", "no")
             }
-            this.createButton()
+            if (!localStorage.getItem("post-test")){
+                this.createButton();
+            }
+            
             
         }
     }
@@ -294,8 +274,10 @@ export default class ViewerPage extends React.Component {
             );
             return cleanHTML
         };
-
-        this.createButton();
+        if (!localStorage.getItem("post-test")){
+            this.createButton();
+        }
+        
 
         return (
             <div className="page">
