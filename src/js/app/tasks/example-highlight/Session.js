@@ -97,6 +97,10 @@ class Session extends React.PureComponent {
     showSlides() {
         let i;
         let slides = document.getElementsByClassName("mySlides");
+        let tutorialType = localStorage.getItem('taskType')
+        if (tutorialType === 'highlightOnly') {slides.slice(0,7)}
+        if (tutorialType === 'notesOnly') {slides.slice(9,)}
+        if (tutorialType === 'highlightPlusNotes') {slides.slice(0,10)}
         let currentSlide = this.state.slideIndex;
         console.log('before display', currentSlide);
         if (currentSlide > slides.length) {this.closeModal()}
@@ -181,8 +185,18 @@ class Session extends React.PureComponent {
             'You can click on it to deactivate the highlighting tool',
             'When you highlight text, it will remain highlighted',
             'You can delete each highlight with the corresponding button',
-            'Click here to close the document and save your highlights'
+            'Click here to close the document and save your highlights',
+            'You can open the Notepad by clicking on the tab on the right',
+            'This will show the Notepad where you can work',
+            'The Notepad can be closed by clicking the tab again',
+            'You can open the Notepad by clicking on the tab on the right',
+            'This will show the Notepad where you can work',
+            'The Notepad can be closed by clicking the tab again'
         ]
+        let tutorialType = localStorage.getItem('taskType')
+        if (tutorialType === 'highlightOnly') {captions.slice(0,7)}
+        if (tutorialType === 'notesOnly') {captions.slice(9,)}
+        if (tutorialType === 'highlightPlusNotes') {captions.slice(0,10)}
         let caption = captions[this.state.slideIndex - 1];
         let hlintro = localStorage.getItem('start-hl-intro')
         if (hlintro ){
@@ -230,6 +244,30 @@ class Session extends React.PureComponent {
                             <img src='/img/viewerTutorial/Slide6.PNG' />
                         </div>
 
+                        <div className="mySlides">
+                            <img src='/img/viewerTutorial/Slide7.PNG' />
+                        </div>
+
+                        <div className="mySlides">
+                            <img src='/img/viewerTutorial/Slide8.PNG' />
+                        </div>
+
+                        <div className="mySlides">
+                            <img src='/img/viewerTutorial/Slide9.PNG' />
+                        </div>
+
+                        <div className="mySlides">
+                            <img src='/img/viewerTutorial/Slide10.PNG' />
+                        </div>
+
+                        <div className="mySlides">
+                            <img src='/img/viewerTutorial/Slide11.PNG' />
+                        </div>
+
+                        <div className="mySlides">
+                            <img src='/img/viewerTutorial/Slide12.PNG' />
+                        </div>
+
                         
                         <div className="caption-container">
                             <p id="caption">{caption}</p>
@@ -239,7 +277,6 @@ class Session extends React.PureComponent {
                         </div>
                     </div>
                 </div>
-                {/*// Viewer Tutorial Content ///////////////*/}
             </div>
         )
     }
@@ -251,7 +288,7 @@ class Session extends React.PureComponent {
         // if (localStorage.session ==1):
         this.setState({
             finished: true
-        });;
+        });
     
     }
     onLeave() {
