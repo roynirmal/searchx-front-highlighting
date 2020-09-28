@@ -58,29 +58,43 @@ const formData = function() {
     elements.push({
         type: "html",
         name: "topic",
-        html: "<h2>STUDY DESCRIPTION</h2>"
+        html: "<h2>STUDY DESCRIPTION:  Search as Learning</h2>"
     });
 
     elements.push({
         type: "html",
         name: "start",
         html: `
-        <h3> <img src ="/img/virus.png" width="50" height="50"> Help us learn more about the novel coronavirus!  </h3>
+       
+        <hr/>
+       
+        
+        
+        <h3> <img src ="/img/search.png" width="50" height="50"> Spend twenty minutes to learn about a topic by searching the Web with our search engine!</h3>
         
         <hr/>
-        <p> As researchers, clinicians, and policy makers are involved with the response to COVID-19 (the novel coronavirus), it is becoming increasingly necessary for them and for the rest of us to find reliable information about the disease. In this study, we require you to help us with a critical step of the process when searching for information on COVID-19 -- formulating queries that can be issued to a search engine.
-        </p>
+        <p>The study consists of three phases: a questionnaire, a search phase and another questionnaire.</p>
         
-        <h3> <img src ="/img/coronavirus.png" width="50" height="50"> Searching the web  </h3>
-        <hr/>
-        <p> We use the web on a regular basis to find various information we need. To do so, we often express our information need (e.g. ‘comparing prices of two smartphones’) by formulating a query (e.g. ‘iphone vs. samsung galaxy cost’ etc.) and type it in to a search engine. The search engine in turn provides us with a list of results that we analyse. If the query is not well formed or ambiguous, there is a chance that we won't be able to find what we are looking for.<p> 
+        <p> Each questionnaire contains questions about one or more topics - please answer the questions truthfully. 
+        Your payment is <b>not</b> affected by the number of correct or incorrect answers. 
+        Most questions are multiple-choice questions, in the second questionnaire we ask you to write a summary  too.
+        When you write the summary you will have access to the search results you saved during the search phase. </p>
         
         <h3> <img src ="/img/experiment.png" width="50" height="50"> The experiment  </h3>
         <hr/>
-        <p> In this study, we will provide you with 3 information needs related to COVID-19 (e.g. ‘Looking for information on all possible ways to contract COVID-19 from people, animals and objects’). With each of these information needs, you have to provide us with two good (but different) queries that represents that particular information need. There is no right answer here. If you were to imagine that you are searching the web for this particular information need, what we are after are the terms that you type into the search engine to get the documents that will answer your information need.</p>
+        <p>During the search phase we want you to use our custom search engine (which provides access to a large portion of the web) to learn about one topic –- you will find a description of your topic on the right-hand side of the search interface. 
+       <br>
+        Our search interface has a number of user interface elements that help you to learn and search–-we will introduce them to you on the next screen. </p>
+        <p>You are required to search for web pages, read them and learn about a topic for at
+        least 20 minutes–-our interface has a timer, so you can see how much time you already spent searching. 
+        After 20 minutes you can move on to the final questionnaire by clicking on the <span style="background-color: #00A6D3"><font color="white">To Final Test</span></font> button. 
+        If you prefer, you can also keep searching for a bit longer and then move on.</p>
+
+       
+
         <h3> <img src ="/img/list.png" width="50" height="50"> Your role  </h3>
         <hr/>
-        <p> Imagine that you are searching the web with that particular information need in mind. You can use our SearchX system to issue queries and examine a series of documents we have collated that discuss various issues related coronavirus. After providing us with some basic demographics information, we will present the search interface.</p>
+        <p> Imagine that you are searching the web with that particular information need in mind. You can use our SearchX system to issue queries and examine a series of documents for researching about your information need.  After providing us with some basic demographics information, we will present the search interface.</p>
         <ol type="-">
             <li>
                 <p>  Use SearchX just as you would your chosen web search engine. Issue as many queries as you like, and examine whatever documents you like. 
@@ -95,19 +109,11 @@ const formData = function() {
                 </p> 
             </li>
             <li>
-                <p> You will be then asked to select from all the queries you issued the one you think is best for the given topic.
-                </p> 
-            </li>
-            <li>
-                <p> This process will then be repeated for the remaining nine tasks. The topic description presented on the right will change, and you can start your exploration again.
-                </p> 
-            </li>
-            <li>
-                <p> You can save the queries and bookmark documents you find important. 
+                <p> You can save the queries and bookmark documents you find important. You will also be able to highlight text in a document and take notes in our search interface as well.
                 </p> 
             </li>
         </ol>
-        <p>We ask you to also check that there are no spelling mistakes in the query you choose to give to us. <b>Once you click Next, you cannot go back and try other queries.</b></p>
+        
         
         <h3> <img src ="/img/error.png" width="50" height="50"> Keep in mind...  </h3>
         <hr/>
@@ -122,7 +128,8 @@ const formData = function() {
             <li>
                 <p>You can interact with the search results. 
                     A click on a document snippet will open this document in our own document viewer. 
-                    We know that this document viewer is not perfect, but please stick with it. 
+                    We know that this document viewer is not perfect, but please stick with it. In the document viewer you will have access to a highlighting tool.
+
                 </p>
             </li>
             <li> 
@@ -241,7 +248,7 @@ const formData = function() {
         <br/>
         <br/>
         <div align="center">
-        <img src ="img/journey_2.jpeg" width="450" height="250">
+        <img src ="/img/journey_2.jpeg" width="450" height="250">
         </div>
         
         `
@@ -292,13 +299,36 @@ const formData = function() {
     });
 
         elements.push({
-        title: "What are your preferred offline resources (can be books, people, institutions) to learn about a scientific topic?",
-        name: "web-offline",
+        title: "How often do you highlight text while reading a document online or a printed article?",
+        name: "hl-freq",
         type: "comment",
         inputType: "text",
         width: 600,
         rows: 1,
         isRequired: true
+    });
+
+    elements.push({
+        title: "How often do you take notes while doing some research on your preferred online or offline resources?",
+        name: "nt-freq",
+        type: "comment",
+        inputType: "text",
+        width: 600,
+        rows: 1,
+        isRequired: true
+    });
+
+    elements.push({
+        title: "Do you think highlighting helps or would help you learn a scientific topic more efficiently?",
+        name: "hl-benefit",
+        name: "english",
+        type: "radiogroup",
+        isRequired: true,
+        choices: [
+            {value: 0, text: "No"},
+            {value: 1, text: "Maybe"},
+            {value: 2, text: "Yes"},
+        ]
     });
 
     elements.push({

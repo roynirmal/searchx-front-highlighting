@@ -68,13 +68,13 @@ class Session extends React.PureComponent {
                 position: 'top'
             },
             {
-                element: '.Bookmarks',
-                intro: 'The saved documents saved will appear here. You can revisit them before completing the session and while writing the summary on what you have learned about the topic.',
+                element: '.Savedhighlights',
+                intro: 'The saved highlights along with the documents will appear here. You can revisit them before completing the session and while writing the summary on what you have learned about the topic.',
                 position: 'top'
             }
 
         ];     
-        IntroStore.startIntro(introSteps, this.openModal, () => {
+        IntroStore.startIntro(introSteps, () => {
             const start = localStorage.getItem("timer-start") || Date.now();
             localStorage.setItem("timer-start", start);
             this.setState({
@@ -140,6 +140,7 @@ class Session extends React.PureComponent {
         const timer = (
             <div style={{marginTop: '10px', textAlign: 'center'}}>
                 <Timer start={this.state.start} duration={constants.taskDuration} onFinish={this.onFinish} style={{fontSize: '2em'}} showRemaining={false}/>
+                
                 
                 <Link className={"btn btn-primary" + (this.state.finished ? '' : ' disabled')} to="/sync/posttest" role="button">
                         To Final Test

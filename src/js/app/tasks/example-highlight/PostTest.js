@@ -10,7 +10,7 @@ import SyncStore from "../../../stores/SyncStore";
 import SearchStore from "../../search/SearchStore";
 import SearchResultsContainer from "../../search/results/SearchResultsContainer";
 import SearchActions from '../../../actions/SearchActions';
-import BookmarkContainer from "../../search/features/bookmark/BookmarkContainer";
+import SavedhighlightContainer from "../../search/features/savedhighlight/SavedhighlightContainer";
 
 
 class PostTest extends React.Component {
@@ -35,27 +35,27 @@ class PostTest extends React.Component {
 
     render() {
         const task = AccountStore.getTask();
-        window.globalPage=1;
-        function keepMePosted(){
-            var els = document.getElementsByClassName('btn-green');
-            var hideme = document.getElementById("hideme");
-            Array.prototype.forEach.call(els, function(el) {
-                if (el.value === "Next" || el.value === "Previous") {
-                    el.onclick=function(){
-                        window.globalPage=window.globalPage===1?2:1;		
-                    }
-            }
-            });
-            if (hideme!=null){
-                if (window.globalPage===1){
-                    hideme.style.display="none";
-                } else {
-                    hideme.style.display="block";
-                }
-            }
-            setTimeout(keepMePosted, 200);
-        }
-        setTimeout(keepMePosted, 2000);
+        // window.globalPage=1;
+        // function keepMePosted(){
+        //     var els = document.getElementsByClassName('btn-green');
+        //     var hideme = document.getElementById("hideme");
+        //     Array.prototype.forEach.call(els, function(el) {
+        //         if (el.value === "Next" || el.value === "Previous") {
+        //             el.onclick=function(){
+        //                 window.globalPage=window.globalPage===1?2:1;		
+        //             }
+        //     }
+        //     });
+        //     if (hideme!=null){
+        //         if (window.globalPage===1){
+        //             hideme.style.display="none";
+        //         } else {
+        //             hideme.style.display="block";
+        //         }
+        //     }
+        //     setTimeout(keepMePosted, 200);
+        // }
+        // setTimeout(keepMePosted, 2000);
         
         localStorage.setItem("post-test", 1);
         return (
@@ -72,7 +72,7 @@ class PostTest extends React.Component {
                             <SearchResultsContainer/>
                         </div>
         <div className="Side" id="hideme">
-        <BookmarkContainer collaborative={this.props.collaborative}/>
+        <SavedhighlightContainer collaborative={this.props.collaborative}/>
         </div> 
         </div>
         )

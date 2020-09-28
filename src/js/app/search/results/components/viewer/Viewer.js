@@ -324,11 +324,11 @@ export default class Viewer extends React.Component  {
                 <div id={"viewer"} className="viewer" onMouseEnter={hoverEnterDocument} onMouseLeave={hoverLeaveDocument}
                      onScroll={scrollDocument} >
                     <div className="header">
-                        {!this.props.doctext  ?
+                        {!this.props.doctext || localStorage.getItem('post-test') ?
                             [
                                 <span className="forward" > </span>,
                                 <span className="divider"/>
-                            ] :
+                            ] : 
                             <div className="pull-right" >
                                 <span>{highlighterToggle}</span>
                                 <Rating className="Rating"
