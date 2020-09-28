@@ -9,11 +9,12 @@
     }
 
     header {
-        position: relative;
-        top: 120px;
-        left: -10px;
+        position: absolute;
+        top: 200px;
+        right: 10px;
         white-space: nowrap;
         width: 20px;
+        z-index: 999999;
     }
 
     .btnSidebar {
@@ -37,7 +38,6 @@
         position: relative;
         top: 20%;
         left: 10px;
-        z-index: 1;
     }
 
     .sidebar.open {
@@ -45,5 +45,6 @@
         width: 33%;
         overflow-x: auto;
         overflow-y: auto;
+        z-index: 1001;
     }
 }
