@@ -234,6 +234,11 @@ const formData = function() {
             {value: 5, text: "Proficiency"}
         ]
     });
+    elements.push({
+        html: "<div class='container-fluid' style='height:calc(50vh - 50px);'>",
+        name: "english-chart",
+        type: "html",
+    });
 
     pages.push({elements:  elements});
 
@@ -321,7 +326,6 @@ const formData = function() {
     elements.push({
         title: "Do you think highlighting helps or would help you learn a scientific topic more efficiently?",
         name: "hl-benefit",
-        name: "english",
         type: "radiogroup",
         isRequired: true,
         choices: [

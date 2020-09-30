@@ -57,6 +57,8 @@ const SearchResults = function ({
 
     if (!tutorial && !progress.finished) {
         return <CenteredMessage height="800px">
+            <h3>Your search is being processed!</h3>
+            <br></br>
             <Loader/>
         </CenteredMessage>
     }
