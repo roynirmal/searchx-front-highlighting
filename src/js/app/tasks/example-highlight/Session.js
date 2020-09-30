@@ -186,7 +186,7 @@ class Session extends React.PureComponent {
             'When you highlight text, it will remain highlighted',
             'You can delete each highlight with the corresponding button',
             'Click here to close the document and save your highlights',
-            'You can open the Notepad by clicking on the tab on the right',
+            'You can open the Notepad by clicking on the tab on the right. Your highlights will be automatically copeid to the notepad.',
             'This will show the Notepad where you can work',
             'The Notepad can be closed by clicking the tab again',
             'You can open the Notepad by clicking on the tab on the right',

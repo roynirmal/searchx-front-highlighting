@@ -54,12 +54,23 @@ const SearchResults = function ({
             <h4> We have not found results for you! Try to shorten your query! </h4>
         </CenteredMessage>
     }
-
     if (!tutorial && !progress.finished) {
-        return <CenteredMessage height="800px">
-            <Loader/>
+        return <CenteredMessage height="800px" style={style}>
+            <Loader/>   
+            <h4>  &nbsp;&nbsp; </h4>
+            <h4> Please wait while your result is being loaded!   </h4>
         </CenteredMessage>
+        
+             
+        
     }
+
+    // if (!tutorial && !progress.finished) {
+    //     return <div className='content'>
+           
+            
+    //     </div>
+    // }
 
     ////
 
@@ -134,8 +145,8 @@ const SearchResults = function ({
                                           hideCollapsedResultsHandler={hideCollapsedResults} searchState={searchState}
                                           serpId={serpId}/>);
     }
-    const currentCollapsedResultsLength = Object.values(collapsed).filter(value => value).length;
-    const allBookmarkedResultsHidden = currentCollapsedResultsLength === getCollapsibleResultsLength();
+    // const currentCollapsedResultsLength = Object.values(collapsed).filter(value => value).length;
+    // const allBookmarkedResultsHidden = currentCollapsedResultsLength === getCollapsibleResultsLength();
 
 
     return (
@@ -150,10 +161,10 @@ const SearchResults = function ({
                             disabled={allBookmarkedResultsShown}>
                         Show all hidden results
                     </Button> */}
-                    <Button variant="light" className="allCollapsedResultsButton" onClick={hideAllCollapsedResults}
+                    {/* <Button variant="light" className="allCollapsedResultsButton" onClick={hideAllCollapsedResults}
                             disabled={allBookmarkedResultsHidden}>
                         Hide all saved results
-                    </Button>
+                    </Button> */}
                 </div>
                 }
                 <div className="list">

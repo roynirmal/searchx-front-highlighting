@@ -319,16 +319,13 @@ const formData = function() {
     });
 
     elements.push({
-        title: "Do you think highlighting helps or would help you learn a scientific topic more efficiently?",
+        title: "To what extent you think highlighting helps or would help you learn a scientific topic more efficiently?",
         name: "hl-benefit",
-        name: "english",
-        type: "radiogroup",
-        isRequired: true,
-        choices: [
-            {value: 0, text: "No"},
-            {value: 1, text: "Maybe"},
-            {value: 2, text: "Yes"},
-        ]
+        type: "comment",
+        inputType: "text",
+        width: 600,
+        rows: 1,
+        isRequired: true
     });
 
     elements.push({

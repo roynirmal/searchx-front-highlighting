@@ -316,7 +316,7 @@ const _search = (query, vertical, page) => {
                 elapsedTime: state.elapsedTime,
                 session: localStorage.getItem("session-num")
             });
-
+            
             SearchStore.emitChange();
             SessionActions.getQueryHistory();
         });

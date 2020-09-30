@@ -13,9 +13,11 @@ export default class SearchHeaderContainer extends React.Component {
     constructor() {
         super();
         const searchState = SearchStore.getSearchState();
+        const searchProgress = SearchStore.getSearchProgress();
         this.state = {
             searchState: searchState,
-            query: searchState.query
+            query: searchState.query,
+            load: searchProgress.finished
         };
 
         this.changeHandler = this.changeHandler.bind(this);
@@ -31,6 +33,8 @@ export default class SearchHeaderContainer extends React.Component {
     componentWillUnmount() {SearchStore.removeChangeListener(this.changeHandler);}
 
     render() {
+        // let load = localStorage.getItem("result-here")
+        // console.log("ULOAD", load)
         return <SearchHeader
             query={this.state.query}
             vertical={this.state.searchState.vertical}
@@ -46,6 +50,7 @@ export default class SearchHeaderContainer extends React.Component {
             clickSuggestionHandler={this.clickSuggestionHandler}
             showSuggestions={this.state.showSuggestions}
             // these props do not update to changes
+            load={this.state.load}
             userId={AccountStore.getUserId()}
             groupId={AccountStore.getGroupId()}
         />
@@ -62,6 +67,11 @@ export default class SearchHeaderContainer extends React.Component {
                 query: nextSearchState.query
             });
         }
+        const searchProgress = SearchStore.getSearchProgress();
+            // console.log("load")
+            this.setState({
+                load: searchProgress.finished
+            });
     }
 
     searchHandler() {
