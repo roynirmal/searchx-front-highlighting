@@ -236,7 +236,7 @@ const formData = function() {
     });
     elements.push({
         html: "<div class='container-fluid' style='height:calc(50vh - 50px);'>",
-        name: "english-chart",
+        name: "intentionally-blank",
         type: "html",
     });
 
