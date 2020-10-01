@@ -1,5 +1,5 @@
 import React from 'react';
-// import Rating from 'react-rating';
+import Rating from 'react-rating';
 
 import {Collapse} from "react-bootstrap";
 
@@ -12,19 +12,22 @@ const SearchResult = function ({
                                    collapsed, excludeClickHandler, hideCollapsedResultsHandler, isCollapsible, visited,
                                    index
                                }) {
-    // let initialBookmark = 0;
-    // let initialExclude = 0;
-    // if ('metadata' in result) {
-    //     initialBookmark = result.metadata.bookmark ? 1 : 0;
-    //     initialExclude = result.metadata.exclude ? 1 : 0;
-    // }
+                                   
 
-    // const bookmarkButton = <Rating
-    //     className="rating" emptySymbol="fa fa-bookmark-o" fullSymbol="fa fa-bookmark"
-    //     onClick={bookmarkClickHandler}
-    //     stop={1} initialRating={initialBookmark}
-    //     title="Save result"
-    // />;
+                          
+            let initialBookmark = 0;
+        // let initialExclude = 0;
+        // if ('metadata' in result) {
+        //     initialBookmark = result.metadata.bookmark ? 1 : 0;
+        //     initialExclude = result.metadata.exclude ? 1 : 0;
+        // }
+
+           const bookmarkButton = <Rating
+                className="rating" emptySymbol="fa fa-bookmark-o" fullSymbol="fa fa-bookmark"
+                onClick={bookmarkClickHandler}
+                stop={1} initialRating={initialBookmark}
+                title="Save result"
+            />;
 
     // TODO: use variant from SearchStore instead of defaultVariant
     // const excludeButton = <div>
@@ -35,9 +38,23 @@ const SearchResult = function ({
     //         title="Exclude result from future queries"
     //     />}
     // </div>;
-
-
-    const props = {
+    let props = {}
+    if (config.interface.bookmarks){                            
+     props = {
+        searchState: searchState,
+        serpId: serpId,
+        result: result,
+        index: index,
+        metadata: formatMetadata(result.metadata),
+        bookmarkButton: bookmarkButton,
+        // excludeButton: excludeButton,
+        urlClickHandler: urlClickHandler,
+        // hideCollapsedResultsHandler: hideCollapsedResultsHandler,
+        isCollapsible: isCollapsible,
+        visited: visited
+    };
+} else {
+    props = {
         searchState: searchState,
         serpId: serpId,
         result: result,
@@ -50,6 +67,8 @@ const SearchResult = function ({
         isCollapsible: isCollapsible,
         visited: visited
     };
+} 
+
     const ResultType = config.providerVerticals[provider].get(searchState.vertical);
     const view = <ResultType {...props}/>;
 

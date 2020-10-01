@@ -324,7 +324,7 @@ export default class Viewer extends React.Component  {
                 <div id={"viewer"} className="viewer" onMouseEnter={hoverEnterDocument} onMouseLeave={hoverLeaveDocument}
                      onScroll={scrollDocument} >
                     <div className="header">
-                        {!this.props.doctext || localStorage.getItem('post-test') ?
+                        {!this.props.doctext || localStorage.getItem('post-test') || !config.interface.highlight ?
                             [
                                 <span className="forward" > </span>,
                                 <span className="divider"/>

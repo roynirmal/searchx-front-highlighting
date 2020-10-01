@@ -3,6 +3,7 @@ import TextHighlighter from "texthighlighter";
 import {log} from '../../../../../utils/Logger';
 import {LoggerEventTypes} from '../../../../../utils/LoggerEventTypes';
 import IntroStore from "../../../../../stores/IntroStore";
+import config from '../../../../../config';
 
 export default class ViewerPage extends React.Component {
     constructor(props) {
@@ -202,11 +203,13 @@ export default class ViewerPage extends React.Component {
     }
 
     componentDidMount() {
+        if (config.interface.highlight){
         this.props.highlightClickHandler();
+        }
     }
     
     componentDidUpdate() {
-        if (this.props.doctext  ) {
+        if (this.props.doctext && config.interface.highlight ) {
             this.props.loadHandler();
 
             // Remove highlighter listener

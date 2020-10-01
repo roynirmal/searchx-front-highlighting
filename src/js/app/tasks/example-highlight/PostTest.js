@@ -10,8 +10,9 @@ import SyncStore from "../../../stores/SyncStore";
 import SearchStore from "../../search/SearchStore";
 import SearchResultsContainer from "../../search/results/SearchResultsContainer";
 import SearchActions from '../../../actions/SearchActions';
-import SavedhighlightContainer from "../../search/features/savedhighlight/SavedhighlightContainer";
-
+import SavedHighlightContainer from "../../search/features/savedhighlight/SavedhighlightContainer";
+import BookmarkContainer from "../../search/features/bookmark/BookmarkContainer";
+import config from "../../../config";
 
 class PostTest extends React.Component {
     constructor(props) {
@@ -72,7 +73,8 @@ class PostTest extends React.Component {
                             <SearchResultsContainer/>
                         </div>
         <div className="Side" id="hideme">
-        <SavedhighlightContainer collaborative={this.props.collaborative}/>
+        {config.interface.bookmarks && ( <BookmarkContainer collaborative={this.props.collaborative}/>)}
+        {config.interface.highlight && (<SavedHighlightContainer collaborative={this.props.collaborative}/>)}
         </div> 
         </div>
         )
