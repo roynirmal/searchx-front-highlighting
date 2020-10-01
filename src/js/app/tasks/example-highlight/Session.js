@@ -55,16 +55,11 @@ class Session extends React.PureComponent {
             },
             {
                 element: '.SearchHeader .form',
-                intro: 'Use SearchX to search for webpages, publications, and other online sources to learn about the topic. '
+                intro: 'Use SearchX to search for webpages, publications, and other online document sources to learn about the topic. '
             },
             {
                 element: '.QueryHistory',
                 intro: 'The query history shows your past search queries.',
-                position: 'top'
-            },
-            {
-                element: '.SearchResults',
-                intro: 'Save a resource that is useful by clicking on the yellow flag. Make sure to read the document and not just the snippet!',
                 position: 'top'
             },
             {
@@ -181,17 +176,17 @@ class Session extends React.PureComponent {
 
         let captions = [
             'This is what a document looks like when you click a search result!',
-            'The top right corner shows that the highlighter is active',
-            'You can click on it to deactivate the highlighting tool',
-            'When you highlight text, it will remain highlighted',
-            'You can delete each highlight with the corresponding button',
-            'Click here to close the document and save your highlights',
-            'You can open the Notepad by clicking on the tab on the right. Your highlights will be automatically copeid to the notepad.',
-            'This will show the Notepad where you can work',
-            'The Notepad can be closed by clicking the tab again',
-            'You can open the Notepad by clicking on the tab on the right',
-            'This will show the Notepad where you can work',
-            'The Notepad can be closed by clicking the tab again'
+            'The top right corner shows that the highlighter is active.',
+            'You can click on it to deactivate the highlighting tool.',
+            'When you highlight text, it will remain highlighted.',
+            'You can delete each highlight with the corresponding button.',
+            'Click here to close the document. You can see the list of your highlights in Your Highlights box.',
+            'You can open the Notepad by clicking on the tab on the right. Your highlights will be automatically copied to the notepad.',
+            'This is the Notepad interface where you can write your notes.',
+            'The Notepad can be closed by clicking the tab again.',
+            'You can open the Notepad by clicking on the tab on the right.',
+            'This is the Notepad interface where you can write your notes.',
+            'The Notepad can be closed by clicking the tab again.'
         ]
         let tutorialType = localStorage.getItem('taskType')
         if (tutorialType === 'highlightOnly') {captions.slice(0,7)}

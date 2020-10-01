@@ -137,18 +137,13 @@ const SearchStore = Object.assign(EventEmitter.prototype, {
                     name: "You can view the second result here",
                     id: "2",
                     snippet: "This is the second result...",
-                    metadata: {
-                        bookmark: {userId: AccountStore.getUserId(), date: new Date()},
-                        views: 10,
-                        rating: {total: -5, rating: 0},
-                        annotations: [1]
-                    }
+                    metadata: {}
                 },
                 {
                     name: "You can view the third result here",
                     id: "3",
                     snippet: "This is the third result...",
-                    metadata: {bookmark: {userId: 'test', date: new Date() - 2000}}
+                    metadata: {}
                 },
                 {
                     name: "You can view the fourth result here",

@@ -31,10 +31,13 @@ export default class SearchHeaderContainer extends React.Component {
 
     componentWillMount() {SearchStore.addChangeListener(this.changeHandler);}
     componentWillUnmount() {SearchStore.removeChangeListener(this.changeHandler);}
+    componentDidMount(){
+        this.state.load = true
+    }
 
     render() {
         // let load = localStorage.getItem("result-here")
-        // console.log("ULOAD", load)
+        console.log("ULOAD", this.state.load)
         return <SearchHeader
             query={this.state.query}
             vertical={this.state.searchState.vertical}
@@ -68,10 +71,15 @@ export default class SearchHeaderContainer extends React.Component {
             });
         }
         const searchProgress = SearchStore.getSearchProgress();
-            // console.log("load")
+            if (this.state.query) {
             this.setState({
                 load: searchProgress.finished
             });
+        } else {
+            this.setState({
+                load: true
+            });
+        }
     }
 
     searchHandler() {

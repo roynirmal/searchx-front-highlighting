@@ -54,7 +54,7 @@ class Timer extends React.PureComponent {
                 {this.props.start > 0 || this.props.showRemaining ?
                     minutes + ':' + padZero(seconds)
                     :
-                    '0:0'
+                    '0:00'
                 }
             </div>
         )

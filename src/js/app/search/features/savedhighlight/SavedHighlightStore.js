@@ -32,9 +32,9 @@ const SavedHighlightStore = Object.assign(EventEmitter.prototype, {
         // console.log("coming here B", state)
         if (state.tutorial) {
             return [
-                {title: "You can view your bookmarked documents here", url: "https://www.viewbookmark.com", userId: "1"},
-                {title: "You also can delete any bookmarked documents here", url: "https://www.deletebookmark.com", userId: "1"},
-                {title: "A starred bookmark will appear on top", url: "https://www.starredbookmark.com", starred: true, userId: "1"}
+                {title: "You can view your highlighted documents here", url: "https://www.viewhighlight.com", userId: "1"},
+                {title: "You also can delete any highlighted documents here", url: "https://www.deletehighlight.com", userId: "1"},
+                {title: "A starred highlight will appear on top", url: "https://www.starredhighlight.com", starred: true, userId: "1"}
             ];
         }
 

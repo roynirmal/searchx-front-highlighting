@@ -69,24 +69,25 @@ const formData = function() {
         <hr/>
        
         
-        
-        <h3> <img src ="/img/search.png" width="50" height="50"> Spend twenty minutes to learn about a topic by searching the Web with our search engine!</h3>
-        
+        <img src ="/img/search.png" width="50" height="50"> 
+        <br>
+        <h3> Spend 20 minutes to learn about a topic by searching the web</h3> 
+        <h3> with our search engine!</h3>
         <hr/>
         <p>The study consists of three phases: a questionnaire, a search phase and another questionnaire.</p>
         
-        <p> Each questionnaire contains questions about one or more topics - please answer the questions truthfully. 
+        <p> Each questionnaire contains questions about one or more topics&mdash;please answer the questions truthfully. 
         Your payment is <b>not</b> affected by the number of correct or incorrect answers. 
-        Most questions are multiple-choice questions, in the second questionnaire we ask you to write a summary  too.
-        When you write the summary you will have access to the search results you saved during the search phase. </p>
+        Most questions are multiple-choice questions. In the second questionnaire we ask you to write a summary  too.
+        </p>
         
         <h3> <img src ="/img/experiment.png" width="50" height="50"> The experiment  </h3>
         <hr/>
-        <p>During the search phase we want you to use our custom search engine (which provides access to a large portion of the web) to learn about one topic –- you will find a description of your topic on the right-hand side of the search interface. 
+        <p>During the search phase we want you to use our custom search engine (which provides access to a large portion of the web) to learn about one topic &mdash;you will find a description of your topic on the right-hand side of the search interface. 
        <br>
-        Our search interface has a number of user interface elements that help you to learn and search–-we will introduce them to you on the next screen. </p>
+        Our search interface has a number of user interface elements that help you to learn and search&mdash;we will introduce them to you on the next screen. </p>
         <p>You are required to search for web pages, read them and learn about a topic for at
-        least 20 minutes–-our interface has a timer, so you can see how much time you already spent searching. 
+        least 20 minutes&mdash;our interface has a timer, so you can see how much time you already spent searching. 
         After 20 minutes you can move on to the final questionnaire by clicking on the <span style="background-color: #00A6D3"><font color="white">To Final Test</span></font> button. 
         If you prefer, you can also keep searching for a bit longer and then move on.</p>
 
@@ -101,15 +102,11 @@ const formData = function() {
                  </p> 
             </li>
             <li>
-                <p> The information need we wish you to find a good query for will be outlined on the right of the screen.
+                <p> The information need we wish you search for will be outlined on the right of the screen.
                 </p> 
             </li>
             <li>
-                <p> Once you have completed your exploration, click Next. 
-                </p> 
-            </li>
-            <li>
-                <p> You can save the queries and bookmark documents you find important. You will also be able to highlight text in a document and take notes in our search interface as well.
+                <p> Your queries will be automatically saved. You will also be able to highlight text in a document and take notes in our search interface as well. If you highlight in a document, that particular document will be saved. Your highlights and notes will also be available to you during the final questionnaire.
                 </p> 
             </li>
         </ol>
@@ -127,18 +124,22 @@ const formData = function() {
             </li>
             <li>
                 <p>You can interact with the search results. 
-                    A click on a document snippet will open this document in our own document viewer. 
-                    We know that this document viewer is not perfect, but please stick with it. In the document viewer you will have access to a highlighting tool.
+                    A click on a document link will open the selected document in our own document viewer. 
+                    We know that this document viewer is not perfect, but please stick with it. In the document viewer you will have access to the highlighting tool.
 
                 </p>
             </li>
             <li> 
                 <p>
-                Keep your queries in line with the information need. 
-                For example, please do not issue queries for a prior topic once you have begun the search process for a new topic. Keep the queries you issue (and subsequently select) on point, and relevant to the topic outline provided on the right of the search interface.
+                Keep the queries you issue on point, and relevant to the topic outline provided on the right of the search interface.
+                For example, please do not issue queries for a prior topic once you have begun the search process for a new topic. 
                 If you begin issuing queries that are totally off topic (e.g. queries on ice skating, Brexit, or anything else you can think of), we will cancel your participation.
                 </p>
             </li>
+            <li>
+            <p> Once you have completed your exploration, click <span style="background-color: #00A6D3"><font color="white">To Final Test</span></font> button. Note that it will be only activate after 20 minutes. 
+            </p> 
+        </li>
         </ol>
         <hr/>
         Thank you for your valuable contribution and time! We really appreciate your help.
@@ -154,12 +155,12 @@ const formData = function() {
     elements.push({
         type: "html",
         name: "topic",
-        html: "<h2>Registration</h2>" +
-        "<h3>First fill out this basic information about you.</h3>"
+        html: "<h2>Registration: Demographics Survey</h2>" +
+        "<h3>First fill out this basic information about yourself.</h3>"
     });
 
     elements.push({
-        title: "Insert your assigned Prolific ID here",
+        title: "Insert your assigned Prolific ID here:",
         name : "userId",
         type :"text",
         inputType:"text",
@@ -231,7 +232,7 @@ const formData = function() {
             {value: 2, text: "Intermediate"},
             {value: 3, text: "Upper-intermediate"},
             {value: 4, text: "Advanced"},
-            {value: 5, text: "Proficiency"}
+            {value: 5, text: "Proficient"}
         ]
     });
     elements.push({
@@ -249,7 +250,7 @@ const formData = function() {
         name: "topic",
         html: 
         `<h3>Search as Learning</h3>
-        <br/> People often search the web to learn about something---whether it is knowledge they require for work, their study or just for fun. For the next few questions, we want you to think about how often you use the web when learning something about a scientific topic (e.g. how does partial differentiation work? what is a qubit? how can you determine the water quality of a pond?).
+        <br/> People often search the web to learn about something&mdash;whether it is knowledge they require for work, their study or just for fun. For the next few questions, we want you to think about how often you use the web when learning something about a scientific topic. Some example questions relating to scientific topics could be: how does partial differentiation work? what is a qubit? how can you determine the water quality of a pond? etc.
         <br/>
         <br/>
         <div align="center">
@@ -294,7 +295,7 @@ const formData = function() {
     });
 
     elements.push({
-        title: "What are your preferred online resources (like Wikipedia, Coursera, Youtube etc.) to learn about a scientific topic?",
+        title: "What are your preferred online resources (like Wikipedia, Coursera, Youtube, etc.) to learn about a scientific topic?",
         name: "web-online",
         type: "comment",
         inputType: "text",
