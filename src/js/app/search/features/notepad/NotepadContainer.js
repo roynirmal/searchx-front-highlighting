@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import './components/Notepad.pcss'
 
 import AccountStore from "../../../../stores/AccountStore";
+import {Button} from "react-bootstrap";
 
 function getPadUrl(){
     let url = 'SearchXtesting';
@@ -24,14 +25,15 @@ export default class NotepadContainer extends React.Component {
     handleViewSidebar(){
         this.setState({sidebarOpen: !this.state.sidebarOpen});
         let margin = window.innerWidth/3 * !this.state.sidebarOpen;
-        document.getElementById("root").style.marginRight = margin+15 + "px";
+        let change = margin + 15 + "px"
+        document.getElementById("notepadButton").style.right = change;
     }
 
     render() {
         return (
             <div className="Parent">
-                <Header onClick={this.handleViewSidebar} />
                 <Notepad isOpen={this.state.sidebarOpen} toggleSidebar={this.handleViewSidebar} padUrl={this.padUrl}/>
+                <Header onClick={this.handleViewSidebar} isOpen={this.state.sidebarOpen}/>
             </div>
         );
     }

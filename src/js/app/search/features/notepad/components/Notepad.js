@@ -9,10 +9,8 @@ const Notepad = function(props) {
     // const padUrl = "http://localhost:9001/p/" + props.padUrl + "?showControls=true&showChat=false&showLineNumbers=true&useMonospaceFont=false&withCredentials=true";
     return (
         <div className={sidebarClass}>
-            {/*<Button variant="light" onClick={props.toggleSidebar} className="sidebar-toggle">Hide Document</Button>*/}
             <div>
                 <Iframe url={padUrl}
-                        // width="600px"
                         width={window.innerWidth/3}
                         height={window.innerHeight - 50}
                         id="embed_readwrite"

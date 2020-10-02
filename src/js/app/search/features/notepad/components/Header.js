@@ -3,10 +3,11 @@ import './Notepad.pcss';
 import {Button} from "react-bootstrap";
 
 const Header = function(props) {
+    const headerClass = props.isOpen ? 'header open' : 'header';
     return (
-        <header>
-            <div className="btnSidebar">
-                <Button variant="light" onClick={props.onClick}>Notepad</Button>
+        <header id='notepadButton'>
+            <div className="btnSidebar" >
+                <Button onClick={props.onClick}>Notepad</Button>
             </div>
         </header>
     );
