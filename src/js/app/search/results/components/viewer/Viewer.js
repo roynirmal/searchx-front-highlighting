@@ -329,12 +329,12 @@ export default class Viewer extends React.Component  {
                                 <span className="forward" > </span>,
                                 <span className="divider"/>
                             ] : 
-                            <div className="pull-right" >
+                            <div className="pull-right" style={{height:'30px'}}>
                                 <span>{highlighterToggle}</span>
                                 <Rating className="Rating"
-                                        emptySymbol={<img src='/img/highlighter_off.png' height="30"
+                                        emptySymbol={<img src='/img/highlighter_off.png' height="30px"
                                                           className='highlighter icon' alt='highlighter off' />}
-                                        fullSymbol={<img src='/img/highlighter_on.png' height="30"
+                                        fullSymbol={<img src='/img/highlighter_on.png' height="30px"
                                                          className='highlighter icon' alt='highlighter on' />}
                                         onClick={this.highlightClickHandler} title="Highlight" stop={1}
                                         initialRating={initialHighlight}

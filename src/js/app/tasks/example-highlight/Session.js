@@ -216,51 +216,51 @@ class Session extends React.PureComponent {
                     <span className="tutorialClose" onClick={this.closeModal}>&times;</span>
                     <div className="modal-content">
                         <div className="mySlides">
-                            <img src='/img/viewerTutorial/Slide1.PNG' />
+                            <img src='/img/viewerTutorial/Slide1.PNG' className='tutorialSlide' />
                         </div>
 
                         <div className="mySlides">
-                            <img src='/img/viewerTutorial/Slide2.PNG' />
+                            <img src='/img/viewerTutorial/Slide2.PNG' className='tutorialSlide' />
                         </div>
 
                         <div className="mySlides">
-                            <img src='/img/viewerTutorial/Slide3.PNG' />
+                            <img src='/img/viewerTutorial/Slide3.PNG' className='tutorialSlide' />
                         </div>
 
                         <div className="mySlides">
-                            <img src='/img/viewerTutorial/Slide4.PNG' />
+                            <img src='/img/viewerTutorial/Slide4.PNG' className='tutorialSlide' />
                         </div>
 
                         <div className="mySlides">
-                            <img src='/img/viewerTutorial/Slide5.PNG' />
+                            <img src='/img/viewerTutorial/Slide5.PNG' className='tutorialSlide' />
                         </div>
 
                         <div className="mySlides">
-                            <img src='/img/viewerTutorial/Slide6.PNG' />
+                            <img src='/img/viewerTutorial/Slide6.PNG' className='tutorialSlide' />
                         </div>
 
                         <div className="mySlides">
-                            <img src='/img/viewerTutorial/Slide7.PNG' />
+                            <img src='/img/viewerTutorial/Slide7.PNG' className='tutorialSlide' />
                         </div>
 
                         <div className="mySlides">
-                            <img src='/img/viewerTutorial/Slide8.PNG' />
+                            <img src='/img/viewerTutorial/Slide8.PNG' className='tutorialSlide' />
                         </div>
 
                         <div className="mySlides">
-                            <img src='/img/viewerTutorial/Slide9.PNG' />
+                            <img src='/img/viewerTutorial/Slide9.PNG' className='tutorialSlide' />
                         </div>
 
                         <div className="mySlides">
-                            <img src='/img/viewerTutorial/Slide10.PNG' />
+                            <img src='/img/viewerTutorial/Slide10.PNG' className='tutorialSlide'  />
                         </div>
 
                         <div className="mySlides">
-                            <img src='/img/viewerTutorial/Slide11.PNG' />
+                            <img src='/img/viewerTutorial/Slide11.PNG' className='tutorialSlide' />
                         </div>
 
                         <div className="mySlides">
-                            <img src='/img/viewerTutorial/Slide12.PNG' />
+                            <img src='/img/viewerTutorial/Slide12.PNG' className='tutorialSlide' />
                         </div>
 
                         
