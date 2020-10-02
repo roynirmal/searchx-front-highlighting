@@ -153,7 +153,7 @@ export default class Viewer extends React.Component  {
             // let apiKey = 'a7ffd005ad9357ee7b8b0fb1650a38a32a0638476a009d49cc0437e44ad01a85';
             // let padID = getPadUrl();
             // let url = 'http://lambda4.ewi.tudelft.nl/api/1.2.13/appendText?apikey=' + apiKey + '&padID=' + padID + '&text= --';
-            // url += name[1] + ' '  + this.props.url.toString().replace("https\:\/\/", "") + '%0A' + newHls + '%0A%0A' ;
+            // url += name[1] + ' '  + '%0A' + newHls + '%0A%0A' ;
             // Http.open("GET", url);
             // Http.setRequestHeader("Content-Type", "text/plain");
             // Http.send();
