@@ -95,6 +95,8 @@ class PostTest extends React.Component {
 
         localStorage.setItem('posttest-finish', true.toString());
         this.setState({ finished :true});
+        let sidebar = document.getElementById('hideme');
+        sidebar.style.display = 'none';
     }
     onLeave() {
         log(LoggerEventTypes.SURVEY_EXIT, {
