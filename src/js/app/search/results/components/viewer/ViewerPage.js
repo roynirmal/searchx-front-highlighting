@@ -203,7 +203,7 @@ export default class ViewerPage extends React.Component {
     }
 
     componentDidMount() {
-        if (config.interface.highlight){
+        if (config.interface.highlight && !localStorage.getItem("post-test")){
         this.props.highlightClickHandler();
         }
     }

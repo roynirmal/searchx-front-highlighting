@@ -79,9 +79,11 @@ class Session extends React.PureComponent {
     }
     // Viewer Tutorial Functions ///////////////
     openModal(){
+        if (document.getElementById("myModal")){
         document.getElementById("myModal").style.display = "block";
         console.log("This is the openModal function")
         this.showSlides()
+        }
     }
 
     closeModal(){

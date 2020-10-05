@@ -37,7 +37,7 @@ export default class SearchHeaderContainer extends React.Component {
 
     render() {
         // let load = localStorage.getItem("result-here")
-        console.log("ULOAD", this.state.load)
+        // console.log("ULOAD", this.state.load, this.state.searchState, this.state.query)
         return <SearchHeader
             query={this.state.query}
             vertical={this.state.searchState.vertical}
@@ -71,7 +71,7 @@ export default class SearchHeaderContainer extends React.Component {
             });
         }
         const searchProgress = SearchStore.getSearchProgress();
-            if (this.state.query) {
+            if (this.state.searchState.query) {
             this.setState({
                 load: searchProgress.finished
             });
