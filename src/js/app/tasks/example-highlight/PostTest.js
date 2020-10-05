@@ -12,6 +12,7 @@ import SearchResultsContainer from "../../search/results/SearchResultsContainer"
 import SearchActions from '../../../actions/SearchActions';
 import SavedHighlightContainer from "../../search/features/savedhighlight/SavedhighlightContainer";
 import BookmarkContainer from "../../search/features/bookmark/BookmarkContainer";
+import NotepadContainer from "../../search/features/notepad/NotepadContainer";
 import config from "../../../config";
 
 class PostTest extends React.Component {
@@ -75,6 +76,11 @@ class PostTest extends React.Component {
         <div className="Side" id="hideme">
         {config.interface.bookmarks && ( <BookmarkContainer collaborative={this.props.collaborative}/>)}
         {config.interface.highlight && (<SavedHighlightContainer collaborative={this.props.collaborative}/>)}
+        {config.interface.notepad && (                    
+                    <div>
+                        <NotepadContainer collaborative={this.props.collaborative} />
+                    </div>
+                    ) }
         </div> 
         </div>
         )

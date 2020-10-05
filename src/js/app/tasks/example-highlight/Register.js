@@ -129,6 +129,10 @@ const formData = function() {
 
                 </p>
             </li>
+            <li>
+                <p> Your highlights and notes taken during the search session will be avaiable to you during the final questionnaire. However, you will NOT be able to take more notes or highlight documents during then.
+                </p>
+            </li>
             <li> 
                 <p>
                 Keep the queries you issue on point, and relevant to the topic outline provided on the right of the search interface.
