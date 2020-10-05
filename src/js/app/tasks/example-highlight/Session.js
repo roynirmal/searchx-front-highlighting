@@ -184,7 +184,7 @@ class Session extends React.PureComponent {
             'You can delete each highlight with the corresponding button.',
             'Click here to close the document. You can see the list of your highlights in Your Highlights box.',
             'You can open the Notepad by clicking on the tab on the right. Your highlights will be automatically copied to the notepad.',
-            'This is the Notepad interface where you can write your notes.',
+            'This is the Notepad interface where you can write your notes. Note: highlights are only copied when you close the document',
             'The Notepad can be closed by clicking the tab again.',
             'You can open the Notepad by clicking on the tab on the right.',
             'This is the Notepad interface where you can write your notes.',
