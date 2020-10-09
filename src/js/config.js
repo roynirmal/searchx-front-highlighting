@@ -39,9 +39,9 @@ var config = {
         star: true, /* allow users to star bookmarks */
         saveTimestamp: true, /* show the   and date at which a document was saved */
         verticals: false, /* show the vertical selection menu */
-        notepad:true, /*enable notepad*/
-        highlight:true, /*enable highlight*/
-        bookmarks: false /*enable bookmarking*/
+        notepad:false, /*enable notepad*/
+        highlight:false, /*enable highlight*/
+        bookmarks: true /*enable bookmarking*/
     }
 };
 

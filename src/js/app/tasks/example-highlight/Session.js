@@ -36,7 +36,8 @@ class Session extends React.PureComponent {
 
     componentDidMount() {
         const taskdata = JSON.parse(localStorage.getItem("task-data") === undefined ? "{}" : localStorage.getItem("task-data")) || '';
-        let td = '<h3> Your task </h3><p> The professor requires all students to demonstrate what they learn about a particular topic by conducting searches online and presenting their views on the topic. </p>';
+        let td = '<h3> Your task </h3>';
+        td += taskdata.topic.description
 
         const introSteps = [
             {
@@ -62,9 +63,14 @@ class Session extends React.PureComponent {
                 intro: 'The query history shows your past search queries.',
                 position: 'top'
             },
+            // {
+            //     element: '.Savedhighlights',
+            //     intro: 'The saved highlights along with the documents will appear here. You can revisit them before completing the session and while writing the summary on what you have learned about the topic.',
+            //     position: 'top'
+            // },
             {
-                element: '.Savedhighlights',
-                intro: 'The saved highlights along with the documents will appear here. You can revisit them before completing the session and while writing the summary on what you have learned about the topic.',
+                element: '.Bookmarks',
+                intro: 'The saved documents saved will appear here. You can revisit them before completing the session and while writing the summary on what you have learned about the topic.',
                 position: 'top'
             }
 
@@ -149,7 +155,7 @@ class Session extends React.PureComponent {
             </div>
         );
         const metaInfo = {
-            session: "hlnote",
+            session: "control",
 
         };
         let handleTaskOpen = () => {
@@ -211,7 +217,7 @@ class Session extends React.PureComponent {
                 {/* <div>
                     <h2 onClick={this.openModal}> OpenTutorial </h2>
                 </div> */}
-                <div id="myModal" className="tutorialModal">
+                {/* <div id="myModal" className="tutorialModal">
                     <span className="tutorialClose" onClick={this.closeModal}>&times;</span>
                     <div className="modal-content">
                         <div className="mySlides">
@@ -256,9 +262,9 @@ class Session extends React.PureComponent {
                             <a id='tutorialPrev' className="tutorialPrev" onClick={this.minusSlides}>Back</a>
                         <a id='tutorialNext' className="tutorialNext" onClick={this.plusSlides}>{this.state.nextbutton}</a>
 
-                        </div>
-                    </div>
-                </div>
+                        </div> */}
+                    {/* </div> */}
+                {/* // </div> */}
             </div>
         )
     }

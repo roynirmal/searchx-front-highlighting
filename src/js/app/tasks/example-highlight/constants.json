@@ -2,9 +2,9 @@
     "taskId": "example-highlight",
     "groupSize": 1,
     "topicsSize": 3,
-    "taskDuration": 20,
+    "taskDuration": 5,
     "waitDuration": 20,
-    "switchPageLimit": 3,
+    "switchPageLimit": 30,
     "completionURL": "https://app.prolific.co/submissions/complete?cc=59F081E7",
     "choices": [
         {
