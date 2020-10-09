@@ -67,7 +67,7 @@ class PreTest extends React.Component {
 
         localStorage.setItem("timer-start", Date.now());
 
-        this.props.history.push('/sync/session');
+        this.props.history.push('/hl/session');
     }
 
     onSync(data) {
@@ -77,7 +77,7 @@ class PreTest extends React.Component {
         
         
         IntroStore.clearIntro();
-        this.props.history.push('/sync/session');
+        this.props.history.push('/hl/session');
     }
 
     onLeave() {

@@ -42,9 +42,9 @@ class Register extends React.Component {
             if (res) {
                 
                 if ('topic' in res.taskData) {
-                    this.props.history.push('/sync/session');
+                    this.props.history.push('/hl/session');
                 } else {
-                    this.props.history.push('/sync/pretest');
+                    this.props.history.push('/hl/pretest');
                 }
             }
         });

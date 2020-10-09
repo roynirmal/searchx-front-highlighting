@@ -143,7 +143,7 @@ class Session extends React.PureComponent {
                 <Timer start={this.state.start} duration={constants.taskDuration} onFinish={this.onFinish} style={{fontSize: '2em'}} showRemaining={false}/>
                 
                 
-                <Link className={"btn btn-primary" + (this.state.finished ? '' : ' disabled')} to="/sync/posttest" role="button">
+                <Link className={"btn btn-primary" + (this.state.finished ? '' : ' disabled')} to="/hl/posttest" role="button">
                         To Final Test
                 </Link>
             </div>
@@ -162,12 +162,12 @@ class Session extends React.PureComponent {
 
         const taskDescription = (
             <Collapsible trigger="Your Task" open transitionTime={3} onOpen={handleTaskOpen} onClose={handleTaskClose} >
-                <p>
+                {/* <p>
                     The professor requires all students to demonstrate what they learn about a particular topic by
                     conducting searches on the Web and presenting what they learned about it.
                     You need to use SearchX to learn about the topic. You must open and read documents that you think are
                     important about the given topic.
-                </p>
+                </p> */}
                 <p dangerouslySetInnerHTML={{__html: task.data.topic.description}}/>
                 <hr/>
                 <p> Remember: After searching for at least 20 minutes you can move on to the final test by clicking on the "To Final Test" button.

@@ -93,6 +93,13 @@ export class App extends React.Component {
                     <Route exact path="/sync/posttest" component={SyncPostTest}/>
                     <Route path="/sync/session" component={SyncSession}/>
 
+                    <Route exact path="/hl" component={SyncRegister}/>
+                    <Route exact path="/disq" component={Disqualified}/>
+                    <Route exact path="/hl/pretest" component={SyncPreTest}/>
+                    <Route exact path="/hl/intermediatetest" component={SyncIntermediateTests}/>
+                    <Route exact path="/hl/posttest" component={SyncPostTest}/>
+                    <Route path="/hl/session" component={SyncSession}/>
+
                     <Route exact path="/async" component={AsyncRegister}/>
                     <Route exact path="/async/feedback" component={AsyncFeedback}/>
                     <Route path="/async/session" component={AsyncSession}/>

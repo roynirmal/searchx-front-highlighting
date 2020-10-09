@@ -205,7 +205,7 @@ const formData = function(topic) {
         name: "outline-description",
         html: `
             <p>  ${topic.description}</p>
-            <b> Based on what you have learned from the search session about the topic, please write, in your own words, a summary at a minimum of 100 words. </b>
+            
             
             `
     });

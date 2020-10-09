@@ -205,6 +205,11 @@ export default class ViewerPage extends React.Component {
     componentDidMount() {
         if (config.interface.highlight && !localStorage.getItem("post-test")){
         this.props.highlightClickHandler();
+        } else if (localStorage.getItem("post-test")) {
+            let oldElement = document.getElementById("documentText");
+            // console.log("pos", oldElement)
+            // let newElement = oldElement.cloneNode(true);
+            // oldElement.parentNode.replaceChild(newElement, oldElement);
         }
     }
     
@@ -229,6 +234,9 @@ export default class ViewerPage extends React.Component {
                 let oldElement = document.getElementById("documentText");
                 let newElement = oldElement.cloneNode(true);
                 // oldElement.parentNode.replaceChild(newElement, oldElement);
+                if (localStorage.getItem("post-test")) {
+                    oldElement.parentNode.replaceChild(newElement, oldElement);
+                }
 
                 localStorage.setItem("first-click", "no")
             }

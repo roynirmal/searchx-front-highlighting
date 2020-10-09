@@ -69,7 +69,7 @@ class PreTest extends React.Component {
         SessionStore.updateTask(constants.taskId, data, (res) => {
             if (res) {
                 if ('topic' in res.taskData) {
-                    this.props.history.push('/sync/session');
+                    this.props.history.push('/hl/session');
                 } 
             }
         });
@@ -82,7 +82,7 @@ class PreTest extends React.Component {
         
         
         IntroStore.clearIntro();
-        this.props.history.push('/sync/session');
+        this.props.history.push('/hl/session');
     }
 
     onLeave() {
