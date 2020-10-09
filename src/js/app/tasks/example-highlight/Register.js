@@ -339,6 +339,16 @@ const formData = function() {
     });
 
     elements.push({
+        title: "To what extent you think note-taking helps or would help you learn a scientific topic more efficiently?",
+        name: "note-benefit",
+        type: "comment",
+        inputType: "text",
+        width: 600,
+        rows: 1,
+        isRequired: true
+    });
+
+    elements.push({
         type: "html",
         html: "<hr/>"
     });

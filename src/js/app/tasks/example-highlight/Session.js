@@ -149,7 +149,7 @@ class Session extends React.PureComponent {
             </div>
         );
         const metaInfo = {
-            session: localStorage.getItem("session-num") || 0,
+            session: "hlnote",
 
         };
         let handleTaskOpen = () => {
@@ -183,12 +183,9 @@ class Session extends React.PureComponent {
             'When you highlight text, it will remain highlighted.',
             'You can delete each highlight with the corresponding button.',
             'Click here to close the document. You can see the list of your highlights in Your Highlights box.',
-            'You can open the Notepad by clicking on the tab on the right. Your highlights will be automatically copied to the notepad.',
-            'This is the Notepad interface where you can write your notes. Note: highlights are only copied when you close the document',
-            'The Notepad can be closed by clicking the tab again.',
             'You can open the Notepad by clicking on the tab on the right.',
             'This is the Notepad interface where you can write your notes.',
-            'The Notepad can be closed by clicking the tab again.'
+            'The Notepad can be closed by clicking the tab again. Your notes will be saved',
         ]
         let tutorialType = localStorage.getItem('taskType')
         if (tutorialType === 'highlightOnly') {captions.slice(0,7)}
@@ -251,18 +248,6 @@ class Session extends React.PureComponent {
 
                         <div className="mySlides">
                             <img src='/img/viewerTutorial/Slide9.PNG' className='tutorialSlide' />
-                        </div>
-
-                        <div className="mySlides">
-                            <img src='/img/viewerTutorial/Slide10.PNG' className='tutorialSlide'  />
-                        </div>
-
-                        <div className="mySlides">
-                            <img src='/img/viewerTutorial/Slide11.PNG' className='tutorialSlide' />
-                        </div>
-
-                        <div className="mySlides">
-                            <img src='/img/viewerTutorial/Slide12.PNG' className='tutorialSlide' />
                         </div>
 
                         

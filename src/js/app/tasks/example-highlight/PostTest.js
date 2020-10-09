@@ -221,7 +221,7 @@ const formData = function(topic) {
     // });
 
     elements.push({
-        title: "Please write your summary here. ",
+        title: "Please write your the answer to the above questions here. ",
         name: "summary",
         type: "comment",
         inputType: "text",
@@ -229,11 +229,11 @@ const formData = function(topic) {
         isRequired: true
     });
 
-    elements.push({
-        type: "html",
-        name: "searchx-feedback-description",
-        html: "<b>We would also like you to describe your experience while using SearchX and taking part in our study. This information will help us in making SearchX better for future usage. It will also help us to analyze user experience during the study. </b>"
-    });
+    // elements.push({
+    //     type: "html",
+    //     name: "searchx-feedback-description",
+    //     html: "<b>We would also like you to describe your experience while using SearchX and taking part in our study. This information will help us in making SearchX better for future usage. It will also help us to analyze user experience during the study. </b>"
+    // });
    
 
     // elements.push({
@@ -245,32 +245,62 @@ const formData = function(topic) {
     //     isRequired: true
     // });
     elements.push({
-        title: "I didn't notice any inconsistencies when I used the system.",
-        name: "inconsistencies",
-        type: "rating",
-        isRequired: true,
-        minRateDescription: "Disagree",
-        maxRateDescription: "Agree"
-    });
-
-
-    elements.push({
-        title: "It was easy to determine if a document was relevant to a task.",
-        name: "relevance",
-        type: "rating",
-        isRequired: true,
-        minRateDescription: "Disagree",
-        maxRateDescription: "Agree"
-    });
-
-
-    elements.push({
-        title: "How difficult was this task?",
-        name: "difficult",
+        title: "It was easy for me to use the highlighting tool",
+        name: "highlight-ease",
         type: "rating",
         isRequired: true,
         minRateDescription: "Very easy",
         maxRateDescription: "Very difficult"
+    });
+
+    elements.push({
+        title: "It was easy for me to use the notepad tool",
+        name: "notepad-ease",
+        type: "rating",
+        isRequired: true,
+        minRateDescription: "Very easy",
+        maxRateDescription: "Very difficult"
+    });
+
+
+
+
+
+
+    elements.push({
+        title: "I believe highlighting tool was useful and helped me in my learning goals",
+        name: "highlight-useful",
+        type: "rating",
+        isRequired: true,
+        minRateDescription: "Disagree",
+        maxRateDescription: "Agree"
+    });
+    elements.push({
+        title: "I believe notepad tool was useful and helped me in my learning goals",
+        name: "notepad-useful",
+        type: "rating",
+        isRequired: true,
+        minRateDescription: "Disagree",
+        maxRateDescription: "Agree"
+    });
+    elements.push({
+        title: "Can you tell us more about your strategy using the highlight tool? e.g. did you use the tool as you were reading or after reading several documents? How did you decide on what to use the tool for?",
+        name: "highlight-strategy",
+        type: "comment",
+        inputType: "text",
+        width: 600,
+        rows: 1,
+        isRequired: true
+    });
+
+    elements.push({
+        title: "Can you tell us more about your strategy using the notepad tool? e.g. did you use the tool as you were reading or after reading several documents? How did you decide on what to use the tool for?",
+        name: "notepad-strategy",
+        type: "comment",
+        inputType: "text",
+        width: 600,
+        rows: 1,
+        isRequired: true
     });
 
     elements.push({
