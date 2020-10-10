@@ -212,7 +212,7 @@ class Session extends React.PureComponent {
                 onSwitchPage={this.onSwitchPage}
                 lastSession={false} 
                 firstSession={false}/>
-                {/*// Viewer Tutorial Content ///////////////*/}
+                {/*// Viewer Tutorial Content //////////////*/}
                 {/* {hlintro === true? this.openModal() : [] } */}
                 {/* <div>
                     <h2 onClick={this.openModal}> OpenTutorial </h2>
