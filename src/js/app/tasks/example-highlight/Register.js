@@ -106,7 +106,7 @@ const formData = function() {
                 </p> 
             </li>
             <li>
-                <p> Your queries will be automatically saved. You will also be able to highlight text in a document and take notes in our search interface as well. If you highlight in a document, that particular document will be saved. Your highlights and notes will also be available to you during the final questionnaire.
+                <p> Your queries will be automatically saved. You will also be able to highlight text in a document in our search interface as well. If you highlight in a document, that particular document will be saved. Your highlights  will also be available to you during the final questionnaire.
                 </p> 
             </li>
         </ol>
@@ -130,7 +130,7 @@ const formData = function() {
                 </p>
             </li>
             <li>
-                <p> Your highlights and notes taken during the search session will be avaiable to you during the final questionnaire. However, you will NOT be able to take more notes or highlight documents during then.
+                <p> Your highlights  during the search session will be available to you during the final questionnaire. However, you will NOT be able to highlight documents during then.
                 </p>
             </li>
             <li> 

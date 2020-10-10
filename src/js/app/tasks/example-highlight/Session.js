@@ -149,7 +149,7 @@ class Session extends React.PureComponent {
             </div>
         );
         const metaInfo = {
-            session: "hlnote",
+            session: "hl",
 
         };
         let handleTaskOpen = () => {
@@ -183,9 +183,9 @@ class Session extends React.PureComponent {
             'When you highlight text, it will remain highlighted.',
             'You can delete each highlight with the corresponding button.',
             'Click here to close the document. You can see the list of your highlights in Your Highlights box.',
-            'You can open the Notepad by clicking on the tab on the right.',
-            'This is the Notepad interface where you can write your notes.',
-            'The Notepad can be closed by clicking the tab again. Your notes will be saved',
+            // 'You can open the Notepad by clicking on the tab on the right.',
+            // 'This is the Notepad interface where you can write your notes.',
+            // 'The Notepad can be closed by clicking the tab again. Your notes will be saved',
         ]
         let tutorialType = localStorage.getItem('taskType')
         if (tutorialType === 'highlightOnly') {captions.slice(0,7)}
@@ -238,7 +238,7 @@ class Session extends React.PureComponent {
                             <img src='/img/viewerTutorial/Slide6.PNG' className='tutorialSlide' />
                         </div>
 
-                        <div className="mySlides">
+                        {/* <div className="mySlides">
                             <img src='/img/viewerTutorial/Slide7.PNG' className='tutorialSlide' />
                         </div>
 
@@ -248,7 +248,7 @@ class Session extends React.PureComponent {
 
                         <div className="mySlides">
                             <img src='/img/viewerTutorial/Slide9.PNG' className='tutorialSlide' />
-                        </div>
+                        </div> */}
 
                         
                         <div className="caption-container">

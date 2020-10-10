@@ -253,14 +253,14 @@ const formData = function(topic) {
         maxRateDescription: "Very difficult"
     });
 
-    elements.push({
-        title: "It was easy for me to use the notepad tool",
-        name: "notepad-ease",
-        type: "rating",
-        isRequired: true,
-        minRateDescription: "Very easy",
-        maxRateDescription: "Very difficult"
-    });
+    // elements.push({
+    //     title: "It was easy for me to use the notepad tool",
+    //     name: "notepad-ease",
+    //     type: "rating",
+    //     isRequired: true,
+    //     minRateDescription: "Very easy",
+    //     maxRateDescription: "Very difficult"
+    // });
 
 
 
@@ -275,14 +275,14 @@ const formData = function(topic) {
         minRateDescription: "Disagree",
         maxRateDescription: "Agree"
     });
-    elements.push({
-        title: "I believe notepad tool was useful and helped me in my learning goals",
-        name: "notepad-useful",
-        type: "rating",
-        isRequired: true,
-        minRateDescription: "Disagree",
-        maxRateDescription: "Agree"
-    });
+    // elements.push({
+    //     title: "I believe notepad tool was useful and helped me in my learning goals",
+    //     name: "notepad-useful",
+    //     type: "rating",
+    //     isRequired: true,
+    //     minRateDescription: "Disagree",
+    //     maxRateDescription: "Agree"
+    // });
     elements.push({
         title: "Can you tell us more about your strategy using the highlight tool? e.g. did you use the tool as you were reading or after reading several documents? How did you decide on what to use the tool for?",
         name: "highlight-strategy",
@@ -293,15 +293,15 @@ const formData = function(topic) {
         isRequired: true
     });
 
-    elements.push({
-        title: "Can you tell us more about your strategy using the notepad tool? e.g. did you use the tool as you were reading or after reading several documents? How did you decide on what to use the tool for?",
-        name: "notepad-strategy",
-        type: "comment",
-        inputType: "text",
-        width: 600,
-        rows: 1,
-        isRequired: true
-    });
+    // elements.push({
+    //     title: "Can you tell us more about your strategy using the notepad tool? e.g. did you use the tool as you were reading or after reading several documents? How did you decide on what to use the tool for?",
+    //     name: "notepad-strategy",
+    //     type: "comment",
+    //     inputType: "text",
+    //     width: 600,
+    //     rows: 1,
+    //     isRequired: true
+    // });
 
     elements.push({
         title: "Do you have any additional comments regarding SearchX?",

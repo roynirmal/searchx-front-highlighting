@@ -1,7 +1,7 @@
 {
     "taskId": "example-highlight",
     "groupSize": 1,
-    "topicsSize": 3,
+    "topicsSize": 2,
     "taskDuration": 20,
     "waitDuration": 20,
     "switchPageLimit": 3,
