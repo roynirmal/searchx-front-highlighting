@@ -106,7 +106,7 @@ const formData = function() {
                 </p> 
             </li>
             <li>
-                <p> Your queries will be automatically saved. You will also be able to save documents that you find important. Your saved documents will also be available to you during the final questionnaire.
+                <p> Your queries will be automatically saved. You will also be able to save documents that you find important. You can also take notes during your search session by using our notepad. Your saved documents and notes will also be available to you during the final questionnaire.
                 </p> 
             </li>
         </ol>
@@ -130,7 +130,7 @@ const formData = function() {
                 </p>
             </li>
             <li>
-                <p> Your saved documents during the search session will be avaiable to you during the final questionnaire. However, you will NOT be able to save more documents during then.
+                <p> Your saved documents and notes during the search session will be available to you during the final questionnaire. However, you will NOT be able to save more documents or take more notes during then.
                 </p>
             </li>
             <li> 

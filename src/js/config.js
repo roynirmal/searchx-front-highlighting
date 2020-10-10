@@ -39,7 +39,7 @@ var config = {
         star: true, /* allow users to star bookmarks */
         saveTimestamp: true, /* show the   and date at which a document was saved */
         verticals: false, /* show the vertical selection menu */
-        notepad:false, /*enable notepad*/
+        notepad:true, /*enable notepad*/
         highlight:false, /*enable highlight*/
         bookmarks: true /*enable bookmarking*/
     }

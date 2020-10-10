@@ -155,7 +155,7 @@ class Session extends React.PureComponent {
             </div>
         );
         const metaInfo = {
-            session: "control",
+            session: "hl",
 
         };
         let handleTaskOpen = () => {
@@ -184,11 +184,11 @@ class Session extends React.PureComponent {
 
         let captions = [
             'This is what a document looks like when you click a search result!',
-            'The top right corner shows that the highlighter is active.',
-            'You can click on it to deactivate the highlighting tool.',
-            'When you highlight text, it will remain highlighted.',
-            'You can delete each highlight with the corresponding button.',
-            'Click here to close the document. You can see the list of your highlights in Your Highlights box.',
+            // 'The top right corner shows that the highlighter is active.',
+            // 'You can click on it to deactivate the highlighting tool.',
+            // 'When you highlight text, it will remain highlighted.',
+            // 'You can delete each highlight with the corresponding button.',
+            // 'Click here to close the document. You can see the list of your highlights in Your Highlights box.',
             'You can open the Notepad by clicking on the tab on the right.',
             'This is the Notepad interface where you can write your notes.',
             'The Notepad can be closed by clicking the tab again. Your notes will be saved',
@@ -217,13 +217,13 @@ class Session extends React.PureComponent {
                 {/* <div>
                     <h2 onClick={this.openModal}> OpenTutorial </h2>
                 </div> */}
-                {/* <div id="myModal" className="tutorialModal">
+                <div id="myModal" className="tutorialModal">
                     <span className="tutorialClose" onClick={this.closeModal}>&times;</span>
                     <div className="modal-content">
-                        <div className="mySlides">
+                        { <div className="mySlides">
                             <img src='/img/viewerTutorial/Slide1.PNG' className='tutorialSlide' />
                         </div>
-
+                        /*
                         <div className="mySlides">
                             <img src='/img/viewerTutorial/Slide2.PNG' className='tutorialSlide' />
                         </div>
@@ -242,7 +242,7 @@ class Session extends React.PureComponent {
 
                         <div className="mySlides">
                             <img src='/img/viewerTutorial/Slide6.PNG' className='tutorialSlide' />
-                        </div>
+                        </div> */}
 
                         <div className="mySlides">
                             <img src='/img/viewerTutorial/Slide7.PNG' className='tutorialSlide' />
@@ -262,9 +262,9 @@ class Session extends React.PureComponent {
                             <a id='tutorialPrev' className="tutorialPrev" onClick={this.minusSlides}>Back</a>
                         <a id='tutorialNext' className="tutorialNext" onClick={this.plusSlides}>{this.state.nextbutton}</a>
 
-                        </div> */}
-                    {/* </div> */}
-                {/* // </div> */}
+                        </div> 
+                    </div>
+                 </div>
             </div>
         )
     }
