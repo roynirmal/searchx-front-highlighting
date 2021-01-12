@@ -8,6 +8,8 @@ It is based on [Pineapple Search](http://onlinelibrary.wiley.com/doi/10.1002/pra
 Apart from serving the interface, the front end also manages user data and defines the logs sent back to the back end.
 It is built on NodeJS using the [React](https://reactjs.org/) + [Flux](https://facebook.github.io/flux/) framework and is served through [webpack](https://webpack.js.org/).
 
+**For the Highlighting and Notepad versions of SearchX used in the publication *Note the Highlight: Incorporating Active Reading Tools in a Search as Learning Environment* (CHIIR21) please use the `control`, `highlight`, `note` and `highlight+note` branches of this repository**
+
 # Setup
 
 - Make sure the [SearchX back end](https://github.com/felipemoraes/searchx-backend) is up and running.
