@@ -6,6 +6,8 @@ It is based on [Pineapple Search](http://onlinelibrary.wiley.com/doi/10.1002/pra
 Apart from serving the interface, the front end also manages user data and defines the logs sent back to the back end.
 It is built on NodeJS using the [React](https://reactjs.org/) + [Flux](https://facebook.github.io/flux/) framework and is served through [webpack](https://webpack.js.org/).
 
+**Note: This is the `highlight` front end used for the publication *Note the Highlight: Incorporating Active Reading Tools in a Search as Learning Environment* (CHIIR21). It must be used together the specific [backend](https://github.com/roynirmal/searchx-back-highlighting/tree/highlight) of the study, on the `highlight` branch**
+
 # Setup
 
 - Make sure the [SearchX back end](https://github.com/felipemoraes/searchx-backend) is up and running.
@@ -31,6 +33,10 @@ It is built on NodeJS using the [React](https://reactjs.org/) + [Flux](https://f
     
     // Now check http://localhost:8080/search
     ```
+    
+## Docker Setup
+Go to the [Docker](https://github.com/felipemoraes/searchx#docker) submodule of the main SearchX repository for detailed instructions. Remember to specify the URL of the frontend and the required BRANCH in the Dockerfile as shown in `highlight/docker-images/front/Dockerfile`. 
+
 # Configuration
 The main production configuration keys are can be found in your `.env` file. If the backend runs on the same server as the frontend the default values work for local access. If you want access the frontend publicly you need to set at least the `REACT_APP_PUBLIC_URL` key. The keys are:
 - `PORT`: the port at which the frontend will run
