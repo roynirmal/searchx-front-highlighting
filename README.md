@@ -3,22 +3,28 @@
 SearchX is a scalable collaborative search system being developed by [Lambda Lab](http://www.wis.ewi.tudelft.nl/projects/learning-analytics/) of [TU Delft](https://www.tudelft.nl/).
 It is based on [Pineapple Search](http://onlinelibrary.wiley.com/doi/10.1002/pra2.2016.14505301122/full) and is further developed to facilitate collaborative search and sensemaking.
 
-Apart from serving the interface, the front end also manages user data and defines the logs sent back to the back end.
+Apart from serving the interface, the front end also manages user data and defines the logs sent back to the backend.
 It is built on NodeJS using the [React](https://reactjs.org/) + [Flux](https://facebook.github.io/flux/) framework and is served through [webpack](https://webpack.js.org/).
 
-**This is the Front End for the Highlighting and Notepad versions of SearchX used in the publication *Note the Highlight: Incorporating Active Reading Tools in a Search as Learning Environment* (CHIIR21)**
+## Highlight Front End
+This is the frontend used for the publication *Note the Highlight: Incorporating Active Reading Tools in a Search as Learning Environment* (CHIIR21). 
+It must be used together with with the specific [backend](https://github.com/roynirmal/searchx-back-highlighting) that was also created for the study, where researchers can enable the Active Reading strategies evaluated: highlight, note-taking or both.
+This front end is based on the original [SearchX Front End](https://github.com/felipemoraes/searchx-frontend), but it has a completely different document rendering process: instead of showing the website with their complex styling, it is stripped down to black text on white background on a single column and images are left untouched - making highlighting easier to achieve and more impactful to the user.
+
+### SearchX Front End Integration
+SearchX is a modular system, so this highlight-specific front end will be integrated back into the original, where features such as the simple document viewer, highlighting tool and notepad are available as features that can be enabled/disabled. The integration is planned for the first half of 2021.
 
 # Setup
 
-- Make sure the [SearchX back end](https://github.com/felipemoraes/searchx-backend) is up and running.
+- Make sure the [backend](https://github.com/roynirmal/searchx-back-highlighting) is up and running
 
 - Set up the server and install dependencies:
     ```
     // Clone the repository
-    git clone https://github.com/felipemoraes/searchx-frontend.git
+    git clone https://https://github.com/roynirmal/searchx-front-highlighting.git
     
     // Change directory to repository
-    cd searchx-frontend
+    cd searchx-front-highlighting
     
     // Install dependencies:
     npm install
@@ -35,7 +41,7 @@ It is built on NodeJS using the [React](https://reactjs.org/) + [Flux](https://f
     ```
 
 ## Docker Setup
-Go to the [Docker](https://github.com/felipemoraes/searchx#docker) submodule of the main SearchX repository for detailed instructions. Remember to specify the URL of the frontend and the required BRANCH in the Dockerfile as shown in `highlight/docker-images/front/Dockerfile`. 
+Go to the [Docker](https://github.com/felipemoraes/searchx#docker) submodule of the main SearchX repository for detailed instructions. Remember to specify the URL of the front end in the Dockerfile as shown in `highlight/docker-images/front/Dockerfile`. 
 
 # Configuration
 The main production configuration keys are can be found in your `.env` file. If the backend runs on the same server as the frontend the default values work for local access. If you want access the frontend publicly you need to set at least the `REACT_APP_PUBLIC_URL` key. The keys are:
@@ -55,8 +61,8 @@ The logger will automatically add information on the current user state.
 Any action specific log data can be inserted as an argument when calling the `log` function.
 
 ## Tasks
-The learning task is defined inside `app/tasks/learning`.
-The forms and interface is defined in the front end, whereas the learning topics and group creation is managed by the back end.
+The learning task is defined inside `app/tasks/example-highlight/`.
+The forms and interface is defined in the front end, whereas the learning topic selection is managed by the back end.
 All form uses [surveyjs](https://surveyjs.io/Overview/Library/) and the results are sent to the back end as logs.
 
 ### Modifying the learning task
@@ -64,9 +70,7 @@ All form uses [surveyjs](https://surveyjs.io/Overview/Library/) and the results 
 To change the task duration and task type, you can modify the values inside `config.js`.
 
 2. Changing the pretest / posttest
-The form questions are defined inside `app/tasks/learning/LearningPages.js` 
-while the form behavior is defined inside `app/tasks/learning/forms`. 
-To change the questions, you can change the `elements` inside `LearningPages.js`.
+The pre-task, session instructions and post-task questions are defined inside `PreTest.js`, `Session.js`, and `PostTest.js`, respectively. 
 
 ```
 // EXAMPLE FORM QUESTIONS
@@ -131,62 +135,30 @@ SearchX supports multiple search providers, which provide the search results tha
 Each provider can support one or more verticals. For example, the Bing provider provides four verticals: Web, Images, Videos and News. Verticals are shown to the user in the top menu and they can switch between verticals while retaining their current query.
 
 ### Adding a new vertical or provider
-If you want to add a new vertical or provider, first the searchx-backend needs to be adapted to return the data for your result. See the [searchx-backend documentation](https://github.com/felipemoraes/searchx-backend#search-providers) for instructions on how to do this.
+If you want to add a new vertical or provider, first the searchx-backend needs to be adapted to return the data for your result. See the [searchx-backend documentation](https://github.com/roynirmal/searchx-back-highlighting#search-providers) for instructions on how to do this.
 
 The new vertical or provider needs to be added to the verticalProviders mapping in `src/js/config.js`. The first level of the map contains the provider name as key, and a map as value. The second level contains the vertical name as key, and a reference to the react component that will be used to display the search result as value. You can add your own verticals and providers to this map. Every provider needs to have at least one vertical.
 
 If you wish to add your own component to display search results, add it to `src/js/app/search/results/components/types`, and reference it in the verticalProviders map.
 
 
-### Citation
---------
+# Citation
+If you use the highlighting or note-taking widgets of SearchX to produce results for your scientific publication, please refer to our [CHIIR 2021]() or [ECIR2021]() papers.
+```
+@inproceedings{roy2021active,
+  title={How Do Active Reading Strategies Affect Learning Outcomes in Web Search?},
+  author={Roy, Nirmal; Valle Torre, Manuel; Gadiraju, Ujwal; Maxwell, David; Hauff, Claudia},
+  booktitle={ECIR},
+  year={2021}
+}
 
-If you use SearchX to produce results for your scientific publication, please refer to our [SIGIR 2018](http://fmoraes.nl/documents/moraes2018sigir.pdf) paper.
-
-    @inproceedings{putra2018searchx,
-      title={SearchX: Empowering Collaborative Search Research.},
-      author={Putra, Sindunuraga Rikarno and Moraes, Felipe and Hauff, Claudia},
-      booktitle={SIGIR},
-      pages={1265--1268},
-      year={2018}
-    }
-    
-### Publications
-
-    @article{moraes2019impact,
-      title={On the impact of group size on collaborative search effectiveness},
-      author={Moraes, Felipe and Grashoff, Kilian and Hauff, Claudia},
-      journal={Information Retrieval Journal},
-      pages={1--23},
-      year={2019},
-      publisher={Springer}
-    }
-    
-    
-    @inproceedings{moraes2019node,
-        title={node-indri: moving the Indri toolkit to the modern Web stack},
-        author={Moraes, Felipe and Hauff, Claudia},
-        booktitle={ECIR},
-        pages={241--245},
-        year={2019}
-    }
-
-    @inproceedings{moraes2018contrasting,
-      title={Contrasting Search as a Learning Activity with Instructor-designed Learning},
-      author={Moraes, Felipe and Putra, Sindunuraga Rikarno and Hauff, Claudia},
-      booktitle={CIKM},
-      pages={167--176},
-      year={2018}
-    }
-    
-    @inproceedings{putra2018development,
-        title={On the Development of a Collaborative Search System},
-        author={Putra, Sindunuraga Rikarno and Grashoff, Kilian and Moraes, Felipe and Hauff, Claudia},
-        booktitle={DESIRES},
-        pages={76--82},
-        year={2018}
-    }
-    
+@inproceedings{roy2021notehighlight,
+  title={ Note the Highlight: Incorporating Active Reading Tools for Search As Learning},
+  author={Roy, Nirmal; Valle Torre, Manuel; Gadiraju, Ujwal; Maxwell, David; Hauff, Claudia},
+  booktitle={CHIIR},
+  year={2021}
+}
+```
 
 # License
 
