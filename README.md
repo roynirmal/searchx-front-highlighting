@@ -11,6 +11,20 @@ This is the frontend used for the publications *Note the Highlight: Incorporatin
 It must be used together with with the specific [backend](https://github.com/roynirmal/searchx-back-highlighting) that was also created for the study, where researchers can enable the Active Reading strategies evaluated: highlight, note-taking or both.
 This front end is based on the original [SearchX Front End](https://github.com/felipemoraes/searchx-frontend), but it has a completely different document rendering process: instead of showing the website with their complex styling, it is stripped down to black text on white background on a single column and images are left untouched - making highlighting easier to achieve and more impactful to the user.
 
+<p align="center">
+    <img src="https://github.com/roynirmal/searchx-front-highlighting/blob/master/public/img/interface-dmaxed.png" width="700">
+</p>
+
+A brief description of the SERP is as follows: **1** is the search bar, with query auto-completion in **2**, task timer **3** and description **4**, result list with familiar link/URL/snippet layout in **5**, query history in **6**, highlight list with the corresponding document in **7**. If the highlighting is disabled, documents can be saved with the star in **8** (and they are shown in **7** instead of the highlights). Fiinally, the notepad can be opened with **9**.
+
+<p align="center">
+    <img src="https://github.com/roynirmal/searchx-front-highlighting/blob/master/public/img/highlight-dmaxed.png" width="700">
+</p>
+
+Examples of the two new widgets introduced to SearchX for this study. **(a)** On the left is the document view, complete with text highlighting capabilities: **a1** to enable/disable the highlighting tool, **a2** to close the page and **a3** to delete each highlight.
+**(b)** On the right is the note-taking widget **b2**, which is visible when Notepad button **b1** is clicked.
+For a more detailed explanation of the document viewer, the SERP or the widgets, please refer to the publication.
+
 ### SearchX Front End Integration
 SearchX is a modular system, so this highlight-specific front end will be integrated back into the original, where features such as the simple document viewer, highlighting tool and notepad are available as features that can be enabled/disabled. The integration is planned for the first half of 2021.
 
