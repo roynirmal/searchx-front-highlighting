@@ -12,6 +12,9 @@ import $ from 'jquery';
 import CenteredMessage from "../../../common/CenteredMessage";
 import Helpers from "../../../../utils/Helpers";
 
+import AccountStore from "../../../../stores/AccountStore"
+
+
 const SearchResults = function ({
                                     searchState, progress, serpId, results, matches, elapsedTime, activeUrl, provider,
                                     distributionOfLabour, activeDoctext, tutorial, collapsed, autoHide,
@@ -39,6 +42,9 @@ const SearchResults = function ({
     if (searchState.query === '' && results.length === 0) {
         return <CenteredMessage height="800px" style={style}>
             <h3> Your search results will appear here :) </h3>
+            <p> User {AccountStore.getUserId()} </p>
+            {/* todo - make this execute after content is loaded*/}
+            {/* <script> {highlightStored()} </script> */}
         </CenteredMessage>
     }
 
@@ -48,25 +54,36 @@ const SearchResults = function ({
             <h4> We have not found results for you! Try to shorten your query! </h4>
         </CenteredMessage>
     }
-
     if (!tutorial && !progress.finished) {
-        return <CenteredMessage height="800px">
+        return <CenteredMessage height="800px" style={style}>
             <Loader/>
+            <h4>  &nbsp;&nbsp; </h4>
+            <h4> Please wait while your result is being loaded!   </h4>
         </CenteredMessage>
+
+
+
     }
+
+    // if (!tutorial && !progress.finished) {
+    //     return <div className='content'>
+
+
+    //     </div>
+    // }
 
     ////
 
 
     // Trick to remove last page from pagination;
-    $(".pagination").find("a").last().hide();
+    // $(".pagination").find("a").last().hide();
     
-    const pagination = <SearchResultsPagination
-        searchState={searchState}
-        finished={results.length > 0 || progress.finished}
-        matches={matches}
-        changeHandler={pageChangeHandler}
-    />;
+    // const pagination = <SearchResultsPagination
+    //     searchState={searchState}
+    //     finished={results.length > 0 || progress.finished}
+    //     matches={matches}
+    //     changeHandler={pageChangeHandler}
+    // />;
 
     const prefix = (matches < config.aboutPrefixAt) ? "" : "About ";
     const timeIndicator = prefix + Helpers.numberWithCommas(matches) + " results (" + elapsedTime + " seconds)";
@@ -128,8 +145,8 @@ const SearchResults = function ({
                                           hideCollapsedResultsHandler={hideCollapsedResults} searchState={searchState}
                                           serpId={serpId}/>);
     }
-    const currentCollapsedResultsLength = Object.values(collapsed).filter(value => value).length;
-    const allBookmarkedResultsHidden = currentCollapsedResultsLength === getCollapsibleResultsLength();
+    // const currentCollapsedResultsLength = Object.values(collapsed).filter(value => value).length;
+    // const allBookmarkedResultsHidden = currentCollapsedResultsLength === getCollapsibleResultsLength();
 
 
     return (
@@ -144,10 +161,10 @@ const SearchResults = function ({
                             disabled={allBookmarkedResultsShown}>
                         Show all hidden results
                     </Button> */}
-                    <Button variant="light" className="allCollapsedResultsButton" onClick={hideAllCollapsedResults}
+                    {/* <Button variant="light" className="allCollapsedResultsButton" onClick={hideAllCollapsedResults}
                             disabled={allBookmarkedResultsHidden}>
                         Hide all saved results
-                    </Button>
+                    </Button> */}
                 </div>
                 }
                 <div className="list">
@@ -155,7 +172,7 @@ const SearchResults = function ({
                 </div>
             </div>
 
-            {pagination}
+            {/* {pagination} */}
         </div>
     )
 };

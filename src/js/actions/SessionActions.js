@@ -5,6 +5,8 @@ export default {
 
     //// Chat
 
+
+
     getChatMessageList(){
         dispatch({
             type: ActionTypes.GET_CHAT_MESSAGE_LIST,
@@ -39,12 +41,39 @@ export default {
         })
     },
 
-    addBookmark(url, title) {
+    getHighlights() {
+        dispatch({
+            type: ActionTypes.GET_HIGHLIGHTS,
+            payload: {}
+        })
+    },
+
+    addHighlight(url, title, text){
+        dispatch({
+            type: ActionTypes.ADD_HIGHLIGHT,
+            payload: {
+                url: url,
+                title: title,
+                text:text
+            }
+        })
+    },
+    removeHighlight(url){
+        dispatch({
+            type: ActionTypes.REMOVE_HIGHLIGHT,
+            payload: {
+                url: url
+            }
+        })
+    },
+
+    addBookmark(url, title, text) {
         dispatch({
             type: ActionTypes.ADD_BOOKMARK,
             payload: {
                 url: url,
-                title: title
+                title: title,
+                text:text
             }
         })
     },
@@ -52,6 +81,15 @@ export default {
     removeBookmark(url) {
         dispatch({
             type: ActionTypes.REMOVE_BOOKMARK,
+            payload: {
+                url: url
+            }
+        })
+    },
+
+    removeSavedHighlight(url) {
+        dispatch({
+            type: ActionTypes.REMOVE_SAVEDHIGHLIGHT,
             payload: {
                 url: url
             }
@@ -80,6 +118,14 @@ export default {
     starBookmark(url) {
         dispatch({
             type: ActionTypes.STAR_BOOKMARK,
+            payload: {
+                url: url
+            }
+        })
+    },
+    starHighlight(url) {
+        dispatch({
+            type: ActionTypes.STAR_HIGHLIGHT,
             payload: {
                 url: url
             }

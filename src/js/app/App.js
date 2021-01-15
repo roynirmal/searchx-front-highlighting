@@ -10,12 +10,17 @@ import Search from './search/Search';
 import SimpleRegister from './tasks/example-simple/Register';
 import SimpleSubmit from './tasks/example-simple/Submit';
 import SimpleSession from './tasks/example-simple/Session';
-import SyncRegister from './tasks/example-group-sync/Register';
-import Disqualified from './tasks/example-group-sync/Disqualified';
-import SyncPreTest from './tasks/example-group-sync/PreTest';
+// import SyncRegister from './tasks/example-group-sync/Register';
+// import Disqualified from './tasks/example-group-sync/Disqualified';
+// import SyncPreTest from './tasks/example-group-sync/PreTest';
+import SyncRegister from './tasks/example-highlight/Register';
+import Disqualified from './tasks/example-highlight/Disqualified';
+import SyncPreTest from './tasks/example-highlight/PreTest';
 import SyncIntermediateTests from './tasks/example-group-sync/IntermediateTests';
-import SyncPostTest from './tasks/example-group-sync/PostTest';
-import SyncSession from './tasks/example-group-sync/Session';
+// import SyncPostTest from './tasks/example-group-sync/PostTest';
+// import SyncSession from './tasks/example-group-sync/Session';
+import SyncPostTest from './tasks/example-highlight/PostTest';
+import SyncSession from './tasks/example-highlight/Session';
 import AsyncRegister from './tasks/example-group-async/Register';
 import AsyncFeedback from './tasks/example-group-async/Feedback';
 import AsyncSession from './tasks/example-group-async/Session';
@@ -87,6 +92,13 @@ export class App extends React.Component {
                     <Route exact path="/sync/intermediatetest" component={SyncIntermediateTests}/>
                     <Route exact path="/sync/posttest" component={SyncPostTest}/>
                     <Route path="/sync/session" component={SyncSession}/>
+
+                    <Route exact path="/hl" component={SyncRegister}/>
+                    <Route exact path="/disq" component={Disqualified}/>
+                    <Route exact path="/hl/pretest" component={SyncPreTest}/>
+                    <Route exact path="/hl/intermediatetest" component={SyncIntermediateTests}/>
+                    <Route exact path="/hl/posttest" component={SyncPostTest}/>
+                    <Route path="/hl/session" component={SyncSession}/>
 
                     <Route exact path="/async" component={AsyncRegister}/>
                     <Route exact path="/async/feedback" component={AsyncFeedback}/>

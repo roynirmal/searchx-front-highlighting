@@ -102,6 +102,12 @@ const SyncStore = Object.assign(EventEmitter.prototype, {
             groupId: AccountStore.getGroupId()
         });
     },
+    emitHighlightUpdate(searchState) {
+        socket.emit('pushHighlightUpdate', {
+            searchState: searchState,
+            groupId: AccountStore.getGroupId()
+        });
+    },
 
     emitPageMetadataUpdate(activeUrl) {
         socket.emit('pushPageMetadataUpdate', {

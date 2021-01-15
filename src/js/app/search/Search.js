@@ -8,8 +8,11 @@ import SearchHeaderContainer from './header/SearchHeaderContainer';
 import SearchResultsContainer from "./results/SearchResultsContainer";
 import QueryHistoryContainer from "./features/queryhistory/QueryHistoryContainer";
 import BookmarkContainer from "./features/bookmark/BookmarkContainer";
+import SavedHighlightContainer from "./features/savedhighlight/SavedhighlightContainer";
 import Chat from "./features/chat/Chat";
 import config from "../../config";
+
+import NotepadContainer from "./features/notepad/NotepadContainer";
 
 class Search extends React.Component {
     constructor(props) {
@@ -53,8 +56,15 @@ class Search extends React.Component {
 
                     <div className="Side">
                         <QueryHistoryContainer collaborative={this.props.collaborative}/>
-                        <BookmarkContainer collaborative={this.props.collaborative}/>
+                        {config.interface.bookmarks && ( <BookmarkContainer collaborative={this.props.collaborative}/>)}
+                        {config.interface.highlight && (<SavedHighlightContainer collaborative={this.props.collaborative}/>)}
                     </div>
+                    {config.interface.notepad && (                    
+                    <div>
+                        <NotepadContainer collaborative={this.props.collaborative} />
+                    </div>
+                    ) }
+
 
                     {this.props.taskDescription && (
                         <div className="Side">

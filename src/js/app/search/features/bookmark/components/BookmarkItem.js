@@ -18,7 +18,9 @@ const BookmarkItem = function({data, removeHandler, starHandler, clickHandler}) 
     let hoverLeaveSummary = () => log(LoggerEventTypes.BOOKMARK_HOVERLEAVE,metaInfo);
     let contextUrl = () => log(LoggerEventTypes.BOOKMARK_CONTEXT_URL,metaInfo);
     let clickUrl = () => {
-        clickHandler(data.url);
+        var doctext = '<h1>'+data.title +'</h1>'+ data.text
+        console.log(data)
+        clickHandler(data.url, doctext);
         log(LoggerEventTypes.BOOKMARK_CLICK_URL, metaInfo);
     };
 
@@ -31,6 +33,7 @@ const BookmarkItem = function({data, removeHandler, starHandler, clickHandler}) 
     }
     let icon = new Identicon(md5(data.userId), options).toString();
     let iconUrl = "data:image/png;base64," + icon 
+    let postT = localStorage.getItem("post-test")
 
     // todo: put id vs url in bookmark model instead of isNaN hack
     return  (
@@ -46,16 +49,17 @@ const BookmarkItem = function({data, removeHandler, starHandler, clickHandler}) 
             
 
             <div className="buttons">
-                {config.interface.star && (
+                {config.interface.star && !postT &&  (
                     <Rating className="topicon" emptySymbol="fa fa-star-o" fullSymbol="fa fa-star"
                             onClick={() => starHandler(data.url)}
                             stop={1} initialRating={data.starred ? 1 : 0}
                     />
                 )}
+                {!postT && (
                 <Rating className={(config.interface.star ? "bottomicon " : "topicon ") + "remove"} emptySymbol="fa fa-trash-o" fullSymbol="fa fa-trash"
                         onClick={() => removeHandler(data.url)}
                         stop={1} initialRating={0}
-                />
+                /> )}
             </div>
             
             <span>

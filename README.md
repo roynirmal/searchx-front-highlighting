@@ -1,14 +1,12 @@
 # SearchX Front End
 
-
-
 SearchX is a scalable collaborative search system being developed by [Lambda Lab](http://www.wis.ewi.tudelft.nl/projects/learning-analytics/) of [TU Delft](https://www.tudelft.nl/).
 It is based on [Pineapple Search](http://onlinelibrary.wiley.com/doi/10.1002/pra2.2016.14505301122/full) and is further developed to facilitate collaborative search and sensemaking.
 
 Apart from serving the interface, the front end also manages user data and defines the logs sent back to the back end.
 It is built on NodeJS using the [React](https://reactjs.org/) + [Flux](https://facebook.github.io/flux/) framework and is served through [webpack](https://webpack.js.org/).
 
-**For the Highlighting and Notepad versions of SearchX used in the publication *Note the Highlight: Incorporating Active Reading Tools in a Search as Learning Environment* (CHIIR21) please use the `control`, `highlight`, `note` and `highlight+note` branches of this repository**
+**This is the Front End for the Highlighting and Notepad versions of SearchX used in the publication *Note the Highlight: Incorporating Active Reading Tools in a Search as Learning Environment* (CHIIR21)**
 
 # Setup
 
@@ -35,6 +33,10 @@ It is built on NodeJS using the [React](https://reactjs.org/) + [Flux](https://f
     
     // Now check http://localhost:8080/search
     ```
+
+## Docker Setup
+Go to the [Docker](https://github.com/felipemoraes/searchx#docker) submodule of the main SearchX repository for detailed instructions. Remember to specify the URL of the frontend and the required BRANCH in the Dockerfile as shown in `highlight/docker-images/front/Dockerfile`. 
+
 # Configuration
 The main production configuration keys are can be found in your `.env` file. If the backend runs on the same server as the frontend the default values work for local access. If you want access the frontend publicly you need to set at least the `REACT_APP_PUBLIC_URL` key. The keys are:
 - `PORT`: the port at which the frontend will run

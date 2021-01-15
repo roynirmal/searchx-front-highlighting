@@ -1,9 +1,9 @@
 import React from 'react';
 import VisibilitySensor from 'react-visibility-sensor';
-
+// import {highlightStored} from "../../../../../utils/Highlighter"
 import {log} from '../../../../../utils/Logger';
 import {LoggerEventTypes} from '../../../../../utils/LoggerEventTypes';
-
+// import AccountStore from "../../../../../stores/AccountStore"
 ////
 
 const TextSearchResult = function ({
@@ -11,7 +11,7 @@ const TextSearchResult = function ({
                                        urlClickHandler, hideCollapsedResultsHandler, isCollapsible, visited
                                    }) {
     let metaInfo = {
-        url: result.id,
+        url: result.url,
         index: index,
         query: searchState.query,
         page: searchState.page,
@@ -20,15 +20,47 @@ const TextSearchResult = function ({
     };
 
     let clickUrl = () => {
+        localStorage.setItem("opened-doc", result.url)
+        var doctext = '<h1>'+result.name+'</h1>'
+        // console.log(result.id)
 
-        var doctext = result.text.split('\n').map((item, key) => {
-            return <span key={key}>{item}<br/></span>
-        })
+        // result.text.split('\n').forEach(element => {
+            
+            // res = result.text.match(/<p>(.*?)<\/p>/g);
+        // const rp = /<p>(.*?)<\/p>|<h2>(.*?)<\/h2>|<h3>(.*?)<\/h3>/g
+ 
+        // const regex0 = /\n/g;
+        // let cleaned_item0 = result.text.replace(regex0, '');
+        // const regex1 = /<a.*?>/g;
+        // let cleaned_item = cleaned_item0.replace(regex1, '');
+        // const regex2 = /<\/a>/g;
+        // let cleaned_item2 = cleaned_item.replace(regex2, '');
+        // const regex3 = /<img.*?>/g;
+        // let cleaned_item3 = cleaned_item2.replace(regex3, '');
+        // const regex4 = /<\/img>/g;
+        // let cleaned_item4 = cleaned_item3.replace(regex4, '');
+        // const regex5 = /<sup.*?<\/sup>/g;
+        // let cleaned_item5 = cleaned_item4.replace(regex5, '');
+        // // const regex6 = /<\/sup>/g;
+        // // let cleaned_item6 = cleaned_item5.replace(regex6, '');
+        
+        // while (m = rp.exec(cleaned_item5)) {
+        //     if (m[0].startsWith('<p>')){
+        //     doctext.push(<p dangerouslySetInnerHTML={{__html: m[1]}}/>);
+        //     } else if (m[0].startsWith('<h2>')){
+                
+        //         doctext.push(<h2 dangerouslySetInnerHTML={{__html: m[2]}}/>);
+        //     } else if (m[0].startsWith('<h3>')){
+                
+        //         doctext.push(<h3 dangerouslySetInnerHTML={{__html: '<b>'+ m[3] + '</b>'}}/>);
+        //     }
+        // }
+        // console.log(doctext)
+        // highlightStored()
 
-        doctext.unshift(<h4> {result.source} <br/></h4>);
-        doctext.unshift(<h3> {result.name} <br/></h3>);
+        // highlightStored()
 
-        urlClickHandler(result.id, doctext);
+        urlClickHandler(result.url, doctext);
         log(LoggerEventTypes.SEARCHRESULT_CLICK_URL, metaInfo);
     };
 
@@ -55,14 +87,14 @@ const TextSearchResult = function ({
 
     const hideCollapsedResults = function () {
         const collapseMetaInfo = {
-            urls: [result.id],
+            urls: [result.url],
             query: searchState.query,
             page: searchState.page,
             serpId: serpId,
         };
         log(LoggerEventTypes.SEARCHRESULT_HIDE_COLLAPSED, collapseMetaInfo);
-        const id = result.id ? result.id : result.url;
-        hideCollapsedResultsHandler([id]);
+
+        // hideCollapsedResultsHandler([id]);
     };
 
     const toTitleCase = function(str) {
@@ -99,7 +131,9 @@ const TextSearchResult = function ({
                         {result.name}
                     </a>
                 </h2>
-
+                <span className="source">
+                    {result.url}
+                </span>
                 {isCollapsible ? (
                     <div className="textArea" draggable="true" role="button" onClick={hideCollapsedResults}>
                         <p dangerouslySetInnerHTML={createSnippet()} >

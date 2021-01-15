@@ -13,9 +13,11 @@ export default class SearchHeaderContainer extends React.Component {
     constructor() {
         super();
         const searchState = SearchStore.getSearchState();
+        const searchProgress = SearchStore.getSearchProgress();
         this.state = {
             searchState: searchState,
-            query: searchState.query
+            query: searchState.query,
+            load: searchProgress.finished
         };
 
         this.changeHandler = this.changeHandler.bind(this);
@@ -29,8 +31,13 @@ export default class SearchHeaderContainer extends React.Component {
 
     componentWillMount() {SearchStore.addChangeListener(this.changeHandler);}
     componentWillUnmount() {SearchStore.removeChangeListener(this.changeHandler);}
+    componentDidMount(){
+        this.state.load = true
+    }
 
     render() {
+        // let load = localStorage.getItem("result-here")
+        // console.log("ULOAD", this.state.load, this.state.searchState, this.state.query)
         return <SearchHeader
             query={this.state.query}
             vertical={this.state.searchState.vertical}
@@ -46,6 +53,7 @@ export default class SearchHeaderContainer extends React.Component {
             clickSuggestionHandler={this.clickSuggestionHandler}
             showSuggestions={this.state.showSuggestions}
             // these props do not update to changes
+            load={this.state.load}
             userId={AccountStore.getUserId()}
             groupId={AccountStore.getGroupId()}
         />
@@ -60,6 +68,16 @@ export default class SearchHeaderContainer extends React.Component {
             this.setState({
                 searchState: nextSearchState,
                 query: nextSearchState.query
+            });
+        }
+        const searchProgress = SearchStore.getSearchProgress();
+            if (this.state.searchState.query) {
+            this.setState({
+                load: searchProgress.finished
+            });
+        } else {
+            this.setState({
+                load: true
             });
         }
     }

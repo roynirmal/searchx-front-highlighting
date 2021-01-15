@@ -19,12 +19,8 @@ function starHandler(url) {
     SessionActions.starBookmark(url);
 }
 
-function clickHandler(url) {
-    if (isNaN(url)){
-        SearchActions.openUrl(url);
-    } else {
-        SearchActions.getDocumentById(url);
-    }
+function clickHandler(url, doctext) {
+    SearchActions.openUrl(url, doctext);
 }
 
 export default class BookmarkContainer extends React.Component {
@@ -44,7 +40,7 @@ export default class BookmarkContainer extends React.Component {
     componentWillUnmount() {BookmarkStore.removeChangeListener(this.changeHandler);}
 
     render() {
-
+        // console.log("GET BC1", this.state.bookmarks)
         return <Bookmark
             bookmarks={this.state.bookmarks}
             popup={this.state.popup}
@@ -59,6 +55,7 @@ export default class BookmarkContainer extends React.Component {
 
     changeHandler() {
         let bookmarks = BookmarkStore.getBookmarks();
+        console.log("GET QC1", bookmarks)
         if (!this.props.collaborative) {
             bookmarks = bookmarks.filter((data) => {
                 return data.userId === AccountStore.getUserId();
@@ -71,6 +68,7 @@ export default class BookmarkContainer extends React.Component {
         this.setState({
             bookmarks: bookmarks
         });
+        // console.log("GET BC", this.state.bookmarks)
     }
 
     popupHandler() {

@@ -1,0 +1,55 @@
+@import '../../../../Variables.pcss';
+
+.Parent {
+    padding: 0;
+    height: 100%;
+
+    .banner {
+        cursor: pointer;
+    }
+
+    header {
+        position: fixed;
+        top: 200px;
+        right: 18px;
+        white-space: nowrap;
+        width: 20px;
+        z-index: 50;
+    }
+
+    .btnSidebar {
+        transform: rotate(270deg);
+        height: 20px;
+        position: relative;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 20px;
+        right: 0;
+        height: 100%;
+        width: 0;
+        transition: right .3s ease-in-out;
+        background-color: white;
+        z-index: 1;
+        overflow-x: hidden;
+    }
+
+    .sidebar-toggle {
+        position: relative;
+        top: 50%;
+        left: 10px;
+    }
+
+    .sidebar.open {
+        right: 0;
+        width: 33%;
+        overflow-x: auto;
+        overflow-y: auto;
+        z-index: 49;
+        display: block;
+    }
+}
+.Button {
+    background-color: $primary-color;
+}

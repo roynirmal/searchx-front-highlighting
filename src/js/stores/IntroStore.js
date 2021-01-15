@@ -6,7 +6,7 @@ import {log} from "../utils/Logger";
 
 import SearchStore from "../app/search/SearchStore";
 import QueryHistoryStore from "../app/search/features/queryhistory/QueryHistoryStore";
-import BookmarkStore from "../app/search/features/bookmark/BookmarkStore";
+import SavedHighlightStore from "../app/search/features/savedhighlight/SavedHighlightStore";
 import $ from 'jquery';
 
 /* global introJs */
@@ -27,6 +27,7 @@ let state = {
 const IntroStore = Object.assign(EventEmitter.prototype, {
     startIntro(steps, callback) {
         if (this.isIntroDone()) {
+           
             callback();
             return;
         }
@@ -37,7 +38,7 @@ const IntroStore = Object.assign(EventEmitter.prototype, {
 
         SearchStore.setSearchTutorialData();
         QueryHistoryStore.setQueryHistoryTutorialData();
-        BookmarkStore.setBookmarksTutorialData();
+        SavedHighlightStore.setHighlightsTutorialData();
 
         intro.setOption('steps', steps);
         const oncomplete = () => {
@@ -51,8 +52,9 @@ const IntroStore = Object.assign(EventEmitter.prototype, {
             });
             SearchStore.removeSearchTutorialData();
             QueryHistoryStore.removeQueryHistoryTutorialData();
-            BookmarkStore.removeBookmarksTutorialData();
-
+            SavedHighlightStore.removeHighlightsTutorialData();
+            // console.log("yes Intro done", modal)
+            localStorage.setItem('start-hl-intro', true)
             callback();
         };
         intro.onexit(oncomplete);

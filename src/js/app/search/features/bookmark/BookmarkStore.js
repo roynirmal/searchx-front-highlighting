@@ -29,6 +29,7 @@ const BookmarkStore = Object.assign(EventEmitter.prototype, {
         this.removeListener(CHANGE_EVENT, callback);
     },
     getBookmarks() {
+        // console.log("coming here B", state)
         if (state.tutorial) {
             return [
                 {title: "You can view your bookmarked documents here", url: "https://www.viewbookmark.com", userId: "1"},
@@ -39,6 +40,7 @@ const BookmarkStore = Object.assign(EventEmitter.prototype, {
 
         const starred = state.bookmark.filter(x => x.starred);
         const notStarred = state.bookmark.filter(x => !x.starred);
+        
         return starred.concat(notStarred);
     },
     getExcludes() {
@@ -61,7 +63,7 @@ const BookmarkStore = Object.assign(EventEmitter.prototype, {
                 _get('exclude');
                 break;
             case ActionTypes.ADD_BOOKMARK:
-                _add(action.payload.url, action.payload.title, 'bookmark');
+                _add(action.payload.url, action.payload.title, action.payload.text, 'bookmark');
                 break;
             case ActionTypes.REMOVE_BOOKMARK:
                 _remove(action.payload.url, 'bookmark');
@@ -93,6 +95,7 @@ const _get = function(type) {
             if (err || !res.body || res.body.error) {
                 state[type] = [];
             } else {
+                console.log("GET B", res.body.results, type)
                 state[type] = res.body.results;
                 res.body.results.forEach(result => {
                     const resultId = result.url ? result.url : result.id;
@@ -109,7 +112,7 @@ const _get = function(type) {
         });
 };
 
-const _add = function(url, title, type) {
+const _add = function(url, title, text, type) {
     const userId = AccountStore.getUserId();
     request
         .post(`${process.env.REACT_APP_SERVER_URL}/v1/session/${AccountStore.getSessionId()}/${type}`)
@@ -121,13 +124,17 @@ const _add = function(url, title, type) {
         .end(() => {
             _broadcast_change();
         });
-
-    state[type].push({
-        url: url,
-        title: title,
-        userId: userId,
-        date: new Date()
-    });
+    const checkUrl = obj => obj.url === url;
+    console.log(state[type].some(checkUrl))
+    if (state[type].some(checkUrl)===false){
+        state[type].push({
+            url: url,
+            title: title,
+            userId: userId,
+            text: text,
+            date: new Date()
+        });
+    }
     BookmarkStore.emitChange();
     SearchStore.updateMetadata();
 };

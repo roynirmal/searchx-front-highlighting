@@ -1,4 +1,4 @@
-import WebSearchResult from "./app/search/results/components/types/WebSearchResult";
+// import WebSearchResult from "./app/search/results/components/types/WebSearchResult";
 import ImagesSearchResult from "./app/search/results/components/types/ImagesSearchResult";
 import VideosSearchResult from "./app/search/results/components/types/VideosSearchResult";
 import NewsSearchResult from "./app/search/results/components/types/NewsSearchResult";
@@ -9,7 +9,7 @@ import TextSearchResult from "./app/search/results/components/types/TextSearchRe
 // Each provider must have at least one vertical.
 const providerVerticals = {
     'bing': new Map([
-        ['web', WebSearchResult],
+        ['web', TextSearchResult],
         ['images', ImagesSearchResult],
         ['videos', VideosSearchResult],
         ['news', NewsSearchResult]
@@ -25,7 +25,7 @@ const providerVerticals = {
 var config = {
     aboutPrefixAt: 1000, /* at how many search results do we start saying 'About X results' vs. 'X results' */
     logTimeInterval: 5000,
-    defaultProvider: 'indri',
+    defaultProvider: 'bing',
     defaultVariant: 'S1',
     variantQueryParameter: false, /* allow the variant to be modified by a query parameter, or fix it to the default or variant set by the task */
     fallbackToS0ForGroupSize1: false, /* always make group sizes of size 1 use variant S0 */
@@ -34,11 +34,14 @@ var config = {
         annotations: false, /* allow users to place annotations (comments) on documents */
         ratings: false, /* allow users to rate search results and show the ratings for the group */
         views: false, /* show the number of times a result has been viewed */
-        chat: true, /* enable the group chat feature */
+        chat: false, /* enable the group chat feature */
         timeIndicator: false, /* show the time it took to return results */
         star: true, /* allow users to star bookmarks */
-        saveTimestamp: true, /* show the time and date at which a document was saved */
-        verticals: false /* show the vertical selection menu */
+        saveTimestamp: true, /* show the   and date at which a document was saved */
+        verticals: false, /* show the vertical selection menu */
+        notepad:true, /*enable notepad*/
+        highlight:true, /*enable highlight*/
+        bookmarks: false /*enable bookmarking*/
     }
 };
 

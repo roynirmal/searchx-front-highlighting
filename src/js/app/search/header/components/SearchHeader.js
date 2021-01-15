@@ -8,10 +8,12 @@ import AccountInfo from "./AccountInfo";
 import SuggestionsContainer from "../../features/querysuggestions/SuggestionsContainer";
 
 
-const Header = function ({query, vertical, provider, searchHandler, queryChangeHandler, verticalChangeHandler, timer, statusbar, userId, groupId, showAccountInfo, hideSuggestionsHandler, showSuggestionsHandler, clickSuggestionHandler, showSuggestions}) {
+const Header = function ({query, vertical, provider, searchHandler, queryChangeHandler, verticalChangeHandler, timer, statusbar, userId, groupId, showAccountInfo, hideSuggestionsHandler, showSuggestionsHandler, clickSuggestionHandler, showSuggestions, load}) {
+    // console.log("LOAD", load)
     return (
         <div className="SearchHeader">
             <Logo/>
+            { load ? 
             <form action="/" method="GET" className="form" onSubmit={e => {
                 e.preventDefault();
                 searchHandler();
@@ -20,7 +22,13 @@ const Header = function ({query, vertical, provider, searchHandler, queryChangeH
                 <SuggestionsContainer clickSuggestionHandler={clickSuggestionHandler} hideSuggestionsHandler={hideSuggestionsHandler} showSuggestions={showSuggestions}/>    
                 <SearchVerticals query={query} activeVertical={vertical} changeHandler={verticalChangeHandler}
                                  provider={provider}/>
-            </form>
+            </form> : 
+           <form action="/" method="GET" className="form" onSubmit={e => {
+            e.preventDefault();
+            searchHandler();
+        }}> </form>
+            
+            }
             {showAccountInfo && <AccountInfo userId={userId} groupId={groupId}/>}
             <div className="StatusBarDiv">
                 {statusbar}
