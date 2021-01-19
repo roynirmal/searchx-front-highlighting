@@ -57,6 +57,15 @@ SearchX is a modular system, so this highlight-specific front end will be integr
 ## Docker Setup
 Go to the [Docker](https://github.com/felipemoraes/searchx#docker) submodule of the main SearchX repository for detailed instructions. Remember to specify the URL of the front end in the Dockerfile as shown in `highlight/docker-images/front/Dockerfile`. 
 
+## Etherpad Server
+The note-taking module is an embedded instance of [`etherpad-lite`](https://github.com/ether/etherpad-lite), see the image below. 
+For this study we installed `etherpad` in a separate Linux machine, following the instructions on their [repository](https://github.com/ether/etherpad-lite).
+In addition, we configured `etherpad` with `mysql` instead of the default `DirtyDb`. Check the Docker Setup above for a simple configuration.
+
+<p align="center">
+    <img src="https://github.com/roynirmal/searchx-front-highlighting/blob/master/public/img/viewerTutorial/Slide8.PNG" width="700">
+</p>
+
 # Configuration
 The main production configuration keys are can be found in your `.env` file. If the backend runs on the same server as the frontend the default values work for local access. If you want access the frontend publicly you need to set at least the `REACT_APP_PUBLIC_URL` key. The keys are:
 - `PORT`: the port at which the frontend will run
